@@ -1,7 +1,30 @@
 // Declare participant_id at the top
 let participant_id;
 let prolific_id;
+novel_words = ["tinches", "nefts", "bines", "palts"]
+if (Math.floor(Math.random() * 2) == 0) {
+    condition = "novel_word_condition"
+} else {
+    condition = "familiar_word_condition"
+}
 
+function shuffle(array) {
+    let currentIndex = array.length;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+}
+
+shuffle(novel_words)
 
 // Generate participant ID
 async function generateParticipantId() {
@@ -40,22 +63,28 @@ async function createImageGridTrial(folder, trialCounter) {
         // Get the current Prolific ID from jsPsych's data
         const currentProlificId = jsPsych.data.get().last().select('prolific_id').values[0] || prolific_id;
         
+        if (condition == "novel_word_condition") {
+            word = novel_words.pop()
+        } else {
+            word = folder.replace('stimuli/', '')
+        }
         const trial = {
             type: jsPsychImageGridSelect,
             stimulus_folder: folder.replace('stimuli/', ''),
-            preserve_original_size: true,
-            images_per_row: 5,
-            images_per_column: 2,
-            grid_spacing: 20,
+            preserve_original_size: false,
+            images_per_row: 4,
+            grid_spacing: 25,
+            max_image_width: 200,
             center_grid: true,
-            required_clicks: 2,
-            prompt: `<p>Select two ${2} ${folder.replace('stimuli/', '')}s by clicking on them</p>`,
+            required_clicks: 3,
+            prompt: `<p>Click on three ${word}.</p>`,
             data: {
                 participant_id: participant_id,
                 prolific_id: currentProlificId,
                 trial_number: trialCounter,
                 trial_type: 'image-selection',
-                category: folder
+                category: folder,
+                condition: condition
             }
         };
         
@@ -110,11 +139,11 @@ const jsPsych = initJsPsych({
         })
         .then(result => {
             console.log('Data saved successfully:', result);
-            window.location.href = "https://www.prolific.com/";
+            //window.location.href = "https://www.prolific.com/";
         })
         .catch(error => {
             console.error('Error saving data:', error);
-            window.location.href = "https://www.prolific.com/";
+            //window.location.href = "https://www.prolific.com/";
         });
     }
 });
@@ -188,16 +217,19 @@ async function createTimeline() {
     ];
     
     // Get and randomize folders
-    const folders = await getStimulusFolders();
-    const randomizedFolders = jsPsych.randomization.shuffle(folders);
+    folders = await getStimulusFolders();
+    shuffle(folders)
 
     // Add a trial number counter
     let trialCounter = 0;
-    
     // Add image grid trials to timeline
-    for (const folder of randomizedFolders) {
+    for (const folder of folders) {
         const trial = await createImageGridTrial(folder, trialCounter);
-        if (trial) timeline.push(trial)
+        if (trial) {
+            timeline.push(trial)
+        } else {
+            console.log("trial could not be added")
+        }
         trialCounter++;
     }
     

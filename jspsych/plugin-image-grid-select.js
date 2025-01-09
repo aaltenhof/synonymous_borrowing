@@ -31,6 +31,22 @@ var jsPsychImageGridSelect = (function (jspsych) {
     }
   };
 
+  function shuffle(array) {
+    let currentIndex = array.length;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  }
+
   class ImageGridSelectPlugin {
     constructor(jsPsych) {
       this.jsPsych = jsPsych;
@@ -104,6 +120,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
         .then(response => response.json())
         .then(imagePaths => {
           // Create a promise for each image load
+          shuffle(imagePaths)
           const imageLoadPromises = imagePaths.map(path => {
             return new Promise((resolve, reject) => {
               const img = document.createElement('img');
@@ -112,6 +129,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.height = 'auto';
               img.style.cursor = 'pointer';
               img.style.transition = 'transform 0.2s ease';
+              img.style.border = '3px solid #FFFFFF';
               
               // Add hover effect
               img.addEventListener('mouseenter', () => {

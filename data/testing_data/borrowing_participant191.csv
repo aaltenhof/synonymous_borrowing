@@ -1,0 +1,13 @@
+participant_id,prolific_id,trial_number,category,image_name,click_order,rt
+"participant191","1","0","leaves","leaf_heart_2.png","1","30830"
+"participant191","1","0","leaves","leaf_deltoid_1.png","2","31330"
+"participant191","1","0","leaves","leaf_heart_3.png","3","31814"
+"participant191","1","1","flowers","flower_round_1.png","1","29230"
+"participant191","1","1","flowers","flower_trumpet_2.png","2","29864"
+"participant191","1","1","flowers","flower_cup_3.png","3","30281"
+"participant191","1","2","shells","shell_spiral_1.png","1","19132"
+"participant191","1","2","shells","shell_spiral_3.png","2","19516"
+"participant191","1","2","shells","shell_stingray_2.png","3","21231"
+"participant191","1","3","mushrooms","mushroom_toadstool_3.png","1","17164"
+"participant191","1","3","mushrooms","mushroom_bell_1.png","2","17514"
+"participant191","1","3","mushrooms","mushroom_bell_2.png","3","17948"
