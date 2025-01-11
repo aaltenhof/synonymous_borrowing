@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 5000
+
 
 
 const app = express();
@@ -173,6 +173,11 @@ app.get('/get-folders', (req, res) => {
     });
 });
 
-var server = app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+
+const port = process.env.PORT || 5000
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
+app.get('/', function(request, response) {
+    response.render('experiment.html');
 });
