@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const PORT = process.env.PORT || 5000
 
 const app = express();
 
@@ -169,7 +170,6 @@ app.get('/get-folders', (req, res) => {
     });
 });
 
-PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
