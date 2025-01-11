@@ -173,6 +173,6 @@ app.get('/get-folders', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

@@ -1,9 +1,9 @@
 // Declare participant_id at the top
 let participant_id;
 let prolific_id;
-require("dotenv").config();
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = server.address().port
 novel_words = ["tinches", "nefts", "bines", "palts"]
 if (Math.floor(Math.random() * 2) == 0) {
     condition = "novel_word_condition"
