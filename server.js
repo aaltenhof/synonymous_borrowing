@@ -179,7 +179,7 @@ app.get('/get-folders', (req, res) => {
 // Function to get all stimuli folders
 async function getStimulusFolders() {
     try {
-        const response = await fetch(`https://localhost:${PORT}/get-folders`);
+        const response = await fetch(`/get-folders`);
         const folders = await response.json();
         return folders;
     } catch (error) {
@@ -191,7 +191,7 @@ async function getStimulusFolders() {
 // Function to create a grid trial for any folder
 async function createImageGridTrial(folder, trialCounter) {
     try {
-        const response = await fetch(`https://localhost:${PORT}/get-images/${folder}`);
+        const response = await fetch(`/get-images/${folder}`);
         const imagePaths = await response.json();
         
         // Get the current Prolific ID from jsPsych's data
