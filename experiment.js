@@ -1,6 +1,7 @@
 // Declare participant_id at the top
 let participant_id;
 let prolific_id;
+PORT = process.env.PORT || 5000
 novel_words = ["tinches", "nefts", "bines", "palts"]
 if (Math.floor(Math.random() * 2) == 0) {
     condition = "novel_word_condition"
@@ -45,7 +46,7 @@ async function initializeAndRun() {
 // Function to get all stimuli folders
 async function getStimulusFolders() {
     try {
-        const response = await fetch('https://localhost:3000/get-folders');
+        const response = await fetch(`https://localhost:${PORT}/get-folders`);
         const folders = await response.json();
         return folders;
     } catch (error) {
@@ -57,7 +58,7 @@ async function getStimulusFolders() {
 // Function to create a grid trial for any folder
 async function createImageGridTrial(folder, trialCounter) {
     try {
-        const response = await fetch(`https://localhost:3000/get-images/${folder}`);
+        const response = await fetch(`https://localhost:${PORT}/get-images/${folder}`);
         const imagePaths = await response.json();
         
         // Get the current Prolific ID from jsPsych's data
@@ -123,7 +124,7 @@ const jsPsych = initJsPsych({
         console.log('Final data being sent:', experimentData);
         
         // Save the data
-        fetch('https://localhost:3000/save-data', {
+        fetch(`https://localhost:${PORT}/save-data`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
