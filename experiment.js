@@ -45,7 +45,7 @@ async function initializeAndRun() {
 // Function to get all stimuli folders
 async function getStimulusFolders() {
     try {
-        const response = await fetch('http://localhost:3000/get-folders');
+        const response = await fetch('https://localhost:3000/get-folders');
         const folders = await response.json();
         return folders;
     } catch (error) {
@@ -57,7 +57,7 @@ async function getStimulusFolders() {
 // Function to create a grid trial for any folder
 async function createImageGridTrial(folder, trialCounter) {
     try {
-        const response = await fetch(`http://localhost:3000/get-images/${folder}`);
+        const response = await fetch(`https://localhost:3000/get-images/${folder}`);
         const imagePaths = await response.json();
         
         // Get the current Prolific ID from jsPsych's data
@@ -123,7 +123,7 @@ const jsPsych = initJsPsych({
         console.log('Final data being sent:', experimentData);
         
         // Save the data
-        fetch('http://localhost:3000/save-data', {
+        fetch('https://localhost:3000/save-data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
