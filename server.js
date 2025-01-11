@@ -74,8 +74,10 @@ function convertToCSV(data) {
                     participant_id: response.participant_id || trial.participant_id,
                     prolific_id: response.prolific_id || trial.prolific_id,
                     trial_number: response.trial_number || trial.trial_number,
+                    condition: response.condition || trial.condition,
                     category: response.category || trial.category,
                     image_name: response.image_name || '',
+                    word: response.word || trial.word,
                     click_order: response.click_order || '',
                     rt: response.rt || ''
                 });
@@ -86,8 +88,10 @@ function convertToCSV(data) {
                 participant_id: trial.participant_id,
                 prolific_id: trial.prolific_id,
                 trial_number: trial.trial_number,
+                condition: trial.condition,
                 category: trial.category,
                 image_name: trial.image_name,
+                word: trial.word,
                 click_order: trial.click_order,
                 rt: trial.rt
             });
@@ -99,8 +103,10 @@ function convertToCSV(data) {
         'participant_id',
         'prolific_id',
         'trial_number',
+        'condition',
         'category',
         'image_name',
+        'word',
         'click_order',
         'rt'
     ];

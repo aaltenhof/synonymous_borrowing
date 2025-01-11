@@ -1,0 +1,13 @@
+participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt
+"participant32","1","0","familiar_word_condition","mushrooms","mushroom_disc_1_2.png","flowers","1","4495"
+"participant32","1","0","familiar_word_condition","mushrooms","mushroom_bell_1_2.png","flowers","2","4860"
+"participant32","1","0","familiar_word_condition","mushrooms","mushroom_toadstool_2_1.png","flowers","3","5510"
+"participant32","1","1","familiar_word_condition","shells","shell_urn_1_2.png","flowers","1","1269"
+"participant32","1","1","familiar_word_condition","shells","shell_fan_2_1.png","flowers","2","1700"
+"participant32","1","1","familiar_word_condition","shells","shell_spiral_3_1.png","flowers","3","2070"
+"participant32","1","2","familiar_word_condition","leaves","leaf_bean_1_2.png","flowers","1","909"
+"participant32","1","2","familiar_word_condition","leaves","leaf_heart_3_2.png","flowers","2","1328"
+"participant32","1","2","familiar_word_condition","leaves","leaf_droplet_2_1.png","flowers","3","1692"
+"participant32","1","3","familiar_word_condition","flowers","flower_trumpet_2_2.png","flowers","1","872"
+"participant32","1","3","familiar_word_condition","flowers","flower_round_2_1.png","flowers","2","1284"
+"participant32","1","3","familiar_word_condition","flowers","flower_star_1_1.png","flowers","3","1650"

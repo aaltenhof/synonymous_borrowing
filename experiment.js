@@ -78,12 +78,14 @@ async function createImageGridTrial(folder, trialCounter) {
             center_grid: true,
             required_clicks: 3,
             prompt: `<p>Click on three ${word}.</p>`,
+            this_word: word,
             data: {
                 participant_id: participant_id,
                 prolific_id: currentProlificId,
                 trial_number: trialCounter,
                 trial_type: 'image-selection',
                 category: folder,
+                word: word,
                 condition: condition
             }
         };
@@ -139,11 +141,11 @@ const jsPsych = initJsPsych({
         })
         .then(result => {
             console.log('Data saved successfully:', result);
-            //window.location.href = "https://www.prolific.com/";
+            window.location.href = "https://www.prolific.com/";
         })
         .catch(error => {
             console.error('Error saving data:', error);
-            //window.location.href = "https://www.prolific.com/";
+            window.location.href = "https://www.prolific.com/";
         });
     }
 });

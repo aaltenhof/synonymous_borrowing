@@ -1,0 +1,13 @@
+participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt
+"participant951","1","0","novel_word_condition","shells","shell_spiral_2_1.png","tinches","1","1506"
+"participant951","1","0","novel_word_condition","shells","shell_urn_2_2.png","tinches","2","1891"
+"participant951","1","0","novel_word_condition","shells","shell_spiral_1_1.png","tinches","3","2305"
+"participant951","1","1","novel_word_condition","flowers","flower_iris_2_2.png","tinches","1","1049"
+"participant951","1","1","novel_word_condition","flowers","flower_trumpet_1_2.png","tinches","2","1398"
+"participant951","1","1","novel_word_condition","flowers","flower_round_3_1.png","tinches","3","1781"
+"participant951","1","2","novel_word_condition","leaves","leaf_bean_1_2.png","tinches","1","751"
+"participant951","1","2","novel_word_condition","leaves","leaf_oak_3_1.png","tinches","2","1151"
+"participant951","1","2","novel_word_condition","leaves","leaf_oak_1_1.png","tinches","3","1468"
+"participant951","1","3","novel_word_condition","mushrooms","mushroom_disc_1_2.png","tinches","1","795"
+"participant951","1","3","novel_word_condition","mushrooms","mushroom_bell_2_2.png","tinches","2","1198"
+"participant951","1","3","novel_word_condition","mushrooms","mushroom_toadstool_2_1.png","tinches","3","1515"

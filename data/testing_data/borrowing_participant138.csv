@@ -1,0 +1,13 @@
+participant_id,prolific_id,trial_number,condition,category,image_name,click_order,rt
+"participant138","1","0","novel_word_condition","leaves","leaf_oak_3.png","1","2273"
+"participant138","1","0","novel_word_condition","leaves","leaf_oak_2.png","2","2922"
+"participant138","1","0","novel_word_condition","leaves","leaf_oak_1.png","3","3572"
+"participant138","1","1","novel_word_condition","flowers","flower_round_3.png","1","2950"
+"participant138","1","1","novel_word_condition","flowers","flower_trumpet_3.png","2","4016"
+"participant138","1","1","novel_word_condition","flowers","flower_iris_1.png","3","4401"
+"participant138","1","2","novel_word_condition","mushrooms","mushroom_disc_1.png","1","6380"
+"participant138","1","2","novel_word_condition","mushrooms","mushroom_disc_2.png","2","6780"
+"participant138","1","2","novel_word_condition","mushrooms","mushroom_disc_3.png","3","7265"
+"participant138","1","3","novel_word_condition","shells","shell_stingray_1.png","1","2764"
+"participant138","1","3","novel_word_condition","shells","shell_stingray_3.png","2","3248"
+"participant138","1","3","novel_word_condition","shells","shell_spiral_3.png","3","3996"

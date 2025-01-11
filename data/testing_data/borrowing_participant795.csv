@@ -1,0 +1,13 @@
+participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt
+"participant795","1","0","familiar_word_condition","flowers","flower_iris_1_2.png","leaves","1","1347"
+"participant795","1","0","familiar_word_condition","flowers","flower_round_1_1.png","leaves","2","1731"
+"participant795","1","0","familiar_word_condition","flowers","flower_trumpet_2_2.png","leaves","3","2197"
+"participant795","1","1","familiar_word_condition","shells","shell_spiral_1_1.png","leaves","1","1033"
+"participant795","1","1","familiar_word_condition","shells","shell_fan_1_1.png","leaves","2","1465"
+"participant795","1","1","familiar_word_condition","shells","shell_stingray_3_2.png","leaves","3","1951"
+"participant795","1","2","familiar_word_condition","mushrooms","mushroom_toadstool_1_1.png","leaves","1","880"
+"participant795","1","2","familiar_word_condition","mushrooms","mushroom_disc_2_2.png","leaves","2","1231"
+"participant795","1","2","familiar_word_condition","mushrooms","mushroom_enoki_1_1.png","leaves","3","1664"
+"participant795","1","3","familiar_word_condition","leaves","leaf_oak_3_1.png","leaves","1","865"
+"participant795","1","3","familiar_word_condition","leaves","leaf_heart_1_2.png","leaves","2","1267"
+"participant795","1","3","familiar_word_condition","leaves","leaf_heart_2_2.png","leaves","3","1635"

@@ -8,6 +8,10 @@ var jsPsychImageGridSelect = (function (jspsych) {
         type: jspsych.ParameterType.STRING,
         default: undefined
       },
+      this_word: {
+        type: jspsych.ParameterType.STRING,
+        default: undefined
+      },
       required_clicks: {
         type: jspsych.ParameterType.INT,
         default: 2
@@ -158,9 +162,11 @@ var jsPsychImageGridSelect = (function (jspsych) {
           rt: rt,
           participant_id: trial.data.participant_id,
           prolific_id: trial.data.prolific_id,
+          condition: condition,
           category: folderName,
           trial_number: trial.data.trial_number,
           image_name: filename,
+          word: trial.this_word,
           click_order: clicked
       });
 
@@ -174,7 +180,9 @@ var jsPsychImageGridSelect = (function (jspsych) {
                   participant_id: trial.data.participant_id,
                   prolific_id: trial.data.prolific_id,
                   trial_number: trial.data.trial_number,
+                  condition: condition,
                   category: folderName,
+                  word: trial.this_word,
                   responses: responses
               });
           }, 300);
