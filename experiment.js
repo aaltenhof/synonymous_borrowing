@@ -1,6 +1,8 @@
 // Declare participant_id at the top
 let participant_id;
 let prolific_id;
+require("dotenv").config();
+
 const PORT = process.env.PORT || 3000;
 novel_words = ["tinches", "nefts", "bines", "palts"]
 if (Math.floor(Math.random() * 2) == 0) {
