@@ -1,7 +1,7 @@
 // Declare participant_id at the top
 let participant_id;
 let prolific_id;
-import { PORT } from './server.js'
+
 novel_words = ["tinches", "nefts", "bines", "palts"]
 if (Math.floor(Math.random() * 2) == 0) {
     condition = "novel_word_condition"
