@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+var exp = require("./experiment.js")
 
 const PORT = process.env.PORT || 5000
 
@@ -130,6 +131,8 @@ function convertToCSV(data) {
 
     return csvRows.join('\n');
 }
+
+//below from exp file
 // Endpoint to get images from a specific folder
 app.get('/get-images/:folder', (req, res) => {
     const folderPath = path.join('stimuli', req.params.folder);
@@ -172,6 +175,61 @@ app.get('/get-folders', (req, res) => {
         res.json(folders);
     });
 });
+
+// Function to get all stimuli folders
+async function getStimulusFolders() {
+    try {
+        const response = await fetch(`https://localhost:${PORT}/get-folders`);
+        const folders = await response.json();
+        return folders;
+    } catch (error) {
+        console.error('Error getting folders:', error);
+        return [];
+    }
+}
+
+// Function to create a grid trial for any folder
+async function createImageGridTrial(folder, trialCounter) {
+    try {
+        const response = await fetch(`https://localhost:${PORT}/get-images/${folder}`);
+        const imagePaths = await response.json();
+        
+        // Get the current Prolific ID from jsPsych's data
+        const currentProlificId = jsPsych.data.get().last().select('prolific_id').values[0] || prolific_id;
+        
+        if (condition == "novel_word_condition") {
+            word = novel_words.pop()
+        } else {
+            word = folder.replace('stimuli/', '')
+        }
+        const trial = {
+            type: jsPsychImageGridSelect,
+            stimulus_folder: folder.replace('stimuli/', ''),
+            preserve_original_size: false,
+            images_per_row: 4,
+            grid_spacing: 25,
+            max_image_width: 200,
+            center_grid: true,
+            required_clicks: 3,
+            prompt: `<p>Click on three ${word}.</p>`,
+            this_word: word,
+            data: {
+                participant_id: participant_id,
+                prolific_id: currentProlificId,
+                trial_number: trialCounter,
+                trial_type: 'image-selection',
+                category: folder,
+                word: word,
+                condition: condition
+            }
+        };
+        
+        return trial;
+    } catch (error) {
+        console.error('Error loading images:', error);
+        return null;
+    }
+}
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
