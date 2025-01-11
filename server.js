@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000
-export default { PORT: PORT }
+
 
 const app = express();
 
