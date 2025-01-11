@@ -3,7 +3,6 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-var exp = require("./experiment.js")
 
 const PORT = process.env.PORT || 5000
 
