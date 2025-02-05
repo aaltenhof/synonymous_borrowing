@@ -12,6 +12,11 @@ var jsPsychImageGridSelect = (function (jspsych) {
         type: jspsych.ParameterType.STRING,
         default: undefined
       },
+      image_names: {
+        type: jspsych.ParameterType.STRING,
+        array: true,
+        default: undefined
+      },
       required_clicks: {
         type: jspsych.ParameterType.INT,
         default: 2
@@ -31,10 +36,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
       max_image_width: {
         type: jspsych.ParameterType.INT,
         default: 300
-      },
-      image_names: {  // New parameter for image names
-        type: jspsych.ParameterType.STRING,
-        default: ['1.jpg', '2.jpg', '3.jpg', '4.jpg']  // Default image names
       }
     }
   };
@@ -85,6 +86,16 @@ var jsPsychImageGridSelect = (function (jspsych) {
         container.innerHTML += trial.prompt;
       }
 
+      // Show the word for this trial
+      if (trial.this_word) {
+        const wordDisplay = document.createElement('div');
+        wordDisplay.style.fontSize = '24px';
+        wordDisplay.style.textAlign = 'center';
+        wordDisplay.style.marginBottom = '20px';
+        wordDisplay.innerHTML = `<strong>${trial.this_word}</strong>`;
+        container.appendChild(wordDisplay);
+      }
+
       // Add grid container
       const gridContainer = document.createElement('div');
       gridContainer.style.display = 'grid';
@@ -113,12 +124,12 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Add resize event listener
       window.addEventListener('resize', handleResize);
 
-      // Create array of image paths
+      // Create paths from image names
       const imagePaths = trial.image_names.map(name => 
         `${trial.stimulus_folder}/${name}`
       );
       
-      // Shuffle image paths
+      // Shuffle the paths
       shuffle(imagePaths);
 
       // Create and load all images
@@ -157,13 +168,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
               // Store response
               responses.push({
                 rt: rt,
-                participant_id: trial.data.participant_id,
-                prolific_id: trial.data.prolific_id,
-                condition: trial.data.condition,
-                category: trial.stimulus_folder,
-                trial_number: trial.data.trial_number,
                 image_name: filename,
-                word: trial.this_word,
                 click_order: clicked
               });
 
@@ -174,13 +179,11 @@ var jsPsychImageGridSelect = (function (jspsych) {
                   
                   // Finish trial
                   this.jsPsych.finishTrial({
-                    participant_id: trial.data.participant_id,
-                    prolific_id: trial.data.prolific_id,
-                    trial_number: trial.data.trial_number,
-                    condition: trial.data.condition,
-                    category: trial.stimulus_folder,
-                    word: trial.this_word,
-                    responses: responses
+                    rt: responses.map(r => r.rt),
+                    response: responses.map(r => r.image_name),
+                    click_order: responses.map(r => r.click_order),
+                    stimulus_folder: trial.stimulus_folder,
+                    this_word: trial.this_word
                   });
                 }, 300);
               }
