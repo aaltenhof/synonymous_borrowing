@@ -1,7 +1,8 @@
-// Declare participant_id at the top
+// Declare variables at the top
 let participant_id;
 let prolific_id;
-let condition;  // Moved condition declaration to top
+let condition;
+require("dotenv").config();
 
 const novel_words = ["tinches", "nefts", "bines", "palts"];
 // Set condition
@@ -29,21 +30,13 @@ async function generateParticipantId() {
     return `participant${baseId}`;
 }
 
-// Initialize and run the experiment
-async function initializeAndRun() {
-    // Set participant_id first before creating any trials
-    participant_id = await generateParticipantId();
-    
-    // Add participant_id and condition to jsPsych data
-    jsPsych.data.addProperties({
-        participant_id: participant_id,
-        condition: condition  // Add condition as a property
-    });
-    
-    // Then create and run timeline
-    const timeline = await createTimeline();
-    await jsPsych.run(timeline);
-}
+// Initialize jsPsych
+const jsPsych = initJsPsych({
+    on_finish: function(data) {
+        // Final operations when experiment is done
+        console.log('Experiment finished');
+    }
+});
 
 // Create consent trial
 const consent = {
@@ -151,6 +144,22 @@ async function createTimeline() {
     timeline.push(save_data);
     
     return timeline;
+}
+
+// Initialize and run the experiment
+async function initializeAndRun() {
+    // Set participant_id first before creating any trials
+    participant_id = await generateParticipantId();
+    
+    // Add participant_id and condition to jsPsych data
+    jsPsych.data.addProperties({
+        participant_id: participant_id,
+        condition: condition
+    });
+    
+    // Then create and run timeline
+    const timeline = await createTimeline();
+    await jsPsych.run(timeline);
 }
 
 // Start the experiment
