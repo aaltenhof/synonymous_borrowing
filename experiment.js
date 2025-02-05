@@ -2,6 +2,7 @@
 let participant_id;
 let prolific_id;
 let condition;
+require("dotenv").config();
 
 const novel_words = ["tinches", "nefts", "bines", "palts"];
 // Set condition
@@ -110,13 +111,18 @@ const instructions = {
 function createImageGridTrial(folder, trialNumber) {
     return {
         type: jsPsychImageGridSelect,
-        stimulus: folder,
-        grid_size: 2,  // Assuming 2x2 grid
+        stimulus_folder: `stimuli/${folder}`,  // Required parameter from plugin
+        this_word: novel_words[trialNumber % novel_words.length], // Required parameter from plugin
+        required_clicks: 2,
+        images_per_row: 2,
+        grid_spacing: 20,
+        max_image_width: 300,
         data: {
             trial_type: 'image_grid',
             trial_number: trialNumber,
-            folder: folder,
-            condition: condition  // Add condition to each trial's data
+            participant_id: participant_id,
+            prolific_id: prolific_id,
+            condition: condition
         }
     };
 }
@@ -129,16 +135,12 @@ async function createTimeline() {
         instructions
     ];
     
-    // Define stimulus folders - update these paths to match your GitHub structure
+    // Define stimulus folders
     const folders = [
-        'stimuli/1',
-        'stimuli/2',
-        'stimuli/3',
-        'stimuli/4',
-        'stimuli/5',
-        'stimuli/6',
-        'stimuli/7',
-        'stimuli/8'
+        'stimuli/flowers',
+        'stimuli/leaves',
+        'stimuli/mushrooms',
+        'simuli/shells'
     ];
     
     // Shuffle the folders to randomize presentation order
