@@ -8,7 +8,7 @@ if (Math.floor(Math.random() * 2) == 0) {
     condition = "novel_word_condition"
 } else {
     condition = "familiar_word_condition"
-}
+};
 
 function shuffle(array) {
     let currentIndex = array.length;
@@ -24,7 +24,7 @@ function shuffle(array) {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-}
+};
 
 shuffle(novel_words)
 
@@ -42,62 +42,10 @@ async function initializeAndRun() {
     // Then create and run timeline
     const timeline = await createTimeline();
     await jsPsych.run(timeline);
-}
+};
 
+const filename = `${participant_id}.csv`;
 
-
-// Initialize jsPsych
-const jsPsych = initJsPsych({
-    on_finish: function() {
-        // Get the final Prolific ID
-        const finalProlificId = jsPsych.data.get().last().select('prolific_id').values[0] || prolific_id;
-        
-        // Get only the image selection trials
-        const experimentData = jsPsych.data.get()
-            .filter({trial_type: 'image-grid-select'})
-            .values()
-            .flatMap(trial => {
-                if (trial.responses && Array.isArray(trial.responses)) {
-                    return trial.responses.map(response => ({
-                        ...response,
-                        prolific_id: finalProlificId
-                    }));
-                }
-                return {
-                    ...trial,
-                    prolific_id: finalProlificId
-                };
-            });
-
-        console.log('Final data being sent:', experimentData);
-        
-        // Save the data
-        fetch(`https://localhost:${PORT}/save-data`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                participantId: participant_id,
-                data: experimentData
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log('Data saved successfully:', result);
-            window.location.href = "https://www.prolific.com/";
-        })
-        .catch(error => {
-            console.error('Error saving data:', error);
-            window.location.href = "https://www.prolific.com/";
-        });
-    }
-});
 
 // Create consent trial
 const consent = {
@@ -119,6 +67,14 @@ const consent = {
         }
     }
 };
+
+const save_data = {
+    type: jsPsychPipe,
+    action: "save",
+    experiment_id: "sPY6vEQmdfQL",
+    filename: filename,
+    data_string: ()=>jsPsych.data.get().csv()
+  };
 
 
 // Create Prolific ID trial
@@ -183,6 +139,7 @@ async function createTimeline() {
         }
         trialCounter++;
     }
+    timeline.push(save_data)
     
     return timeline;
 }
