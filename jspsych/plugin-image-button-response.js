@@ -1,321 +1,213 @@
-var jsPsychImageButtonResponse = (function (jspsych) {
+var jsPsychImageGridSelect = (function (jspsych) {
   'use strict';
 
-  var version = "2.0.0";
-
   const info = {
-    name: "image-button-response",
-    version,
+    name: 'image-grid-select',
     parameters: {
-      /** The path of the image file to be displayed. */
-      stimulus: {
-        type: jspsych.ParameterType.IMAGE,
-        default: void 0
-      },
-      /** Set the height of the image in pixels. If left null (no value specified), then the image will display at its natural height. */
-      stimulus_height: {
-        type: jspsych.ParameterType.INT,
-        default: null
-      },
-      /** Set the width of the image in pixels. If left null (no value specified), then the image will display at its natural width. */
-      stimulus_width: {
-        type: jspsych.ParameterType.INT,
-        default: null
-      },
-      /** If setting *only* the width or *only* the height and this parameter is true, then the other dimension will be
-       * scaled to maintain the image's aspect ratio.  */
-      maintain_aspect_ratio: {
-        type: jspsych.ParameterType.BOOL,
-        default: true
-      },
-      /** Labels for the buttons. Each different string in the array will generate a different button. */
-      choices: {
+      stimulus_folder: {
         type: jspsych.ParameterType.STRING,
-        default: void 0,
-        array: true
+        default: undefined
       },
-      /**
-       * ``(choice: string, choice_index: number)=>`<button class="jspsych-btn">${choice}</button>``; | A function that
-       * generates the HTML for each button in the `choices` array. The function gets the string and index of the item in
-       * the `choices` array and should return valid HTML. If you want to use different markup for each button, you can do
-       * that by using a conditional on either parameter. The default parameter returns a button element with the text
-       * label of the choice.
-       */
-      button_html: {
-        type: jspsych.ParameterType.FUNCTION,
-        default: function(choice, choice_index) {
-          return `<button class="jspsych-btn">${choice}</button>`;
-        }
+      this_word: {
+        type: jspsych.ParameterType.STRING,
+        default: undefined
       },
-      /** This string can contain HTML markup. Any content here will be displayed below the stimulus. The intention is that
-       * it can be used to provide a reminder about the action the participant is supposed to take (e.g., which key to press). */
+      required_clicks: {
+        type: jspsych.ParameterType.INT,
+        default: 2
+      },
+      images_per_row: {
+        type: jspsych.ParameterType.INT,
+        default: 2
+      },
+      grid_spacing: {
+        type: jspsych.ParameterType.INT,
+        default: 20
+      },
       prompt: {
         type: jspsych.ParameterType.HTML_STRING,
         default: null
       },
-      /** How long to show the stimulus for in milliseconds. If the value is null, then the stimulus will be shown until
-       * the participant makes a response. */
-      stimulus_duration: {
+      max_image_width: {
         type: jspsych.ParameterType.INT,
-        default: null
+        default: 300
       },
-      /** How long to wait for the participant to make a response before ending the trial in milliseconds. If the participant
-       * fails to make a response before this timer is reached, the participant's response will be recorded as null for the
-       * trial and the trial will end. If the value of this parameter is null, the trial will wait for a response indefinitely. */
-      trial_duration: {
-        type: jspsych.ParameterType.INT,
-        default: null
-      },
-      /** Setting to `'grid'` will make the container element have the CSS property `display: grid` and enable the use of
-       * `grid_rows` and `grid_columns`. Setting to `'flex'` will make the container element have the CSS property
-       * `display: flex`. You can customize how the buttons are laid out by adding inline CSS in the `button_html` parameter.  */
-      button_layout: {
+      image_names: {  // New parameter for image names
         type: jspsych.ParameterType.STRING,
-        default: "grid"
-      },
-      /**
-       * The number of rows in the button grid. Only applicable when `button_layout` is set to `'grid'`. If null, the
-       *  number of rows will be determined automatically based on the number of buttons and the number of columns.
-       */
-      grid_rows: {
-        type: jspsych.ParameterType.INT,
-        default: 1
-      },
-      /**
-       * The number of columns in the button grid. Only applicable when `button_layout` is set to `'grid'`. If null, the
-       * number of columns will be determined automatically based on the number of buttons and the number of rows.
-       */
-      grid_columns: {
-        type: jspsych.ParameterType.INT,
-        default: null
-      },
-      /** If true, then the trial will end whenever the participant makes a response (assuming they make their response
-       * before the cutoff specified by the `trial_duration` parameter). If false, then the trial will continue until
-       * the value for `trial_duration` is reached. You can set this parameter to `false` to force the participant to
-       * view a stimulus for a fixed amount of time, even if they respond before the time is complete. */
-      response_ends_trial: {
-        type: jspsych.ParameterType.BOOL,
-        default: true
-      },
-      /**
-       * If true, the image will be drawn onto a canvas element. This prevents a blank screen (white flash) between consecutive image trials in some browsers, like Firefox and Edge.
-       * If false, the image will be shown via an img element, as in previous versions of jsPsych. If the stimulus is an **animated gif**, you must set this parameter to false, because the canvas rendering method will only present static images.
-       */
-      render_on_canvas: {
-        type: jspsych.ParameterType.BOOL,
-        default: true
-      },
-      /** How long the button will delay enabling in milliseconds. */
-      enable_button_after: {
-        type: jspsych.ParameterType.INT,
-        default: 0
-      }
-    },
-    data: {
-      /** The path of the image that was displayed. */
-      stimulus: {
-        type: jspsych.ParameterType.STRING
-      },
-      /** Indicates which button the participant pressed. The first button in the `choices` array is 0, the second is 1, and so on.  */
-      response: {
-        type: jspsych.ParameterType.INT
-      },
-      /** The response time in milliseconds for the participant to make a response. The time is measured from when the stimulus first appears on the screen until the participant's response. */
-      rt: {
-        type: jspsych.ParameterType.INT
+        default: ['1.jpg', '2.jpg', '3.jpg', '4.jpg']  // Default image names
       }
     }
   };
-  class ImageButtonResponsePlugin {
-    constructor(jsPsych) {
-      this.jsPsych = jsPsych;
-    }
-    static {
-      this.info = info;
-    }
-    trial(display_element, trial) {
-      const calculateImageDimensions = (image2) => {
-        let width, height;
-        if (trial.stimulus_height !== null) {
-          height = trial.stimulus_height;
-          if (trial.stimulus_width == null && trial.maintain_aspect_ratio) {
-            width = image2.naturalWidth * (trial.stimulus_height / image2.naturalHeight);
-          }
-        } else {
-          height = image2.naturalHeight;
-        }
-        if (trial.stimulus_width !== null) {
-          width = trial.stimulus_width;
-          if (trial.stimulus_height == null && trial.maintain_aspect_ratio) {
-            height = image2.naturalHeight * (trial.stimulus_width / image2.naturalWidth);
-          }
-        } else if (!(trial.stimulus_height !== null && trial.maintain_aspect_ratio)) {
-          width = image2.naturalWidth;
-        }
-        return [width, height];
-      };
-      display_element.innerHTML = "";
-      let stimulusElement;
-      let canvas;
-      const image = trial.render_on_canvas ? new Image() : document.createElement("img");
-      if (trial.render_on_canvas) {
-        canvas = document.createElement("canvas");
-        canvas.style.margin = "0";
-        canvas.style.padding = "0";
-        stimulusElement = canvas;
-      } else {
-        stimulusElement = image;
-      }
-      const drawImage = () => {
-        const [width, height] = calculateImageDimensions(image);
-        if (trial.render_on_canvas) {
-          canvas.width = width;
-          canvas.height = height;
-          canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-        } else {
-          image.style.width = `${width}px`;
-          image.style.height = `${height}px`;
-        }
-      };
-      let hasImageBeenDrawn = false;
-      image.onload = () => {
-        if (!hasImageBeenDrawn) {
-          drawImage();
-        }
-      };
-      image.src = trial.stimulus;
-      if (image.complete && image.naturalWidth !== 0) {
-        drawImage();
-        hasImageBeenDrawn = true;
-      }
-      stimulusElement.id = "jspsych-image-button-response-stimulus";
-      display_element.appendChild(stimulusElement);
-      const buttonGroupElement = document.createElement("div");
-      buttonGroupElement.id = "jspsych-image-button-response-btngroup";
-      if (trial.button_layout === "grid") {
-        buttonGroupElement.classList.add("jspsych-btn-group-grid");
-        if (trial.grid_rows === null && trial.grid_columns === null) {
-          throw new Error(
-            "You cannot set `grid_rows` to `null` without providing a value for `grid_columns`."
-          );
-        }
-        const n_cols = trial.grid_columns === null ? Math.ceil(trial.choices.length / trial.grid_rows) : trial.grid_columns;
-        const n_rows = trial.grid_rows === null ? Math.ceil(trial.choices.length / trial.grid_columns) : trial.grid_rows;
-        buttonGroupElement.style.gridTemplateColumns = `repeat(${n_cols}, 1fr)`;
-        buttonGroupElement.style.gridTemplateRows = `repeat(${n_rows}, 1fr)`;
-      } else if (trial.button_layout === "flex") {
-        buttonGroupElement.classList.add("jspsych-btn-group-flex");
-      }
-      for (const [choiceIndex, choice] of trial.choices.entries()) {
-        buttonGroupElement.insertAdjacentHTML("beforeend", trial.button_html(choice, choiceIndex));
-        const buttonElement = buttonGroupElement.lastChild;
-        buttonElement.dataset.choice = choiceIndex.toString();
-        buttonElement.addEventListener("click", () => {
-          after_response(choiceIndex);
-        });
-      }
-      display_element.appendChild(buttonGroupElement);
-      if (trial.prompt !== null) {
-        display_element.insertAdjacentHTML("beforeend", trial.prompt);
-      }
-      var start_time = performance.now();
-      var response = {
-        rt: null,
-        button: null
-      };
-      const end_trial = () => {
-        var trial_data = {
-          rt: response.rt,
-          stimulus: trial.stimulus,
-          response: response.button
-        };
-        this.jsPsych.finishTrial(trial_data);
-      };
-      function after_response(choice) {
-        var end_time = performance.now();
-        var rt = Math.round(end_time - start_time);
-        response.button = parseInt(choice);
-        response.rt = rt;
-        stimulusElement.classList.add("responded");
-        for (const button of buttonGroupElement.children) {
-          button.setAttribute("disabled", "disabled");
-        }
-        if (trial.response_ends_trial) {
-          end_trial();
-        }
-      }
-      function enable_buttons() {
-        var btns = document.querySelectorAll(".jspsych-image-button-response-button button");
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].removeAttribute("disabled");
-        }
-      }
-      function disable_buttons() {
-        var btns = document.querySelectorAll(".jspsych-image-button-response-button button");
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].setAttribute("disabled", "disabled");
-        }
-      }
-      if (trial.enable_button_after > 0) {
-        disable_buttons();
-        this.jsPsych.pluginAPI.setTimeout(() => {
-          enable_buttons();
-        }, trial.enable_button_after);
-      }
-      if (trial.stimulus_duration !== null) {
-        this.jsPsych.pluginAPI.setTimeout(() => {
-          stimulusElement.style.visibility = "hidden";
-        }, trial.stimulus_duration);
-      }
-      if (trial.trial_duration !== null) {
-        this.jsPsych.pluginAPI.setTimeout(() => {
-          end_trial();
-        }, trial.trial_duration);
-      } else if (trial.response_ends_trial === false) {
-        console.warn(
-          "The experiment may be deadlocked. Try setting a trial duration or set response_ends_trial to true."
-        );
-      }
-    }
-    simulate(trial, simulation_mode, simulation_options, load_callback) {
-      if (simulation_mode == "data-only") {
-        load_callback();
-        this.simulate_data_only(trial, simulation_options);
-      }
-      if (simulation_mode == "visual") {
-        this.simulate_visual(trial, simulation_options, load_callback);
-      }
-    }
-    create_simulation_data(trial, simulation_options) {
-      const default_data = {
-        stimulus: trial.stimulus,
-        rt: this.jsPsych.randomization.sampleExGaussian(500, 50, 1 / 150, true) + trial.enable_button_after,
-        response: this.jsPsych.randomization.randomInt(0, trial.choices.length - 1)
-      };
-      const data = this.jsPsych.pluginAPI.mergeSimulationData(default_data, simulation_options);
-      this.jsPsych.pluginAPI.ensureSimulationDataConsistency(trial, data);
-      return data;
-    }
-    simulate_data_only(trial, simulation_options) {
-      const data = this.create_simulation_data(trial, simulation_options);
-      this.jsPsych.finishTrial(data);
-    }
-    simulate_visual(trial, simulation_options, load_callback) {
-      const data = this.create_simulation_data(trial, simulation_options);
-      const display_element = this.jsPsych.getDisplayElement();
-      this.trial(display_element, trial);
-      load_callback();
-      if (data.rt !== null) {
-        this.jsPsych.pluginAPI.clickTarget(
-          display_element.querySelector(
-            `#jspsych-image-button-response-btngroup [data-choice="${data.response}"]`
-          ),
-          data.rt
-        );
-      }
+
+  function shuffle(array) {
+    let currentIndex = array.length;
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
     }
   }
 
-  return ImageButtonResponsePlugin;
+  class ImageGridSelectPlugin {
+    constructor(jsPsych) {
+      this.jsPsych = jsPsych;
+    }
 
+    calculateOptimalDimensions(containerWidth, imagesPerRow, gridSpacing, maxWidth) {
+      const totalSpacing = gridSpacing * (imagesPerRow - 1);
+      const availableWidth = containerWidth - totalSpacing;
+      const imageWidth = Math.min(
+        Math.floor(availableWidth / imagesPerRow),
+        maxWidth
+      );
+      return imageWidth;
+    }
+
+    trial(display_element, trial) {
+      let clicked = 0;
+      const responses = [];
+      const start_time = performance.now();
+
+      // Clear display
+      display_element.innerHTML = '';
+
+      // Create container
+      const container = document.createElement('div');
+      container.style.width = '95vw';
+      container.style.maxWidth = '1200px';
+      container.style.margin = '0 auto';
+      container.style.padding = '20px';
+      display_element.appendChild(container);
+
+      // Add prompt if there is one
+      if (trial.prompt !== null) {
+        container.innerHTML += trial.prompt;
+      }
+
+      // Add grid container
+      const gridContainer = document.createElement('div');
+      gridContainer.style.display = 'grid';
+      gridContainer.style.gap = trial.grid_spacing + 'px';
+      gridContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(200px, 1fr))`;
+      gridContainer.style.margin = '20px auto';
+      gridContainer.style.justifyContent = 'center';
+      container.appendChild(gridContainer);
+
+      // Function to handle window resize
+      const handleResize = () => {
+        const imageWidth = this.calculateOptimalDimensions(
+          container.clientWidth,
+          trial.images_per_row,
+          trial.grid_spacing,
+          trial.max_image_width
+        );
+        
+        const images = gridContainer.getElementsByTagName('img');
+        for (let img of images) {
+          img.style.width = imageWidth + 'px';
+          img.style.height = 'auto';
+        }
+      };
+
+      // Add resize event listener
+      window.addEventListener('resize', handleResize);
+
+      // Create array of image paths
+      const imagePaths = trial.image_names.map(name => 
+        `${trial.stimulus_folder}/${name}`
+      );
+      
+      // Shuffle image paths
+      shuffle(imagePaths);
+
+      // Create and load all images
+      const imageLoadPromises = imagePaths.map(path => {
+        return new Promise((resolve, reject) => {
+          const img = document.createElement('img');
+          img.src = path;
+          img.style.width = '100%';
+          img.style.height = 'auto';
+          img.style.cursor = 'pointer';
+          img.style.transition = 'transform 0.2s ease';
+          img.style.border = '3px solid #FFFFFF';
+          
+          // Add hover effect
+          img.addEventListener('mouseenter', () => {
+            if (clicked < trial.required_clicks) {
+              img.style.transform = 'scale(1.05)';
+            }
+          });
+          
+          img.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1)';
+          });
+
+          img.addEventListener('click', () => {
+            if (clicked < trial.required_clicks) {
+              clicked++;
+              const rt = Math.round(performance.now() - start_time);
+              const filename = path.split('/').pop();
+
+              // Visual feedback
+              img.style.border = '3px solid #4CAF50';
+              img.style.transform = 'scale(1)';
+              img.style.pointerEvents = 'none';
+
+              // Store response
+              responses.push({
+                rt: rt,
+                participant_id: trial.data.participant_id,
+                prolific_id: trial.data.prolific_id,
+                condition: trial.data.condition,
+                category: trial.stimulus_folder,
+                trial_number: trial.data.trial_number,
+                image_name: filename,
+                word: trial.this_word,
+                click_order: clicked
+              });
+
+              if (clicked === trial.required_clicks) {
+                setTimeout(() => {
+                  window.removeEventListener('resize', handleResize);
+                  display_element.innerHTML = '';
+                  
+                  // Finish trial
+                  this.jsPsych.finishTrial({
+                    participant_id: trial.data.participant_id,
+                    prolific_id: trial.data.prolific_id,
+                    trial_number: trial.data.trial_number,
+                    condition: trial.data.condition,
+                    category: trial.stimulus_folder,
+                    word: trial.this_word,
+                    responses: responses
+                  });
+                }, 300);
+              }
+            }
+          });
+
+          img.onload = () => resolve(img);
+          img.onerror = () => {
+            console.error(`Failed to load image: ${path}`);
+            reject(new Error(`Failed to load image: ${path}`));
+          };
+        });
+      });
+
+      // Add all images to grid when loaded
+      Promise.all(imageLoadPromises)
+        .then(images => {
+          images.forEach(img => gridContainer.appendChild(img));
+          handleResize();
+        })
+        .catch(error => {
+          console.error('Error loading images:', error);
+          display_element.innerHTML = 'Error loading images. Please try again.';
+        });
+    }
+  }
+
+  ImageGridSelectPlugin.info = info;
+  return ImageGridSelectPlugin;
 })(jsPsychModule);
