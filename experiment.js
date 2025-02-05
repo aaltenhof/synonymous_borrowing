@@ -2,7 +2,6 @@
 let participant_id;
 let prolific_id;
 let condition;  // Moved condition declaration to top
-require("dotenv").config();
 
 const novel_words = ["tinches", "nefts", "bines", "palts"];
 // Set condition
