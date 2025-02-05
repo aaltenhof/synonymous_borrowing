@@ -12,6 +12,11 @@ var jsPsychImageGridSelect = (function (jspsych) {
         type: jspsych.ParameterType.STRING,
         default: undefined
       },
+      image_names: {
+        type: jspsych.ParameterType.STRING,
+        array: true,
+        default: undefined
+      },
       required_clicks: {
         type: jspsych.ParameterType.INT,
         default: 2
@@ -37,15 +42,9 @@ var jsPsychImageGridSelect = (function (jspsych) {
 
   function shuffle(array) {
     let currentIndex = array.length;
-  
-    // While there remain elements to shuffle...
     while (currentIndex != 0) {
-  
-      // Pick a remaining element...
       let randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
@@ -57,7 +56,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
     }
 
     calculateOptimalDimensions(containerWidth, imagesPerRow, gridSpacing, maxWidth) {
-      // Account for grid spacing in width calculations
       const totalSpacing = gridSpacing * (imagesPerRow - 1);
       const availableWidth = containerWidth - totalSpacing;
       const imageWidth = Math.min(
@@ -75,10 +73,10 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Clear display
       display_element.innerHTML = '';
 
-      // Create a responsive container
+      // Create container
       const container = document.createElement('div');
-      container.style.width = '95vw'; // Use viewport width with margin
-      container.style.maxWidth = '1200px'; // Maximum width for very large screens
+      container.style.width = '95vw';
+      container.style.maxWidth = '1200px';
       container.style.margin = '0 auto';
       container.style.padding = '20px';
       display_element.appendChild(container);
@@ -88,7 +86,17 @@ var jsPsychImageGridSelect = (function (jspsych) {
         container.innerHTML += trial.prompt;
       }
 
-      // Add grid container with responsive settings
+      // Show the word for this trial
+      if (trial.this_word) {
+        const wordDisplay = document.createElement('div');
+        wordDisplay.style.fontSize = '24px';
+        wordDisplay.style.textAlign = 'center';
+        wordDisplay.style.marginBottom = '20px';
+        wordDisplay.innerHTML = `<strong>${trial.this_word}</strong>`;
+        container.appendChild(wordDisplay);
+      }
+
+      // Add grid container
       const gridContainer = document.createElement('div');
       gridContainer.style.display = 'grid';
       gridContainer.style.gap = trial.grid_spacing + 'px';
@@ -96,8 +104,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
       gridContainer.style.margin = '20px auto';
       gridContainer.style.justifyContent = 'center';
       container.appendChild(gridContainer);
-
-      const folderName = trial.stimulus_folder.replace('stimuli/', '');
 
       // Function to handle window resize
       const handleResize = () => {
@@ -108,104 +114,99 @@ var jsPsychImageGridSelect = (function (jspsych) {
           trial.max_image_width
         );
         
-        // Update all images in the grid
         const images = gridContainer.getElementsByTagName('img');
         for (let img of images) {
           img.style.width = imageWidth + 'px';
-          img.style.height = 'auto'; // Maintain aspect ratio
+          img.style.height = 'auto';
         }
       };
 
       // Add resize event listener
       window.addEventListener('resize', handleResize);
 
-      // Load images
-      fetch(`http://localhost:3000/get-images/${folderName}`)
-        .then(response => response.json())
-        .then(imagePaths => {
-          // Create a promise for each image load
-          shuffle(imagePaths)
-          const imageLoadPromises = imagePaths.map(path => {
-            return new Promise((resolve, reject) => {
-              const img = document.createElement('img');
-              img.src = path;
-              img.style.width = '100%';
-              img.style.height = 'auto';
-              img.style.cursor = 'pointer';
-              img.style.transition = 'transform 0.2s ease';
-              img.style.border = '3px solid #FFFFFF';
-              
-              // Add hover effect
-              img.addEventListener('mouseenter', () => {
-                if (clicked < trial.required_clicks) {
-                  img.style.transform = 'scale(1.05)';
-                }
-              });
-              
-              img.addEventListener('mouseleave', () => {
-                img.style.transform = 'scale(1)';
-              });
+      // Create paths from image names
+      const imagePaths = trial.image_names.map(name => 
+        `${trial.stimulus_folder}/${name}`
+      );
+      
+      // Shuffle the paths
+      shuffle(imagePaths);
 
-              img.addEventListener('click', () => {
-                if (clicked < trial.required_clicks) {
-                  clicked++;
-                  const rt = Math.round(performance.now() - start_time);
-                  const filename = path.split('/').pop();
-
-                  // Visual feedback on click
-                  img.style.border = '3px solid #4CAF50';
-                  img.style.transform = 'scale(1)';
-                  img.style.pointerEvents = 'none'; // Prevent multiple clicks
-
-                  // Store response data
-        responses.push({
-          rt: rt,
-          participant_id: trial.data.participant_id,
-          prolific_id: trial.data.prolific_id,
-          condition: condition,
-          category: folderName,
-          trial_number: trial.data.trial_number,
-          image_name: filename,
-          word: trial.this_word,
-          click_order: clicked
-      });
-
-      if (clicked === trial.required_clicks) {
-          setTimeout(() => {
-              window.removeEventListener('resize', handleResize);
-              display_element.innerHTML = '';
-              
-              // Send all collected data
-              this.jsPsych.finishTrial({
-                  participant_id: trial.data.participant_id,
-                  prolific_id: trial.data.prolific_id,
-                  trial_number: trial.data.trial_number,
-                  condition: condition,
-                  category: folderName,
-                  word: trial.this_word,
-                  responses: responses
-              });
-          }, 300);
-                  }
-                }
-              });
-
-              img.onload = () => resolve(img);
-              img.onerror = reject;
-            });
+      // Create and load all images
+      const imageLoadPromises = imagePaths.map(path => {
+        return new Promise((resolve, reject) => {
+          const img = document.createElement('img');
+          img.src = path;
+          img.style.width = '100%';
+          img.style.height = 'auto';
+          img.style.cursor = 'pointer';
+          img.style.transition = 'transform 0.2s ease';
+          img.style.border = '3px solid #FFFFFF';
+          
+          // Add hover effect
+          img.addEventListener('mouseenter', () => {
+            if (clicked < trial.required_clicks) {
+              img.style.transform = 'scale(1.05)';
+            }
+          });
+          
+          img.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1)';
           });
 
-          // When all images are loaded, add them to the grid
-          Promise.all(imageLoadPromises)
-            .then(images => {
-              images.forEach(img => gridContainer.appendChild(img));
-              // Initial resize handling
-              handleResize();
-            })
-            .catch(error => {
-              console.error('Error loading images:', error);
-              display_element.innerHTML = 'Error loading images. Please try again.';
-            });
+          img.addEventListener('click', () => {
+            if (clicked < trial.required_clicks) {
+              clicked++;
+              const rt = Math.round(performance.now() - start_time);
+              const filename = path.split('/').pop();
+
+              // Visual feedback
+              img.style.border = '3px solid #4CAF50';
+              img.style.transform = 'scale(1)';
+              img.style.pointerEvents = 'none';
+
+              // Store response
+              responses.push({
+                rt: rt,
+                image_name: filename,
+                click_order: clicked
+              });
+
+              if (clicked === trial.required_clicks) {
+                setTimeout(() => {
+                  window.removeEventListener('resize', handleResize);
+                  display_element.innerHTML = '';
+                  
+                  // Finish trial
+                  this.jsPsych.finishTrial({
+                    rt: responses.map(r => r.rt),
+                    response: responses.map(r => r.image_name),
+                    click_order: responses.map(r => r.click_order),
+                    stimulus_folder: trial.stimulus_folder,
+                    this_word: trial.this_word
+                  });
+                }, 300);
+              }
+            }
+          });
+
+          img.onload = () => resolve(img);
+          img.onerror = () => {
+            console.error(`Failed to load image: ${path}`);
+            reject(new Error(`Failed to load image: ${path}`));
+          };
+        });
+      });
+
+      // Add all images to grid when loaded
+      Promise.all(imageLoadPromises)
+        .then(images => {
+          images.forEach(img => gridContainer.appendChild(img));
+          handleResize();
+        })
+        .catch(error => {
+          console.error('Error loading images:', error);
+          display_element.innerHTML = 'Error loading images. Please try again.';
         });
     }
   }
