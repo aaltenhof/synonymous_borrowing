@@ -32,7 +32,6 @@ async function generateParticipantId() {
 // Initialize jsPsych
 const jsPsych = initJsPsych({
     on_finish: function(data) {
-        // Final operations when experiment is done
         console.log('Experiment finished');
     }
 });
@@ -65,15 +64,11 @@ const save_data = {
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `${participant_id}_${prolific_id}.csv`,
     data_string: () => {
-        // Get all data
         let data = jsPsych.data.get();
-        
-        // Add final metadata
         data.addProperties({
             timestamp: new Date().toISOString(),
             experiment_complete: true
         });
-        
         return data.csv();
     }
 };
@@ -88,10 +83,7 @@ const pid = {
         trial_type: 'pid'
     },
     on_finish: function(data) {
-        // Store Prolific ID from the response
         prolific_id = data.response.Q0.trim();
-        
-        // Store it in jsPsych's data
         jsPsych.data.addProperties({
             prolific_id: prolific_id
         });
@@ -114,49 +106,64 @@ const instructions = {
     }
 };
 
+// Function to create image grid trial
+function createImageGridTrial(folder, trialNumber) {
+    return {
+        type: jsPsychImageGridSelect,
+        stimulus: folder,
+        grid_size: 2,  // Assuming 2x2 grid
+        data: {
+            trial_type: 'image_grid',
+            trial_number: trialNumber,
+            folder: folder,
+            condition: condition  // Add condition to each trial's data
+        }
+    };
+}
+
 // Function to create and run timeline
 async function createTimeline() {
-    // Initialize timeline array
     const timeline = [
         consent,
         pid,
         instructions
     ];
     
-    // Get and randomize folders
-    folders = await getStimulusFolders();
+    // Define stimulus folders - update these paths to match your GitHub structure
+    const folders = [
+        'stimuli/1',
+        'stimuli/2',
+        'stimuli/3',
+        'stimuli/4',
+        'stimuli/5',
+        'stimuli/6',
+        'stimuli/7',
+        'stimuli/8'
+    ];
+    
+    // Shuffle the folders to randomize presentation order
     shuffle(folders);
 
-    // Add a trial number counter
     let trialCounter = 0;
-    // Add image grid trials to timeline
     for (const folder of folders) {
-        const trial = await createImageGridTrial(folder, trialCounter);
-        if (trial) {
-            timeline.push(trial);
-        } else {
-            console.log("trial could not be added");
-        }
+        const trial = createImageGridTrial(folder, trialCounter);
+        timeline.push(trial);
         trialCounter++;
     }
     
     timeline.push(save_data);
-    
     return timeline;
 }
 
 // Initialize and run the experiment
 async function initializeAndRun() {
-    // Set participant_id first before creating any trials
     participant_id = await generateParticipantId();
     
-    // Add participant_id and condition to jsPsych data
     jsPsych.data.addProperties({
         participant_id: participant_id,
         condition: condition
     });
     
-    // Then create and run timeline
     const timeline = await createTimeline();
     await jsPsych.run(timeline);
 }
