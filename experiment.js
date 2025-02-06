@@ -1,9 +1,8 @@
 // Initialize jsPsych first
 const jsPsych = initJsPsych({
-    on_finish: function(data) {
+    on_finish: function() {
         console.log('Experiment finished');
-    },
-    show_progress_bar: true
+    }
 });
 
 // Declare variables at the top
@@ -64,7 +63,7 @@ if (condition === "novel_word_condition") {
 }
 
 // Generate participant ID
-async function generateParticipantId() {
+function generateParticipantId() {
     const baseId = Math.floor(Math.random() * 999) + 1;
     return `participant${baseId}`;
 }
@@ -96,14 +95,7 @@ const save_data = {
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `${participant_id}_${prolific_id}.csv`,
-    data_string: () => {
-        let data = jsPsych.data.get();
-        data.addProperties({
-            timestamp: new Date().toISOString(),
-            experiment_complete: true
-        });
-        return data.csv();
-    }
+    data_string: () => jsPsych.data.get().csv()
 };
 
 // Create Prolific ID trial
@@ -166,8 +158,18 @@ function createImageGridTrial(category, trialNumber) {
     };
 }
 
-// Function to create timeline
-function createTimeline(participantId) {
+// Wait for document to be ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Generate participant ID
+    participant_id = generateParticipantId();
+    
+    // Add properties to jsPsych data
+    jsPsych.data.addProperties({
+        participant_id: participant_id,
+        condition: condition
+    });
+    
+    // Create timeline
     const timeline = [
         consent,
         pid,
@@ -187,21 +189,7 @@ function createTimeline(participantId) {
     }
     
     timeline.push(save_data);
-    return timeline;
-}
-
-// Wait for document to be ready
-document.addEventListener('DOMContentLoaded', async () => {
-    // Generate participant ID
-    participant_id = await generateParticipantId();
     
-    // Add properties to jsPsych data
-    jsPsych.data.addProperties({
-        participant_id: participant_id,
-        condition: condition
-    });
-    
-    // Create and run timeline
-    const timeline = createTimeline(participant_id);
-    await jsPsych.run(timeline);
+    // Run the experiment
+    jsPsych.run(timeline);
 });
