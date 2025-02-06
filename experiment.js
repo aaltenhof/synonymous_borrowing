@@ -96,23 +96,10 @@ const save_data = {
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        // Filter to only include image grid responses
-        const data = jsPsych.data.get().filter({trial_type: 'image_grid'});
-        
-        // Convert to CSV with only the desired columns
-        return data.csv({
-            fields: [
-                'participant_id',
-                'prolific_id',
-                'trial_number',
-                'condition',
-                'category',
-                'image_name',
-                'word',
-                'click_order',
-                'rt'
-            ]
-        });
+        return jsPsych.data.get().filter({trial_type: 'image_grid'}).csv();
+    },
+    success_callback: () => {
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX with your completion code
     }
 };
 

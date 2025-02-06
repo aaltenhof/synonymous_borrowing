@@ -51,16 +51,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
       this.jsPsych = jsPsych;
     }
 
-    calculateOptimalDimensions(containerWidth, imagesPerRow, gridSpacing, maxWidth) {
-      const totalSpacing = gridSpacing * (imagesPerRow - 1);
-      const availableWidth = containerWidth - totalSpacing;
-      const imageWidth = Math.min(
-        Math.floor(availableWidth / imagesPerRow),
-        maxWidth
-      );
-      return imageWidth;
-    }
-
     trial(display_element, trial) {
       let clicked = 0;
       const responses = [];
@@ -69,7 +59,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Clear display
       display_element.innerHTML = '';
 
-      // Create container but don't add to display yet
+      // Create container
       const container = document.createElement('div');
       container.style.width = '95vw';
       container.style.maxWidth = '1200px';
@@ -97,10 +87,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
 
       // Function to handle window resize
       const handleResize = () => {
-        const imageWidth = this.calculateOptimalDimensions(
-          container.clientWidth,
-          trial.images_per_row,
-          trial.grid_spacing,
+        const imageWidth = Math.min(
+          Math.floor((container.clientWidth - (trial.images_per_row - 1) * trial.grid_spacing) / trial.images_per_row),
           trial.max_image_width
         );
         
@@ -154,8 +142,9 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              responses.push({
-                rt: rt,
+              // Store response as a separate trial
+              this.jsPsych.data.write({
+                trial_type: 'image_grid',
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
                 trial_number: trial.data.trial_number,
@@ -163,19 +152,14 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 category: trial.data.category,
                 image_name: filename,
                 word: trial.this_word,
-                click_order: clicked
+                click_order: clicked,
+                rt: rt
               });
 
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
                   window.removeEventListener('resize', handleResize);
                   display_element.innerHTML = '';
-                  
-                  // Instead of using finishTrial's data object, add each response as a separate trial
-                  responses.forEach(response => {
-                    this.jsPsych.data.write(response);
-                  });
-                  
                   this.jsPsych.finishTrial();
                 }, 300);
               }
