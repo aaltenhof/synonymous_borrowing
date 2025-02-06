@@ -96,11 +96,42 @@ const save_data = {
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        // Get only image grid trials
-        return jsPsych.data.get()
-            .filter({trial_type: 'image_grid'})
-            .ignore(['internal_node_id', 'stimulus', 'trial_index', 'time_elapsed'])
-            .csv();
+        // Get the data and prepare the CSV string
+        const rows = [];
+        
+        // Add headers
+        rows.push([
+            'participant_id',
+            'prolific_id',
+            'trial_number',
+            'condition',
+            'category',
+            'image_name',
+            'word',
+            'click_order',
+            'rt'
+        ].join(','));
+
+        // Get image grid trials
+        const trials = jsPsych.data.get().filter({trial_type: 'image_grid'}).values();
+
+        // Add each trial's data
+        trials.forEach(trial => {
+            rows.push([
+                trial.participant_id,
+                trial.prolific_id,
+                trial.trial_number,
+                trial.condition,
+                trial.category,
+                trial.image_name,
+                trial.word,
+                trial.click_order,
+                trial.rt
+            ].join(','));
+        });
+
+        // Return the CSV string
+        return rows.join('\n');
     },
     success_callback: function() {
         window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX with your completion code
