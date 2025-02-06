@@ -23,7 +23,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       },
       images_per_row: {
         type: jspsych.ParameterType.INT,
-        default: 2
+        default: 4
       },
       grid_spacing: {
         type: jspsych.ParameterType.INT,
@@ -31,7 +31,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       },
       max_image_width: {
         type: jspsych.ParameterType.INT,
-        default: 300
+        default: 200
       }
     }
   };
@@ -44,6 +44,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
+    return array; // Return the shuffled array
   }
 
   class ImageGridSelectPlugin {
@@ -56,62 +57,23 @@ var jsPsychImageGridSelect = (function (jspsych) {
       const responses = [];
       const start_time = performance.now();
 
-      // Clear display
-      display_element.innerHTML = '';
+      display_element.innerHTML = `
+        <div style="width: 95vw; max-width: 1200px; margin: 0 auto; padding: 20px;">
+          <div style="font-size: 24px; text-align: center; margin-bottom: 20px;">
+            <p>Select two ${trial.this_word}</p>
+          </div>
+          <div class="jspsych-image-grid" style="display: grid; gap: ${trial.grid_spacing}px; grid-template-columns: repeat(${trial.images_per_row}, 1fr); margin: 20px auto; justify-content: center;">
+          </div>
+        </div>
+      `;
 
-      // Create container
-      const container = document.createElement('div');
-      container.style.width = '95vw';
-      container.style.maxWidth = '1200px';
-      container.style.margin = '0 auto';
-      container.style.padding = '20px';
-      container.style.opacity = '0';
-      container.style.transition = 'opacity 0.15s ease-in';
+      const gridContainer = display_element.querySelector('.jspsych-image-grid');
 
-      // Create prompt div
-      const promptDiv = document.createElement('div');
-      promptDiv.style.fontSize = '24px';
-      promptDiv.style.textAlign = 'center';
-      promptDiv.style.marginBottom = '20px';
-      promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
-      container.appendChild(promptDiv);
-
-      // Add grid container
-      const gridContainer = document.createElement('div');
-      gridContainer.style.display = 'grid';
-      gridContainer.style.gap = trial.grid_spacing + 'px';
-      gridContainer.style.gridTemplateColumns = `repeat(${trial.images_per_row}, 1fr)`;
-      gridContainer.style.margin = '20px auto';
-      gridContainer.style.justifyContent = 'center';
-      container.appendChild(gridContainer);
-
-      // Function to handle window resize
-      const handleResize = () => {
-        const imageWidth = Math.min(
-          Math.floor((container.clientWidth - (trial.images_per_row - 1) * trial.grid_spacing) / trial.images_per_row),
-          trial.max_image_width
-        );
-        
-        const images = gridContainer.getElementsByTagName('img');
-        for (let img of images) {
-          img.style.width = imageWidth + 'px';
-          img.style.height = 'auto';
-        }
-      };
-
-      // Add resize event listener
-      window.addEventListener('resize', handleResize);
-
-      // Create paths from image names
-      const imagePaths = trial.image_names.map(name => 
+      const imagePaths = shuffle([...trial.image_names]).map(name => 
         `${trial.stimulus_folder}/${name}`
       );
-      
-      // Shuffle the paths
-      shuffle(imagePaths);
 
-      // Create and load all images
-      const imageLoadPromises = imagePaths.map(path => {
+      const imagePromises = imagePaths.map(path => {
         return new Promise((resolve, reject) => {
           const img = document.createElement('img');
           img.src = path;
@@ -120,13 +82,13 @@ var jsPsychImageGridSelect = (function (jspsych) {
           img.style.cursor = 'pointer';
           img.style.transition = 'transform 0.2s ease';
           img.style.border = '3px solid #FFFFFF';
-          
+
           img.addEventListener('mouseenter', () => {
             if (clicked < trial.required_clicks) {
               img.style.transform = 'scale(1.05)';
             }
           });
-          
+
           img.addEventListener('mouseleave', () => {
             img.style.transform = 'scale(1)';
           });
@@ -137,13 +99,12 @@ var jsPsychImageGridSelect = (function (jspsych) {
               const rt = Math.round(performance.now() - start_time);
               const filename = path.split('/').pop();
 
-              // Visual feedback
               img.style.border = '3px solid #4CAF50';
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Store response
-              responses.push({
+              // Add response data
+              const responseData = {
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
                 trial_number: trial.data.trial_number,
@@ -153,35 +114,28 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 word: trial.this_word,
                 click_order: clicked,
                 rt: rt
-              });
+              };
+
+              // Add response to jsPsych data
+              jsPsych.data.write(responseData);
 
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
-                  window.removeEventListener('resize', handleResize);
                   display_element.innerHTML = '';
-                  this.jsPsych.finishTrial(responses);
+                  jsPsych.finishTrial();
                 }, 300);
               }
             }
           });
 
           img.onload = () => resolve(img);
-          img.onerror = () => {
-            console.error(`Failed to load image: ${path}`);
-            reject(new Error(`Failed to load image: ${path}`));
-          };
+          img.onerror = reject;
         });
       });
 
-      // Add all images to grid when loaded
-      Promise.all(imageLoadPromises)
+      Promise.all(imagePromises)
         .then(images => {
           images.forEach(img => gridContainer.appendChild(img));
-          handleResize();
-          display_element.appendChild(container);
-          requestAnimationFrame(() => {
-            container.style.opacity = '1';
-          });
         })
         .catch(error => {
           console.error('Error loading images:', error);
