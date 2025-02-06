@@ -90,16 +90,17 @@ const consent = {
 };
 
 // Configure DataPipe save trial
+// Configure save_data trial
 const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        // Get only the relevant data
-        const relevantData = jsPsych.data.get();
+        // Get only the image grid trials
+        const relevantData = jsPsych.data.get().filter({trial_type: 'image_grid'});
         
-        // Convert to CSV with specified columns
+        // Convert to CSV with only the desired columns
         return relevantData.csv({
             columns: [
                 'participant_id',
