@@ -102,17 +102,9 @@ const save_data = {
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-        console.log('All trial data:', allTrials);
-        
-        const imageTrials = allTrials.flatMap(trial => 
-            Array.isArray(trial) ? trial : []
-        ).filter(trial => trial && trial.trial_type === 'image_grid');
-        
-        console.log('Image trials:', imageTrials);
-        
-        if (imageTrials.length === 0) {
-            return 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt';
-        }
+        const imageTrials = allTrials
+            .filter(trial => trial.trial_type === 'image-grid-select')
+            .flatMap(trial => [trial[0], trial[1]]);
 
         const headers = 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt';
         const rows = imageTrials.map(trial => 
