@@ -101,12 +101,23 @@ const save_data = {
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        const imageData = jsPsych.data.get().filter({trial_type: 'image_grid'});
-        console.log('All data:', jsPsych.data.get());
-        console.log('Filtered image data:', imageData);
-        return imageData.csv();
+        // Get raw data
+        const allData = jsPsych.data.get().values();
+        const imageData = allData.filter(trial => trial.trial_type === 'image_grid');
+        
+        // Headers
+        const csv = ['participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt\n'];
+        
+        // Add data rows
+        imageData.forEach(trial => {
+            csv.push(`${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt}\n`);
+        });
+        
+        return csv.join('');
     },
-    success_callback: onSaveComplete
+    success_callback: function() {
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";
+    }
 };
 
 // Create Prolific ID trial
