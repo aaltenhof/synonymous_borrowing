@@ -29,10 +29,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
         type: jspsych.ParameterType.INT,
         default: 20
       },
-      prompt: {
-        type: jspsych.ParameterType.HTML_STRING,
-        default: null
-      },
       max_image_width: {
         type: jspsych.ParameterType.INT,
         default: 300
@@ -79,14 +75,15 @@ var jsPsychImageGridSelect = (function (jspsych) {
       container.style.maxWidth = '1200px';
       container.style.margin = '0 auto';
       container.style.padding = '20px';
-      container.style.opacity = '0';  // Start invisible
+      container.style.opacity = '0';
       container.style.transition = 'opacity 0.15s ease-in';
 
-      // Create prompt div but don't add content yet
+      // Create prompt div
       const promptDiv = document.createElement('div');
       promptDiv.style.fontSize = '24px';
       promptDiv.style.textAlign = 'center';
       promptDiv.style.marginBottom = '20px';
+      promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
       container.appendChild(promptDiv);
 
       // Add grid container
@@ -136,7 +133,6 @@ var jsPsychImageGridSelect = (function (jspsych) {
           img.style.transition = 'transform 0.2s ease';
           img.style.border = '3px solid #FFFFFF';
           
-          // Add hover effect
           img.addEventListener('mouseenter', () => {
             if (clicked < trial.required_clicks) {
               img.style.transform = 'scale(1.05)';
@@ -158,10 +154,15 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Store response
               responses.push({
                 rt: rt,
+                participant_id: trial.data.participant_id,
+                prolific_id: trial.data.prolific_id,
+                trial_number: trial.data.trial_number,
+                condition: trial.data.condition,
+                category: trial.data.category,
                 image_name: filename,
+                word: trial.this_word,
                 click_order: clicked
               });
 
@@ -170,14 +171,12 @@ var jsPsychImageGridSelect = (function (jspsych) {
                   window.removeEventListener('resize', handleResize);
                   display_element.innerHTML = '';
                   
-                  // Finish trial
-                  this.jsPsych.finishTrial({
-                    rt: responses.map(r => r.rt),
-                    response: responses.map(r => r.image_name),
-                    click_order: responses.map(r => r.click_order),
-                    stimulus_folder: trial.stimulus_folder,
-                    this_word: trial.this_word
+                  // Instead of using finishTrial's data object, add each response as a separate trial
+                  responses.forEach(response => {
+                    this.jsPsych.data.write(response);
                   });
+                  
+                  this.jsPsych.finishTrial();
                 }, 300);
               }
             }
@@ -194,17 +193,9 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Add all images to grid when loaded
       Promise.all(imageLoadPromises)
         .then(images => {
-          // First add all images to the grid
           images.forEach(img => gridContainer.appendChild(img));
           handleResize();
-
-          // Add the prompt text
-          promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
-
-          // Add the container to display
           display_element.appendChild(container);
-
-          // Trigger reflow and show everything
           requestAnimationFrame(() => {
             container.style.opacity = '1';
           });

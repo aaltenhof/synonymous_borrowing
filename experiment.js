@@ -94,8 +94,26 @@ const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
-    filename: () => `${participant_id}_${prolific_id}.csv`,
-    data_string: () => jsPsych.data.get().csv()
+    filename: () => `borrowing_${participant_id}.csv`,
+    data_string: () => {
+        // Filter to only include image grid responses
+        const data = jsPsych.data.get().filter({trial_type: 'image_grid'});
+        
+        // Convert to CSV with only the desired columns
+        return data.csv({
+            fields: [
+                'participant_id',
+                'prolific_id',
+                'trial_number',
+                'condition',
+                'category',
+                'image_name',
+                'word',
+                'click_order',
+                'rt'
+            ]
+        });
+    }
 };
 
 // Create Prolific ID trial
