@@ -55,6 +55,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
     trial(display_element, trial) {
       let clicked = 0;
       const start_time = performance.now();
+      let trial_data = [];
 
       // Clear display and create hidden container
       display_element.innerHTML = '';
@@ -113,9 +114,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Add data
-              const data = {
-                rt: rt,
+              // Store response data
+              trial_data.push({
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
                 trial_number: trial.data.trial_number,
@@ -124,16 +124,14 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 image_name: filename,
                 word: trial.this_word,
                 click_order: clicked,
+                rt: rt,
                 trial_type: 'image_grid'
-              };
-
-              this.jsPsych.data.write(data);
-              console.log('Data written:', data);  // Debug log
+              });
 
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
                   display_element.innerHTML = '';
-                  this.jsPsych.finishTrial();
+                  this.jsPsych.finishTrial(trial_data);
                 }, 300);
               }
             }

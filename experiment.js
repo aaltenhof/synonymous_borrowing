@@ -101,19 +101,25 @@ const save_data = {
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        // Get raw data
-        const allData = jsPsych.data.get().values();
-        const imageData = allData.filter(trial => trial.trial_type === 'image_grid');
+        const allTrials = jsPsych.data.get().values();
+        console.log('All trial data:', allTrials);
         
-        // Headers
-        const csv = ['participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt\n'];
+        const imageTrials = allTrials.flatMap(trial => 
+            Array.isArray(trial) ? trial : []
+        ).filter(trial => trial && trial.trial_type === 'image_grid');
         
-        // Add data rows
-        imageData.forEach(trial => {
-            csv.push(`${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt}\n`);
-        });
+        console.log('Image trials:', imageTrials);
         
-        return csv.join('');
+        if (imageTrials.length === 0) {
+            return 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt';
+        }
+
+        const headers = 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt';
+        const rows = imageTrials.map(trial => 
+            `${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt}`
+        );
+
+        return [headers, ...rows].join('\n');
     },
     success_callback: function() {
         window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";
