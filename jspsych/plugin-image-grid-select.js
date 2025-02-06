@@ -142,9 +142,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Store response as a separate trial
-              this.jsPsych.data.write({
-                trial_type: 'image_grid',
+              // Store response
+              responses.push({
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
                 trial_number: trial.data.trial_number,
@@ -160,7 +159,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 setTimeout(() => {
                   window.removeEventListener('resize', handleResize);
                   display_element.innerHTML = '';
-                  this.jsPsych.finishTrial();
+                  this.jsPsych.finishTrial(responses);
                 }, 300);
               }
             }
