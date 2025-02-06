@@ -95,9 +95,27 @@ const save_data = {
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
-    data_string: () => jsPsych.data.get().csv(),
+    data_string: () => {
+        // Get only the relevant data
+        const relevantData = jsPsych.data.get();
+        
+        // Convert to CSV with specified columns
+        return relevantData.csv({
+            columns: [
+                'participant_id',
+                'prolific_id',
+                'trial_number',
+                'condition',
+                'category',
+                'image_name',
+                'word',
+                'click_order',
+                'rt'
+            ]
+        });
+    },
     success_callback: function() {
-        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX completion code
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX with your completion code
     }
 };
 
