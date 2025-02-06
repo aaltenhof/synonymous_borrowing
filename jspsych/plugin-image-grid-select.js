@@ -44,7 +44,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-    return array; // Return the shuffled array
+    return array;
   }
 
   class ImageGridSelectPlugin {
@@ -54,10 +54,14 @@ var jsPsychImageGridSelect = (function (jspsych) {
 
     trial(display_element, trial) {
       let clicked = 0;
-      const responses = [];
+      let trial_data = [];
       const start_time = performance.now();
 
-      display_element.innerHTML = `
+      // Clear display and create container (but don't add it yet)
+      display_element.innerHTML = '';
+      const container = document.createElement('div');
+      container.style.visibility = 'hidden'; // Start hidden
+      container.innerHTML = `
         <div style="width: 95vw; max-width: 1200px; margin: 0 auto; padding: 20px;">
           <div style="font-size: 24px; text-align: center; margin-bottom: 20px;">
             <p>Select two ${trial.this_word}</p>
@@ -67,7 +71,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
         </div>
       `;
 
-      const gridContainer = display_element.querySelector('.jspsych-image-grid');
+      const gridContainer = container.querySelector('.jspsych-image-grid');
 
       const imagePaths = shuffle([...trial.image_names]).map(name => 
         `${trial.stimulus_folder}/${name}`
@@ -103,8 +107,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Add response data
-              const responseData = {
+              trial_data.push({
+                rt: rt,
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
                 trial_number: trial.data.trial_number,
@@ -113,16 +117,13 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 image_name: filename,
                 word: trial.this_word,
                 click_order: clicked,
-                rt: rt
-              };
-
-              // Add response to jsPsych data
-              jsPsych.data.write(responseData);
+                trial_type: 'image_grid'
+              });
 
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
                   display_element.innerHTML = '';
-                  jsPsych.finishTrial();
+                  this.jsPsych.finishTrial(trial_data);
                 }, 300);
               }
             }
@@ -133,9 +134,16 @@ var jsPsychImageGridSelect = (function (jspsych) {
         });
       });
 
+      // Add container to display (still hidden)
+      display_element.appendChild(container);
+
+      // When all images are loaded
       Promise.all(imagePromises)
         .then(images => {
+          // Add all images to grid
           images.forEach(img => gridContainer.appendChild(img));
+          // Make everything visible at once
+          container.style.visibility = 'visible';
         })
         .catch(error => {
           console.error('Error loading images:', error);

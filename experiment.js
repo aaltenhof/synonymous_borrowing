@@ -90,30 +90,34 @@ const consent = {
 };
 
 // Configure DataPipe save trial
-// Configure save_data trial
 const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_${participant_id}.csv`,
     data_string: () => {
-        // Get only the image grid trials
         const relevantData = jsPsych.data.get().filter({trial_type: 'image_grid'});
+        const flat_data = relevantData.values().flat();  // Flatten the array of trial data
+        const headers = [
+            'participant_id',
+            'prolific_id',
+            'trial_number',
+            'condition',
+            'category',
+            'image_name',
+            'word',
+            'click_order',
+            'rt'
+        ];
         
-        // Convert to CSV with only the desired columns
-        return relevantData.csv({
-            columns: [
-                'participant_id',
-                'prolific_id',
-                'trial_number',
-                'condition',
-                'category',
-                'image_name',
-                'word',
-                'click_order',
-                'rt'
-            ]
+        // Convert to CSV manually
+        const csv_rows = [headers.join(',')];
+        flat_data.forEach(row => {
+            const csv_row = headers.map(header => row[header]).join(',');
+            csv_rows.push(csv_row);
         });
+        
+        return csv_rows.join('\n');
     },
     success_callback: function() {
         window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX with your completion code
