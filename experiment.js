@@ -1,3 +1,11 @@
+// Initialize jsPsych first
+const jsPsych = initJsPsych({
+    on_finish: function(data) {
+        console.log('Experiment finished');
+    },
+    show_progress_bar: true
+});
+
 // Declare variables at the top
 let participant_id;
 let prolific_id;
@@ -61,13 +69,6 @@ async function generateParticipantId() {
     return `participant${baseId}`;
 }
 
-// Initialize jsPsych
-const jsPsych = initJsPsych({
-    on_finish: function(data) {
-        console.log('Experiment finished');
-    }
-});
-
 // Create consent trial
 const consent = {
     type: jsPsychHtmlButtonResponse,
@@ -89,7 +90,7 @@ const consent = {
     }
 };
 
-// DataPipe save trial
+// Configure DataPipe save trial
 const save_data = {
     type: jsPsychPipe,
     action: "save",
@@ -102,9 +103,6 @@ const save_data = {
             experiment_complete: true
         });
         return data.csv();
-    },
-    success_callback: () => {
-        jsPsych.finishTrial();  // Move to next trial only after successful save
     }
 };
 
@@ -141,19 +139,6 @@ const instructions = {
     }
 };
 
-// Create saving trial
-const saving = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: `
-        <div style="width: 800px; text-align: center;">
-            <h2>Saving data...</h2>
-            <p>Please don't close the window.</p>
-        </div>
-    `,
-    choices: "NO_KEYS",
-    trial_duration: null
-};
-
 // Function to create image grid trial
 function createImageGridTrial(category, trialNumber) {
     const trialWord = condition === "novel_word_condition" ? 
@@ -164,9 +149,6 @@ function createImageGridTrial(category, trialNumber) {
         type: jsPsychImageGridSelect,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
-        prompt: `<div style="font-size: 24px; text-align: center; margin-bottom: 20px;">
-                    <p>Select two ${trialWord}</p>
-                </div>`,
         required_clicks: 2,
         images_per_row: 4,
         grid_spacing: 20,
@@ -184,8 +166,8 @@ function createImageGridTrial(category, trialNumber) {
     };
 }
 
-// Function to create and run timeline
-async function createTimeline() {
+// Function to create timeline
+function createTimeline(participantId) {
     const timeline = [
         consent,
         pid,
@@ -204,27 +186,22 @@ async function createTimeline() {
         trialCounter++;
     }
     
-    // Add saving trials at the end
-    timeline.push(saving);
     timeline.push(save_data);
-    
     return timeline;
 }
 
-
-
-// Initialize and run the experiment
-async function initializeAndRun() {
+// Wait for document to be ready
+document.addEventListener('DOMContentLoaded', async () => {
+    // Generate participant ID
     participant_id = await generateParticipantId();
     
+    // Add properties to jsPsych data
     jsPsych.data.addProperties({
         participant_id: participant_id,
         condition: condition
     });
     
-    const timeline = await createTimeline();
+    // Create and run timeline
+    const timeline = createTimeline(participant_id);
     await jsPsych.run(timeline);
-}
-
-// Start the experiment
-initializeAndRun();
+});
