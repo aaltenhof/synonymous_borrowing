@@ -73,18 +73,21 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Clear display
       display_element.innerHTML = '';
 
-      // Create container
+      // Create container but don't add to display yet
       const container = document.createElement('div');
       container.style.width = '95vw';
       container.style.maxWidth = '1200px';
       container.style.margin = '0 auto';
       container.style.padding = '20px';
-      display_element.appendChild(container);
+      container.style.opacity = '0';  // Start invisible
+      container.style.transition = 'opacity 0.15s ease-in';
 
-      // Add prompt if there is one
-      if (trial.prompt !== null) {
-        container.innerHTML += trial.prompt;
-      }
+      // Create prompt div but don't add content yet
+      const promptDiv = document.createElement('div');
+      promptDiv.style.fontSize = '24px';
+      promptDiv.style.textAlign = 'center';
+      promptDiv.style.marginBottom = '20px';
+      container.appendChild(promptDiv);
 
       // Add grid container
       const gridContainer = document.createElement('div');
@@ -191,8 +194,20 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Add all images to grid when loaded
       Promise.all(imageLoadPromises)
         .then(images => {
+          // First add all images to the grid
           images.forEach(img => gridContainer.appendChild(img));
           handleResize();
+
+          // Add the prompt text
+          promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
+
+          // Add the container to display
+          display_element.appendChild(container);
+
+          // Trigger reflow and show everything
+          requestAnimationFrame(() => {
+            container.style.opacity = '1';
+          });
         })
         .catch(error => {
           console.error('Error loading images:', error);

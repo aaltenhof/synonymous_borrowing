@@ -89,7 +89,7 @@ const consent = {
     }
 };
 
-// Configure DataPipe save trial
+// DataPipe save trial
 const save_data = {
     type: jsPsychPipe,
     action: "save",
@@ -102,6 +102,9 @@ const save_data = {
             experiment_complete: true
         });
         return data.csv();
+    },
+    success_callback: () => {
+        jsPsych.finishTrial();  // Move to next trial only after successful save
     }
 };
 
@@ -136,6 +139,19 @@ const instructions = {
     data: {
         trial_type: 'instructions'
     }
+};
+
+// Create saving trial
+const saving = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <div style="width: 800px; text-align: center;">
+            <h2>Saving data...</h2>
+            <p>Please don't close the window.</p>
+        </div>
+    `,
+    choices: "NO_KEYS",
+    trial_duration: null
 };
 
 // Function to create image grid trial
@@ -188,9 +204,14 @@ async function createTimeline() {
         trialCounter++;
     }
     
+    // Add saving trials at the end
+    timeline.push(saving);
     timeline.push(save_data);
+    
     return timeline;
 }
+
+
 
 // Initialize and run the experiment
 async function initializeAndRun() {
