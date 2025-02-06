@@ -54,24 +54,30 @@ var jsPsychImageGridSelect = (function (jspsych) {
 
     trial(display_element, trial) {
       let clicked = 0;
-      let trial_data = [];
       const start_time = performance.now();
 
-      // Clear display and create container (but don't add it yet)
+      // Clear display and create hidden container
       display_element.innerHTML = '';
-      const container = document.createElement('div');
-      container.style.visibility = 'hidden'; // Start hidden
-      container.innerHTML = `
-        <div style="width: 95vw; max-width: 1200px; margin: 0 auto; padding: 20px;">
-          <div style="font-size: 24px; text-align: center; margin-bottom: 20px;">
-            <p>Select two ${trial.this_word}</p>
-          </div>
-          <div class="jspsych-image-grid" style="display: grid; gap: ${trial.grid_spacing}px; grid-template-columns: repeat(${trial.images_per_row}, 1fr); margin: 20px auto; justify-content: center;">
-          </div>
-        </div>
-      `;
+      const mainContainer = document.createElement('div');
+      mainContainer.style.opacity = '0';
+      mainContainer.style.transition = 'opacity 0.15s ease-in';
+      display_element.appendChild(mainContainer);
 
-      const gridContainer = container.querySelector('.jspsych-image-grid');
+      // Create inner content
+      const container = document.createElement('div');
+      container.style.width = '95vw';
+      container.style.maxWidth = '1200px';
+      container.style.margin = '0 auto';
+      container.style.padding = '20px';
+      mainContainer.appendChild(container);
+
+      // Create grid container
+      const gridContainer = document.createElement('div');
+      gridContainer.style.display = 'grid';
+      gridContainer.style.gap = trial.grid_spacing + 'px';
+      gridContainer.style.gridTemplateColumns = `repeat(${trial.images_per_row}, 1fr)`;
+      gridContainer.style.margin = '20px auto';
+      gridContainer.style.justifyContent = 'center';
 
       const imagePaths = shuffle([...trial.image_names]).map(name => 
         `${trial.stimulus_folder}/${name}`
@@ -107,7 +113,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              trial_data.push({
+              // Record the response data
+              this.jsPsych.data.write({
                 rt: rt,
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
@@ -123,7 +130,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
                   display_element.innerHTML = '';
-                  this.jsPsych.finishTrial(trial_data);
+                  this.jsPsych.finishTrial();
                 }, 300);
               }
             }
@@ -134,16 +141,25 @@ var jsPsychImageGridSelect = (function (jspsych) {
         });
       });
 
-      // Add container to display (still hidden)
-      display_element.appendChild(container);
-
-      // When all images are loaded
+      // Wait for all images to load
       Promise.all(imagePromises)
         .then(images => {
-          // Add all images to grid
+          // First add the instruction text
+          const promptDiv = document.createElement('div');
+          promptDiv.style.fontSize = '24px';
+          promptDiv.style.textAlign = 'center';
+          promptDiv.style.marginBottom = '20px';
+          promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
+          container.appendChild(promptDiv);
+
+          // Then add the grid container
+          container.appendChild(gridContainer);
+
+          // Add all images to the grid
           images.forEach(img => gridContainer.appendChild(img));
-          // Make everything visible at once
-          container.style.visibility = 'visible';
+
+          // Finally, make everything visible at once
+          mainContainer.style.opacity = '1';
         })
         .catch(error => {
           console.error('Error loading images:', error);
