@@ -86,21 +86,11 @@ var jsPsychImageGridSelect = (function (jspsych) {
         container.innerHTML += trial.prompt;
       }
 
-      // Show the word for this trial
-      if (trial.this_word) {
-        const wordDisplay = document.createElement('div');
-        wordDisplay.style.fontSize = '24px';
-        wordDisplay.style.textAlign = 'center';
-        wordDisplay.style.marginBottom = '20px';
-        wordDisplay.innerHTML = `<strong>${trial.this_word}</strong>`;
-        container.appendChild(wordDisplay);
-      }
-
       // Add grid container
       const gridContainer = document.createElement('div');
       gridContainer.style.display = 'grid';
       gridContainer.style.gap = trial.grid_spacing + 'px';
-      gridContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(200px, 1fr))`;
+      gridContainer.style.gridTemplateColumns = `repeat(${trial.images_per_row}, 1fr)`;
       gridContainer.style.margin = '20px auto';
       gridContainer.style.justifyContent = 'center';
       container.appendChild(gridContainer);

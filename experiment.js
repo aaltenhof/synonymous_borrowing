@@ -12,32 +12,32 @@ if (Math.floor(Math.random() * 2) == 0) {
     condition = "familiar_word_condition";
 }
 
-// Define all stimulus categories and their image groups
+// Define all stimulus categories and their images
 const stimulusCategories = {
-    'flowers': {
-        'iris': ['flower_iris_1_2.png', 'flower_iris_2_2.png', 'flower_iris_3_2.png'],
-        'round': ['flower_round_1_1.png', 'flower_round_2_1.png', 'flower_round_3_1.png'],
-        'star': ['flower_star_1_1.png', 'flower_star_2_1.png', 'flower_star_3_1.png'],
-        'trumpet': ['flower_trumpet_1_2.png', 'flower_trumpet_2_2.png', 'flower_trumpet_3_2.png']
-    },
-    'leaves': {
-        'bean': ['leaf_bean_1_2.png', 'leaf_bean_2_2.png', 'leaf_bean_3_2.png'],
-        'droplet': ['leaf_droplet_1_1.png', 'leaf_droplet_2_1.png', 'leaf_droplet_3_1.png'],
-        'heart': ['leaf_heart_1_2.png', 'leaf_heart_2_2.png', 'leaf_heart_3_2.png'],
-        'oak': ['leaf_oak_1_1.png', 'leaf_oak_2_1.png', 'leaf_oak_3_1.png']
-    },
-    'mushrooms': {
-        'bell': ['mushroom_bell_1_2.png', 'mushroom_bell_2_2.png', 'mushroom_bell_3_2.png'],
-        'disc': ['mushroom_disc_1_2.png', 'mushroom_disc_2_2.png', 'mushroom_disc_3_2.png'],
-        'enoki': ['mushroom_enoki_1_1.png', 'mushroom_enoki_2_1.png', 'mushroom_enoki_3_1.png'],
-        'toadstool': ['mushroom_toadstool_1_1.png', 'mushroom_toadstool_2_1.png', 'mushroom_toadstool_3_1.png']
-    },
-    'shells': {
-        'fan': ['shell_fan_1_1.png', 'shell_fan_2_1.png', 'shell_fan_3_1.png'],
-        'spiral': ['shell_spiral_1_1.png', 'shell_spiral_2_1.png', 'shell_spiral_3_1.png'],
-        'stingray': ['shell_stingray_1_2.png', 'shell_stingray_2_2.png', 'shell_stingray_3_2.png'],
-        'urn': ['shell_urn_1_2.png', 'shell_urn_2_2.png', 'shell_urn_3_2.png']
-    }
+    'flowers': [
+        'flower_iris_1_2.png', 'flower_iris_2_2.png', 'flower_iris_3_2.png',
+        'flower_round_1_1.png', 'flower_round_2_1.png', 'flower_round_3_1.png',
+        'flower_star_1_1.png', 'flower_star_2_1.png', 'flower_star_3_1.png',
+        'flower_trumpet_1_2.png', 'flower_trumpet_2_2.png', 'flower_trumpet_3_2.png'
+    ],
+    'leaves': [
+        'leaf_bean_1_2.png', 'leaf_bean_2_2.png', 'leaf_bean_3_2.png',
+        'leaf_droplet_1_1.png', 'leaf_droplet_2_1.png', 'leaf_droplet_3_1.png',
+        'leaf_heart_1_2.png', 'leaf_heart_2_2.png', 'leaf_heart_3_2.png',
+        'leaf_oak_1_1.png', 'leaf_oak_2_1.png', 'leaf_oak_3_1.png'
+    ],
+    'mushrooms': [
+        'mushroom_bell_1_2.png', 'mushroom_bell_2_2.png', 'mushroom_bell_3_2.png',
+        'mushroom_disc_1_2.png', 'mushroom_disc_2_2.png', 'mushroom_disc_3_2.png',
+        'mushroom_enoki_1_1.png', 'mushroom_enoki_2_1.png', 'mushroom_enoki_3_1.png',
+        'mushroom_toadstool_1_1.png', 'mushroom_toadstool_2_1.png', 'mushroom_toadstool_3_1.png'
+    ],
+    'shells': [
+        'shell_fan_1_1.png', 'shell_fan_2_1.png', 'shell_fan_3_1.png',
+        'shell_spiral_1_1.png', 'shell_spiral_2_1.png', 'shell_spiral_3_1.png',
+        'shell_stingray_1_2.png', 'shell_stingray_2_2.png', 'shell_stingray_3_2.png',
+        'shell_urn_1_2.png', 'shell_urn_2_2.png', 'shell_urn_3_2.png'
+    ]
 };
 
 function shuffle(array) {
@@ -139,7 +139,7 @@ const instructions = {
 };
 
 // Function to create image grid trial
-function createImageGridTrial(category, subtype, trialNumber) {
+function createImageGridTrial(category, trialNumber) {
     const trialWord = condition === "novel_word_condition" ? 
                      novel_words[trialNumber % novel_words.length] : 
                      category;
@@ -148,11 +148,14 @@ function createImageGridTrial(category, subtype, trialNumber) {
         type: jsPsychImageGridSelect,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
+        prompt: `<div style="font-size: 24px; text-align: center; margin-bottom: 20px;">
+                    <p>Select two ${trialWord}</p>
+                </div>`,
         required_clicks: 2,
-        images_per_row: 2,
+        images_per_row: 4,
         grid_spacing: 20,
-        max_image_width: 300,
-        image_names: stimulusCategories[category][subtype],
+        max_image_width: 200,
+        image_names: stimulusCategories[category],
         data: {
             trial_type: 'image_grid',
             trial_number: trialNumber,
@@ -160,7 +163,6 @@ function createImageGridTrial(category, subtype, trialNumber) {
             prolific_id: prolific_id,
             condition: condition,
             category: category,
-            subtype: subtype,
             word: trialWord
         }
     };
@@ -174,21 +176,14 @@ async function createTimeline() {
         instructions
     ];
     
-    // Create array of all category-subtype combinations
-    let allTrials = [];
-    for (const [category, subtypes] of Object.entries(stimulusCategories)) {
-        for (const subtype of Object.keys(subtypes)) {
-            allTrials.push({category, subtype});
-        }
-    }
-    
-    // Shuffle all trials
-    shuffle(allTrials);
+    // Get categories and shuffle them
+    const categories = Object.keys(stimulusCategories);
+    shuffle(categories);
 
     // Create trials
     let trialCounter = 0;
-    for (const {category, subtype} of allTrials) {
-        const trial = createImageGridTrial(category, subtype, trialCounter);
+    for (const category of categories) {
+        const trial = createImageGridTrial(category, trialCounter);
         timeline.push(trial);
         trialCounter++;
     }
