@@ -113,8 +113,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
-              // Record the response data
-              this.jsPsych.data.write({
+              // Add data
+              const data = {
                 rt: rt,
                 participant_id: trial.data.participant_id,
                 prolific_id: trial.data.prolific_id,
@@ -125,7 +125,10 @@ var jsPsychImageGridSelect = (function (jspsych) {
                 word: trial.this_word,
                 click_order: clicked,
                 trial_type: 'image_grid'
-              });
+              };
+
+              this.jsPsych.data.write(data);
+              console.log('Data written:', data);  // Debug log
 
               if (clicked === trial.required_clicks) {
                 setTimeout(() => {
