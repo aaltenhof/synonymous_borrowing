@@ -106,10 +106,21 @@ const save_data = {
             .filter(trial => trial.trial_type === 'image-grid-select')
             .flatMap(trial => [trial[0], trial[1]]);
 
-        const headers = 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt';
-        const rows = imageTrials.map(trial => 
-            `${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt}`
-        );
+        // Add function to extract ID and typicality from filename
+        const parseImageInfo = (filename) => {
+            const parts = filename.split('_');
+            const numbers = parts[parts.length - 1].split('.')[0].split('_');
+            return {
+                id: parts[parts.length - 2],
+                typicality: parts[parts.length - 1].split('.')[0]
+            };
+        };
+
+        const headers = 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt,id,typicality';
+        const rows = imageTrials.map(trial => {
+            const imageInfo = parseImageInfo(trial.image_name);
+            return `${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+        });
 
         return [headers, ...rows].join('\n');
     },
