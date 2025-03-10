@@ -6,8 +6,16 @@ const jsPsych = initJsPsych({
 });
 
 // Declare variables at the top
-let participant_id;
-let prolific_id;
+var participant_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+var session_id = jsPsych.data.getURLVariable('SESSION_ID');
+
+jsPsych.data.addProperties({
+    participant_id: subject_id,
+    study_id: study_id,
+    session_id: session_id
+});
+
 let condition;
 
 const novel_words = ["tinches", "nefts", "bines", "palts"];
@@ -74,7 +82,17 @@ const consent = {
     stimulus: `
         <div style="width: 800px;">
             <h3>Consent to Participate in Research</h3>
-            <p>Consent will go here</p>
+            <p>Protocol Director: Robert Hawkins </p>
+            <p>Protocol Title: Communication and social cognition in natural audiovisual contexts IRB# 77226 </p>
+
+            <p>DESCRIPTION: You are invited to participate in a research study about language and communication. The purpose of the research is to understand how you use and learn about words. This research will be conducted through the Prolific platform, including participants from the US, UK, and Canada. If you decide to participate in this research, you will play a short language game. </p>
+            <p>TIME INVOLVEMENT: The task is estimated to last less than 5 minutes. You are free to withdraw from the study at any time. </p>
+            <p>RISKS AND BENEFITS: You may become frustrated or bored if you do not like the task. Study data will be stored securely, in compliance with Stanford University standards, minimizing the risk of confidentiality breach. This study advances our scientific understanding of how people communicate. We cannot and do not guarantee or promise that you will receive any benefits from this study.</p>
+            <p>PAYMENTS: You will receive payment in the amount advertised on Prolific. If you do not complete this study, you will receive prorated payment based on the time that you have spent if you contact the experimenters.</p>
+            <p>PARTICIPANT'S RIGHTS: If you have read this form and have decided to participate in this project, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled. The alternative is not to participate. You have the right to refuse to answer particular questions. The results of this research study may be presented at scientific or professional meetings or published in scientific journals. Your individual privacy will be maintained in all published and written data resulting from the study. In accordance with scientific norms, the data from this study may be used or shared with other researchers for future research (after removing personally identifying information) without additional consent from you.</p>
+            <p>CONTACT INFORMATION: Questions: If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director, Robert Hawkins (
+rdhawkins@stanford.edu, 217-549-6923). </p>
+            <p>Independent Contact: If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906, or email at irbnonmed@stanford.edu. You can also write to the Stanford IRB, Stanford University, 1705 El Camino Real, Palo Alto, CA 94306. Please save or print a copy of this page for your records.</p>
             <p>Please click "I Agree" if you wish to participate.</p>
         </div>
     `,
@@ -116,10 +134,10 @@ const save_data = {
             };
         };
 
-        const headers = 'participant_id,prolific_id,trial_number,condition,category,image_name,word,click_order,rt,id,typicality';
+        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,image_name,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id},${trial.prolific_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${trial.participant_id},${trial.study_id || ''},${trial.session_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -129,22 +147,6 @@ const save_data = {
     }
 };
 
-// Create Prolific ID trial
-const pid = {
-    type: jsPsychSurveyText,
-    questions: [
-        {prompt: `<p>Please enter your Prolific ID</p>`}
-    ],
-    data: {
-        trial_type: 'pid'
-    },
-    on_finish: function(data) {
-        prolific_id = data.response.Q0.trim();
-        jsPsych.data.addProperties({
-            prolific_id: prolific_id
-        });
-    }
-};
 
 // Create instructions trial
 const instructions = {
@@ -203,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create timeline
     const timeline = [
         consent,
-        pid,
         instructions
     ];
     
