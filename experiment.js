@@ -11,7 +11,7 @@ var study_id = jsPsych.data.getURLVariable('STUDY_ID');
 var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
 jsPsych.data.addProperties({
-    participant_id: subject_id,
+    participant_id: participant_id,
     study_id: study_id,
     session_id: session_id
 });
