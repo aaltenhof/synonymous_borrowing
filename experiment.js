@@ -183,7 +183,8 @@ function createImageGridTrial(category, trialNumber) {
             trial_type: 'image_grid',
             trial_number: trialNumber,
             participant_id: participant_id,
-            prolific_id: prolific_id,
+            study_id: study_id,
+            session_id: session_id,
             condition: condition,
             category: category,
             word: trialWord

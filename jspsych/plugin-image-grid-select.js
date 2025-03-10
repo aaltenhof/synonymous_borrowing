@@ -117,7 +117,8 @@ var jsPsychImageGridSelect = (function (jspsych) {
               // Store response data
               trial_data.push({
                 participant_id: trial.data.participant_id,
-                prolific_id: trial.data.prolific_id,
+                study_id: trial.data.study_id,
+                session_id: trial.data.session_id,
                 trial_number: trial.data.trial_number,
                 condition: trial.data.condition,
                 category: trial.data.category,
