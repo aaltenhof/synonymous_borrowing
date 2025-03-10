@@ -143,7 +143,7 @@ const save_data = {
         return [headers, ...rows].join('\n');
     },
     on_finish: () => {
-        window.location.href = "https://app.prolific.co/submissions/complete?cc=XXXXXX";
+        window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
     }
 };
 

@@ -31,7 +31,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       },
       max_image_width: {
         type: jspsych.ParameterType.INT,
-        default: 200
+        default: 180
       }
     }
   };
