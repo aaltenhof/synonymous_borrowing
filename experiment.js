@@ -8,12 +8,7 @@ const jsPsych = initJsPsych({
 // Declare variables at the top
 let participant_id;
 let prolific_id;
-<<<<<<< HEAD
-
-
-=======
 let condition;
->>>>>>> f96660e1f2809d1786aa0e0dfed3175d2c0c6eff
 
 const novel_words = ["tinches", "nefts", "bines", "palts"];
 
@@ -73,127 +68,6 @@ function generateParticipantId() {
     return `participant${baseId}`;
 }
 
-<<<<<<< HEAD
-// Initialize and run the experiment
-async function initializeAndRun() {
-    // Set participant_id first before creating any trials
-    participant_id = await generateParticipantId();
-    
-    // Then create and run timeline
-    const timeline = await createTimeline();
-    await jsPsych.run(timeline);
-}
-
-// Function to get all stimuli folders
-async function getStimulusFolders() {
-    try {
-        const response = await fetch(`https://localhost:${PORT}/get-folders`);
-        const folders = await response.json();
-        return folders;
-    } catch (error) {
-        console.error('Error getting folders:', error);
-        return [];
-    }
-}
-
-// Function to create a grid trial for any folder
-async function createImageGridTrial(folder, trialCounter) {
-    try {
-        const response = await fetch(`https://localhost:${PORT}/get-images/${folder}`);
-        const imagePaths = await response.json();
-        
-        // Get the current Prolific ID from jsPsych's data
-        const currentProlificId = jsPsych.data.get().last().select('prolific_id').values[0] || prolific_id;
-        
-        if (condition == "novel_word_condition") {
-            word = novel_words.pop()
-        } else {
-            word = folder.replace('stimuli/', '')
-        }
-        const trial = {
-            type: jsPsychImageGridSelect,
-            stimulus_folder: folder.replace('stimuli/', ''),
-            preserve_original_size: false,
-            images_per_row: 4,
-            grid_spacing: 25,
-            max_image_width: 200,
-            center_grid: true,
-            required_clicks: 3,
-            prompt: `<p>Click on three ${word}.</p>`,
-            this_word: word,
-            data: {
-                participant_id: participant_id,
-                prolific_id: currentProlificId,
-                trial_number: trialCounter,
-                trial_type: 'image-selection',
-                category: folder,
-                word: word,
-                condition: condition
-            }
-        };
-        
-        return trial;
-    } catch (error) {
-        console.error('Error loading images:', error);
-        return null;
-    }
-}
-
-// Initialize jsPsych
-const jsPsych = initJsPsych({
-    on_finish: function() {
-        // Get the final Prolific ID
-        const finalProlificId = jsPsych.data.get().last().select('prolific_id').values[0] || prolific_id;
-        
-        // Get only the image selection trials
-        const experimentData = jsPsych.data.get()
-            .filter({trial_type: 'image-grid-select'})
-            .values()
-            .flatMap(trial => {
-                if (trial.responses && Array.isArray(trial.responses)) {
-                    return trial.responses.map(response => ({
-                        ...response,
-                        prolific_id: finalProlificId
-                    }));
-                }
-                return {
-                    ...trial,
-                    prolific_id: finalProlificId
-                };
-            });
-
-        console.log('Final data being sent:', experimentData);
-        
-        // Save the data
-        fetch(`https://localhost:${PORT}/save-data`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                participantId: participant_id,
-                data: experimentData
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log('Data saved successfully:', result);
-            window.location.href = "https://www.prolific.com/";
-        })
-        .catch(error => {
-            console.error('Error saving data:', error);
-            window.location.href = "https://www.prolific.com/";
-        });
-    }
-});
-
-=======
->>>>>>> f96660e1f2809d1786aa0e0dfed3175d2c0c6eff
 // Create consent trial
 const consent = {
     type: jsPsychHtmlButtonResponse,
