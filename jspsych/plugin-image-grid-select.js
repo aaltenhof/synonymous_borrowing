@@ -31,7 +31,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       },
       max_image_width: {
         type: jspsych.ParameterType.INT,
-        default: 150
+        default: 100
       }
     }
   };
@@ -67,7 +67,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       // Create inner content
       const container = document.createElement('div');
       container.style.width = '95vw';
-      container.style.maxWidth = '1200px';
+      container.style.maxWidth = '800px';
       container.style.margin = '0 auto';
       container.style.padding = '20px';
       mainContainer.appendChild(container);
@@ -77,7 +77,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
       gridContainer.style.display = 'grid';
       gridContainer.style.gap = trial.grid_spacing + 'px';
       gridContainer.style.gridTemplateColumns = `repeat(${trial.images_per_row}, 1fr)`;
-      gridContainer.style.margin = '20px auto';
+      gridContainer.style.margin = '50px auto';
       gridContainer.style.justifyContent = 'center';
 
       const imagePaths = shuffle([...trial.image_names]).map(name => 
