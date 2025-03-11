@@ -154,7 +154,7 @@ const instructions = {
     stimulus: `
         <div style="width: 800px;">
             <h2>Instructions</h2>
-            <p>In this task, you will select images to indicate your understanding of new or familiar words. If you encounter an unfamiliar word and are unsure about its meaning, make your best guess.</p>
+            <p>In this task, you will select images to indicate your understanding of new or familiar words. If you encounter an unfamiliar word and are unsure about its meaning, select what makes the most sense to you.</p>
             <p>Click "Begin" when you're ready to start.</p>
         </div>
     `,

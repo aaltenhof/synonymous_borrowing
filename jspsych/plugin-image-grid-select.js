@@ -151,7 +151,7 @@ var jsPsychImageGridSelect = (function (jspsych) {
           promptDiv.style.fontSize = '24px';
           promptDiv.style.textAlign = 'center';
           promptDiv.style.marginBottom = '20px';
-          promptDiv.innerHTML = `<p>Select two ${trial.this_word}</p>`;
+          promptDiv.innerHTML = `<p>Select two ${trial.this_word}.</p>`;
           container.appendChild(promptDiv);
 
           // Then add the grid container
