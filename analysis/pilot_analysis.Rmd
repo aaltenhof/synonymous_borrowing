@@ -1,0 +1,53 @@
+---
+title: "pilot analysis"
+output: html_document
+date: "2025-03-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+```{r, eval = FALSE}
+raw_data <- list.files( path=here("../data/pilot_raw_data"), full.names=TRUE ) %>% 
+  map_dfr( read_csv )
+
+data <- raw_data %>%
+  filter("study_id" != "UNSAVED_STUDY",
+         !is.na(study_id)) %>%
+  select(-prolific_id) 
+
+write_csv(data, here("../data/pilot_data.csv"))
+```
+
+```{r}
+data <- read_csv(here("../data/pilot_data.csv")) %>%
+  mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
+         stimulus_subclass = str_remove(stimulus_subclass, "_.*"))
+
+data %>%
+  ggplot(aes(x = condition, y = typicality)) + 
+  geom_violin() +
+  ylab("typical                          atypical")
+```
+
+Do people tend to choose more atypical objects when prompted with a novel word?
+
+Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
+
+```{r}
+data %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass)) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = distinct_types)) +
+  geom_violin() +
+  ylab("one type                          two types")
+  
+```
+
+Do people tend to choose more varied objects when prompted with familiar vs. novel words? Another way to tell whether people think the meaning of a novel word is narrower is to test whether they choose one subtype (e.g., bean-shaped leaves) vs. multiple subtypes (e.g., teardrop-shaped and oak-shaped leaves). 
+
+Above, participants' choices of exemplars; they have two choices on each trial. A score of 1 reflects that they chose all of one subtype, and a score of 2 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
