@@ -9,6 +9,8 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 library(tidyverse)
 library(here)
+library(lme4)
+library(broom.mixed)
 ```
 
 ```{r, eval = FALSE}
@@ -26,7 +28,8 @@ write_csv(data, here("../data/pilot_data.csv"))
 ```{r}
 data <- read_csv(here("../data/pilot_data.csv")) %>%
   mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
-         stimulus_subclass = str_remove(stimulus_subclass, "_.*"))
+         stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
+  mutate(typicality = typicality - 1)
 
 data %>%
   ggplot(aes(x = condition, y = typicality)) + 
@@ -39,10 +42,18 @@ Do people tend to choose more atypical objects when prompted with a novel word?
 Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
 
 ```{r}
-data %>%
+glmer(typicality ~ condition + (1|participant_id), family = "binomial",
+      data = data) %>%
+  tidy()
+```
+
+```{r}
+data <- data %>%
   group_by(participant_id, trial_number) %>%
-  mutate(distinct_types = n_distinct(stimulus_subclass)) %>%
-  ungroup() %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() 
+
+data %>%
   ggplot(aes(x = condition, y = distinct_types)) +
   geom_violin() +
   ylab("one type                          two types")
@@ -51,4 +62,30 @@ data %>%
 
 Do people tend to choose more varied objects when prompted with familiar vs. novel words? Another way to tell whether people think the meaning of a novel word is narrower is to test whether they choose one subtype (e.g., bean-shaped leaves) vs. multiple subtypes (e.g., teardrop-shaped and oak-shaped leaves). 
 
-Above, participants' choices of exemplars; they have two choices on each trial. A score of 1 reflects that they chose all of one subtype, and a score of 2 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
+Above, participants' choices of exemplars; they have two choices on each trial. A score of 0 reflects that they chose all of one subtype, and a score of 1 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
+
+```{r}
+glmer(distinct_types ~ condition + (1|participant_id), family = "binomial",
+      data = data) %>%
+  tidy()
+```
+
+```{r}
+data %>%
+  ggplot(aes(x = condition, y = typicality)) + 
+  geom_violin() +
+  facet_wrap(~category) +
+  ylab("typical                          atypical")
+```
+
+Examining typicality across stimulus types.
+
+```{r}
+data %>%
+  ggplot(aes(x = condition, y = distinct_types)) + 
+  geom_violin() +
+  facet_wrap(~category) +
+  ylab("one vs. two types")
+```
+
+Examining distinct type choices across stimulus types.
