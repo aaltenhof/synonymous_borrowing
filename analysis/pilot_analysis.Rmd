@@ -11,6 +11,7 @@ library(tidyverse)
 library(here)
 library(lme4)
 library(broom.mixed)
+library(tidyboot)
 ```
 
 ```{r, eval = FALSE}
@@ -32,9 +33,15 @@ data <- read_csv(here("../data/pilot_data.csv")) %>%
   mutate(typicality = typicality - 1)
 
 data %>%
-  ggplot(aes(x = condition, y = typicality)) + 
-  geom_violin() +
-  ylab("typical                          atypical")
+  group_by(condition, participant_id) %>%
+  mutate(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion atypical choices")
 ```
 
 Do people tend to choose more atypical objects when prompted with a novel word?
@@ -54,9 +61,15 @@ data <- data %>%
   ungroup() 
 
 data %>%
-  ggplot(aes(x = condition, y = distinct_types)) +
-  geom_violin() +
-  ylab("one type                          two types")
+  group_by(condition, participant_id, trial_number) %>%
+  mutate(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(condition) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion choices of multiple types")
   
 ```
 
@@ -72,20 +85,32 @@ glmer(distinct_types ~ condition + (1|participant_id), family = "binomial",
 
 ```{r}
 data %>%
-  ggplot(aes(x = condition, y = typicality)) + 
-  geom_violin() +
+  group_by(condition, participant_id, category) %>%
+  mutate(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition, category) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
-  ylab("typical                          atypical")
+  ylab("proportion atypical choices")
 ```
 
 Examining typicality across stimulus types.
 
 ```{r}
 data %>%
-  ggplot(aes(x = condition, y = distinct_types)) + 
-  geom_violin() +
+  group_by(condition, participant_id, category, trial_number) %>%
+  mutate(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(condition, category) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
-  ylab("one vs. two types")
+  ylab("proportion choices of multiple types")
 ```
 
 Examining distinct type choices across stimulus types.
