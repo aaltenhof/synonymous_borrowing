@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Colored Shapes Grid</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+    }
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(18, auto);
+      gap: 10px;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell img {
+      max-height: 100%;
+      max-width: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="image-grid" id="grid"></div>
+
+  <script>
+    const grid = document.getElementById('grid');
+
+    const colors = [
+      '#d01754', '#d01917', '#d02a17', '#d03b17', '#d04f17', '#d07017',
+      '#d08a17', '#d0a217', '#d0bb17', '#d0b817', '#c7d017', '#97d017',
+      '#8fd017', '#5dd017', '#4ed017', '#20d017', '#17d040', '#17d071'
+    ];
+
+    for (let row = 0; row < 18; row++) {
+      const rowColor = colors[row];
+      for (let col = 0; col < 18; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.style.backgroundColor = rowColor; // now applies per row
+
+        const img = document.createElement('img');
+        img.src = `stimuli/continuous_stimuli/shape_${col + 1}.png`;
+        img.alt = `Shape ${col + 1}`;
+
+        cell.appendChild(img);
+        grid.appendChild(cell);
+      }
+    }
+  </script>
+
+</body>
+</html>
