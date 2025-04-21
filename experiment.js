@@ -18,42 +18,15 @@ jsPsych.data.addProperties({
 
 let condition;
 
-const novel_words = ["tinches", "nefts", "bines", "palts"];
+novel_words = ["tinch", "neft", "bine", "palt"];
+novel_words = shuffle(novel_words)
 
 // Set condition
 if (Math.floor(Math.random() * 2) == 0) {
-    condition = "novel_word_condition";
+    condition = "between_categories";
 } else {
-    condition = "familiar_word_condition";
+    condition = "within_category";
 }
-
-// Define all stimulus categories and their images
-const stimulusCategories = {
-    'flowers': [
-        'flower_iris_1_2.png', 'flower_iris_2_2.png', 'flower_iris_3_2.png',
-        'flower_round_1_1.png', 'flower_round_2_1.png', 'flower_round_3_1.png',
-        'flower_star_1_1.png', 'flower_star_2_1.png', 'flower_star_3_1.png',
-        'flower_trumpet_1_2.png', 'flower_trumpet_2_2.png', 'flower_trumpet_3_2.png'
-    ],
-    'leaves': [
-        'leaf_bean_1_2.png', 'leaf_bean_2_2.png', 'leaf_bean_3_2.png',
-        'leaf_droplet_1_1.png', 'leaf_droplet_2_1.png', 'leaf_droplet_3_1.png',
-        'leaf_heart_1_2.png', 'leaf_heart_2_2.png', 'leaf_heart_3_2.png',
-        'leaf_oak_1_1.png', 'leaf_oak_2_1.png', 'leaf_oak_3_1.png'
-    ],
-    'mushrooms': [
-        'mushroom_bell_1_2.png', 'mushroom_bell_2_2.png', 'mushroom_bell_3_2.png',
-        'mushroom_disc_1_2.png', 'mushroom_disc_2_2.png', 'mushroom_disc_3_2.png',
-        'mushroom_enoki_1_1.png', 'mushroom_enoki_2_1.png', 'mushroom_enoki_3_1.png',
-        'mushroom_toadstool_1_1.png', 'mushroom_toadstool_2_1.png', 'mushroom_toadstool_3_1.png'
-    ],
-    'shells': [
-        'shell_fan_1_1.png', 'shell_fan_2_1.png', 'shell_fan_3_1.png',
-        'shell_spiral_1_1.png', 'shell_spiral_2_1.png', 'shell_spiral_3_1.png',
-        'shell_stingray_1_2.png', 'shell_stingray_2_2.png', 'shell_stingray_3_2.png',
-        'shell_urn_1_2.png', 'shell_urn_2_2.png', 'shell_urn_3_2.png'
-    ]
-};
 
 function shuffle(array) {
     let currentIndex = array.length;
@@ -66,9 +39,14 @@ function shuffle(array) {
     return array;
 }
 
-if (condition === "novel_word_condition") {
-    shuffle(novel_words);
+function duplicateArray(arr) {
+    return arr.reduce((newArr, item) => {
+      newArr.push(item, item);
+      return newArr;
+    }, []);
 }
+
+shuffle(novel_words);
 
 // Generate participant ID
 function generateParticipantId() {
@@ -107,11 +85,6 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
     }
 };
 
-function onSaveComplete() {
-    console.log('Data saved, redirecting...');
-    window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXX";  // Replace XXXXXX with your code
-}
-
 // Configure save_data trial
 const save_data = {
     type: jsPsychPipe,
@@ -121,20 +94,10 @@ const save_data = {
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
         const imageTrials = allTrials
-            .filter(trial => trial.trial_type === 'image-grid-select')
+            .filter(trial => trial.trial_type === 'image-keyboard-response-feedback')
             .flatMap(trial => [trial[0], trial[1]]);
 
-        // Add function to extract ID and typicality from filename
-        const parseImageInfo = (filename) => {
-            const parts = filename.split('_');
-            const numbers = parts[parts.length - 1].split('.')[0].split('_');
-            return {
-                id: parts[parts.length - 2],
-                typicality: parts[parts.length - 1].split('.')[0]
-            };
-        };
-
-        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,image_name,word,click_order,rt,id,typicality';
+        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,shape,color,word,rt';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
             return `${trial.participant_id},${trial.study_id || ''},${trial.session_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
@@ -154,7 +117,7 @@ const instructions = {
     stimulus: `
         <div style="width: 800px;">
             <h2>Instructions</h2>
-            <p>In this task, you will select images to indicate your understanding of new or familiar words. If you encounter an unfamiliar word and are unsure about its meaning, select what makes the most sense to you.</p>
+            <p>In this task, you will learn about some unfamiliar categories. You will type in the text box to label the unfamiliar categories. If you aren't sure at first, make your best guess; you will get feedback that allows you to learn.</p>
             <p>Click "Begin" when you're ready to start.</p>
         </div>
     `,
@@ -165,29 +128,22 @@ const instructions = {
 };
 
 // Function to create image grid trial
-function createImageGridTrial(category, trialNumber) {
-    const trialWord = condition === "novel_word_condition" ? 
-                     novel_words[trialNumber % novel_words.length] : 
-                     category;
-    
+function createTrainingTrial(category, trialShape, trialWord, trialColor, trialNumber) {;
     return {
-        type: jsPsychImageGridSelect,
-        stimulus_folder: `stimuli/${category}`,
+        type: jsPsychImageKeyboardResponseFeedback,
+        stimulus: trialShape,
         this_word: trialWord,
-        required_clicks: 2,
-        images_per_row: 4,
-        grid_spacing: 20,
-        max_image_width: 200,
-        image_names: stimulusCategories[category],
         data: {
-            trial_type: 'image_grid',
+            trial_type: 'training_trial',
             trial_number: trialNumber,
             participant_id: participant_id,
             study_id: study_id,
             session_id: session_id,
             condition: condition,
             category: category,
-            word: trialWord
+            word: trialWord,
+            shape: trialShape,
+            color: trialColor
         }
     };
 }
@@ -210,15 +166,29 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     // Get categories and shuffle them
-    const categories = Object.keys(stimulusCategories);
-    shuffle(categories);
+    shapes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+    shapes = shuffle(shapes);
+
+    colors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+    colors = shuffle(colors);
+
+    let category;
 
     // Create trials
     let trialCounter = 0;
-    for (const category of categories) {
-        const trial = createImageGridTrial(category, trialCounter);
-        timeline.push(trial);
-        trialCounter++;
+    for (const shape of shapes) {
+        for (const color of colors) {
+            console.log(shape)
+            console.log(color)
+            if (shape <= 9) {
+                category = 1
+            } else {
+                category = 2
+            }
+            const trial = createTrainingTrial(category, `stimuli/continuous_stimuli/shape_${shape}.png`, novel_words[category], color, trialCounter);
+            timeline.push(trial);
+            trialCounter++;
+        }
     }
     
     timeline.push(save_data);
