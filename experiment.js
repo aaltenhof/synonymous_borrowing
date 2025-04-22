@@ -89,18 +89,18 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
 const save_data = {
     type: jsPsychPipe,
     action: "save",
-    experiment_id: "sPY6vEQmdfQL",
-    filename: () => `borrowing_${participant_id}.csv`,
+    experiment_id: "XXXXXXXX",
+    filename: () => `borrowing_continuous_${participant_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
         const imageTrials = allTrials
-            .filter(trial => trial.trial_type === 'image-keyboard-response-feedback')
+            .filter(trial => trial.trial_type === 'survey-text-feedback')
             .flatMap(trial => [trial[0], trial[1]]);
 
-        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,shape,color,word,rt';
+        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,shape,color,word,response,rt';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id},${trial.study_id || ''},${trial.session_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${trial.participant_id},${trial.study_id || ''},${trial.session_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.shape},${trial.color},${trial.response},${trial.rt}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -128,11 +128,14 @@ const instructions = {
 };
 
 // Function to create image grid trial
-function createTrainingTrial(category, trialShape, trialWord, trialColor, trialNumber) {;
+function createTrainingTrial(category, trialShape, imageDisplay, trialWord, trialColor, trialNumber) {;
     return {
-        type: jsPsychImageKeyboardResponseFeedback,
-        stimulus: trialShape,
-        this_word: trialWord,
+        type: jsPsychSurveyTextFeedback,
+        questions: [{prompt: ''}],
+        preamble: imageDisplay,
+        shape: trialShape,
+        word: trialWord,
+        color: trialColor,
         data: {
             trial_type: 'training_trial',
             trial_number: trialNumber,
@@ -167,10 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Get categories and shuffle them
     shapes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
-    shapes = shuffle(shapes);
+    shuffle(shapes);
 
     colors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
-    colors = shuffle(colors);
+    shuffle(colors);
 
     let category;
 
@@ -178,14 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let trialCounter = 0;
     for (const shape of shapes) {
         for (const color of colors) {
-            console.log(shape)
-            console.log(color)
             if (shape <= 9) {
                 category = 1
             } else {
                 category = 2
             }
-            const trial = createTrainingTrial(category, `stimuli/continuous_stimuli/shape_${shape}.png`, novel_words[category], color, trialCounter);
+            image = `stimuli/continuous_stimuli/shape_${shape}.png`
+            image_display = "<img src=" + image + ' style="width:400px;"></img>'
+            const trial = createTrainingTrial(category, shape, image_display, novel_words[category], color, trialCounter);
             timeline.push(trial);
             trialCounter++;
         }
