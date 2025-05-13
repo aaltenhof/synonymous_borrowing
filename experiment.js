@@ -135,10 +135,10 @@ const instructions = {
     }
 };
 
-// Function to create image grid trial
+// Function to create training trial
 function createTrainingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
     return {
-        type: 'image-color-text-feedback',
+        type: jsPsychImageColorTextFeedback, 
         image: `stimuli/continuous_stimuli/shape_${trialData.shape}.png`,
         color: trialData.color,
         correct_answer: trialData.word,
