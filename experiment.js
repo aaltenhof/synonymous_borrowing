@@ -1,22 +1,3 @@
-// Initialize jsPsych first
-const jsPsych = initJsPsych({
-    on_finish: function() {
-        console.log('Experiment finished');
-    }
-});
-
-// Declare variables at the top
-var participant_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
-var study_id = jsPsych.data.getURLVariable('STUDY_ID');
-var session_id = jsPsych.data.getURLVariable('SESSION_ID');
-
-jsPsych.data.addProperties({
-    participant_id: participant_id,
-    study_id: study_id,
-    session_id: session_id
-});
-
-let condition;
 
 novel_words = ["tinch", "neft", "bine", "palt"];
 novel_words = shuffle(novel_words)
@@ -26,6 +7,33 @@ if (Math.floor(Math.random() * 2) == 0) {
     condition = "between_categories";
 } else {
     condition = "within_category";
+}
+
+async function loadTrialData(csvFilePath) {
+    try {
+        const response = await fetch(csvFilePath);
+        const csvText = await response.text();
+        
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',');
+        
+        const trials = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',');
+            const trial = {};
+            
+            headers.forEach((header, index) => {
+                trial[header.trim()] = values[index] ? values[index].trim() : '';
+            });
+            
+            trials.push(trial);
+        }
+        
+        return trials;
+    } catch (error) {
+        console.error('Error loading trial data:', error);
+        return [];
+    }
 }
 
 function shuffle(array) {
@@ -128,72 +136,88 @@ const instructions = {
 };
 
 // Function to create image grid trial
-function createTrainingTrial(category, trialShape, imageDisplay, trialWord, trialColor, trialNumber) {;
+function createTrainingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
     return {
-        type: jsPsychSurveyTextFeedback,
-        questions: [{prompt: ''}],
-        preamble: imageDisplay,
-        shape: trialShape,
-        word: trialWord,
-        color: trialColor,
+        type: 'image-color-text-feedback',
+        image: `stimuli/continuous_stimuli/shape_${trialData.shape}.png`,
+        color: trialData.color,
+        correct_answer: trialData.word,
+        prompt: '',
+        feedback_duration: 2000,
+        image_width: 400,
         data: {
             trial_type: 'training_trial',
             trial_number: trialNumber,
-            participant_id: participant_id,
-            study_id: study_id,
-            session_id: session_id,
+            participant_id: participantId,
+            study_id: studyId,
+            session_id: sessionId,
             condition: condition,
-            category: category,
-            word: trialWord,
-            shape: trialShape,
-            color: trialColor
+            category: trialData.category,
+            word: trialData.word,
+            shape: trialData.shape,
+            color: trialData.color
         }
     };
 }
 
-// Wait for document to be ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Generate participant ID
-    participant_id = generateParticipantId();
-    
-    // Add properties to jsPsych data
+// initialize jsPsych when document is ready
+document.addEventListener('DOMContentLoaded', async () => {
+    // initialize jsPsych
+    const jsPsych = initJsPsych({
+        on_finish: function() {
+            console.log('Experiment finished');
+        }
+    });
+
+    // get participant info
+    var participant_id = jsPsych.data.getURLVariable('PROLIFIC_PID') || generateParticipantId();
+    var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+    var session_id = jsPsych.data.getURLVariable('SESSION_ID');
+
     jsPsych.data.addProperties({
         participant_id: participant_id,
+        study_id: study_id,
+        session_id: session_id
+    });
+
+    // set condition
+    let condition;
+    if (Math.floor(Math.random() * 2) == 0) {
+        condition = "between_categories";
+    } else {
+        condition = "within_category";
+    }
+
+    jsPsych.data.addProperties({
         condition: condition
     });
-    
-    // Create timeline
+
+    // load trial data from CSV
+    console.log('Loading trial data from CSV...');
+    const trialData = await loadTrialData('demo_trials.csv');
+    console.log(`Loaded ${trialData.length} trials`);
+
+    // check if data loaded 
+    if (trialData.length === 0) {
+        alert('Error: Could not load trial data. Please check that demo_trials.csv exists and is properly formatted.');
+        return;
+    }
+
+    // shuffle trials
+    const shuffledTrials = shuffle(trialData);
+
+    // create timeline
     const timeline = [
         consent,
         instructions
     ];
-    
-    // Get categories and shuffle them
-    shapes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
-    shuffle(shapes);
 
-    colors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
-    shuffle(colors);
+    // create training trials from CSV data
+    shuffledTrials.forEach((trial, index) => {
+        const trainingTrial = createTrainingTrial(trial, index + 1, participant_id, study_id, session_id, condition);
+        timeline.push(trainingTrial);
+    });
 
-    let category;
-
-    // Create trials
-    let trialCounter = 0;
-    for (const shape of shapes) {
-        for (const color of colors) {
-            if (shape <= 9) {
-                category = 1
-            } else {
-                category = 2
-            }
-            image = `stimuli/continuous_stimuli/shape_${shape}.png`
-            image_display = "<img src=" + image + ' style="width:400px;"></img>'
-            const trial = createTrainingTrial(category, shape, image_display, novel_words[category], color, trialCounter);
-            timeline.push(trial);
-            trialCounter++;
-        }
-    }
-    
     timeline.push(save_data);
     
     // Run the experiment
