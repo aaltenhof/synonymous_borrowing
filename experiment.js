@@ -137,6 +137,12 @@ const instructions = {
 
 // Function to create training trial
 function createTrainingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
+    // additional console logging for debugging 
+    console.log('Creating trial with data:', trialData);
+    console.log('Shape value:', trialData.shape);
+    console.log('Color value:', trialData.color);
+    console.log('Word value:', trialData.word);
+
     return {
         type: jsPsychImageColorTextFeedback, 
         image: `stimuli/continuous_stimuli/shape_${trialData.shape}.png`,
