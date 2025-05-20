@@ -114,10 +114,12 @@ const save_data = {
                 (trial.word !== undefined || trial.correct_answer !== undefined));
             
             // create headers
-            const headers = 'participant_id,shape,filename,color,word,response,rt,isRight,trial_type';
+            const headers = 'participant_id,trial_num,shape,filename,color,word,response,rt,isRight,trial_type';
             
             // map trial data 
             const rows = relevantTrials.map(trial => {
+                const trial_num = trial.trial_number
+
                 // extract the filename from the image path
                 const imagePath = trial.image || '';
                 const filename = imagePath.split('/').pop() || '';
@@ -130,9 +132,9 @@ const save_data = {
                 const isRight = (String(trial.response) === String(trial.correct_answer || trial.word)) ? 'true' : 'false';
                 
                 // determine trial type
-                const trialType = trial.trial_type || '';
+                const trialType = trial.trial_kind || '';
                 
-                return `${trial.participant_id || participant_id},${trial.shape || ''},${filename},${trial.color || ''},${trial.word || trial.correct_answer || ''},${response},${rt},${isRight},${trialType}`;
+                return `${trial.participant_id || participant_id}, ${trial_num} ,${trial.shape || ''},${filename},${trial.color || ''},${trial.word || trial.correct_answer || ''},${response},${rt},${isRight},${trialType}`;
             });
 
             // Return the CSV string
@@ -193,7 +195,7 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
         feedback_duration: 2000,
         image_width: 400,
         data: {
-            trial_type: 'training',
+            trial_kind: 'training',
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
@@ -220,7 +222,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         prompt: '',
         image_width: 400,
         data: {
-            trial_type: 'test', 
+            trial_kind: 'test', 
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
