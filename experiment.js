@@ -1,7 +1,8 @@
 // Define global variables
-var participant_id = generateParticipantId(); // Generate random ID at the start
+var participant_id = generateParticipantId(); 
 var novel_words = ["tinch", "neft", "bine", "palt"];
 var condition;
+var jsPsychInstance;
 
 // Function to generate a random participant ID
 function generateParticipantId() {
@@ -90,20 +91,21 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
     },
     on_finish: function(data) {
         if(data.response == 1) {
-            jsPsych.endExperiment('Thank you for your time. The experiment has been ended.');
+            jsPsychInstance.endExperiment('Thank you for your time. The experiment has been ended.');
         }
     }
 };
 
-// Configure save_data trial
 const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
-    filename: () => `borrowing_continuous_${participant_id}.csv`, 
-    data_string: () => {
+    filename: function() {
+        return `borrowing_continuous_${participant_id}.csv`;
+    },
+    data_string: function() {
         try {
-            const allTrials = jsPsych.data.get().values();
+            const allTrials = jsPsychInstance.data.get().values();
             
             // Filter trials that are either training or testing trials
             const relevantTrials = allTrials.filter(trial => 
@@ -111,24 +113,31 @@ const save_data = {
                 trial.trial_type === 'testing_trial');
 
             // Create headers
-            const headers = 'shape,filename,color,word,trial_type';
+            const headers = 'participant_id,shape,filename,color,word,response,rt,isRight,trial_type';
             
-            // map trial data to the required format
+            // Map trial data to the required format
             const rows = relevantTrials.map(trial => {
-                // Extract the filename from the image path (handling potential undefined)
+                // Extract the filename from the image path 
                 const imagePath = trial.image || '';
                 const filename = imagePath.split('/').pop() || '';
+                
+                // Get response and reaction time
+                const response = trial.response || '';
+                const rt = trial.rt || '';
+                
+                // Check if response is correct
+                const isRight = (trial.response === trial.correct_answer) ? 'true' : 'false';
                 
                 // Determine if this is a training or testing trial
                 const trialType = trial.trial_type || '';
                 
-                return `${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${trialType}`;
+                return `${trial.participant_id || participant_id},${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${response},${rt},${isRight},${trialType}`;
             });
 
             return [headers, ...rows].join('\n');
         } catch (error) {
             console.error("Error generating data string:", error);
-            return "shape,filename,color,word,trial_type\nerror,error,error,error,error";
+            return "participant_id,shape,filename,color,word,response,rt,isRight,trial_type\nerror,error,error,error,error,error,error,error,error";
         }
     },
     on_finish: function() {
@@ -156,7 +165,7 @@ const instructions2 = {
     stimulus: `
         <div style="width: 800px;">
             <h2>Instructions</h2>
-            <p>UPDATE? Now you will apply your knowledge of the new categories. You will type in the text box to label the object, but you'll no longer get feedback. If you aren't sure, still make your best guess!</p>
+            <p>Now you will apply your knowledge of the new categories. You will type in the text box to label the object, but you'll no longer get feedback. If you aren't sure, still make your best guess!</p>
             <p>Click "Begin" when you're ready to start.</p>
         </div>
     `,
@@ -207,7 +216,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         prompt: '',
         image_width: 400,
         data: {
-            trial_type: 'testing_trial', 
+            trial_type: 'testing_trial', // Changed to 'testing_trial'
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
@@ -223,14 +232,15 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
 
 // initialize jsPsych when document is ready
 document.addEventListener('DOMContentLoaded', async () => {
-    // initialize jsPsych
     const jsPsych = initJsPsych({
         on_finish: function() {
             console.log('Experiment finished');
         }
     });
+    
+    jsPsychInstance = jsPsych;
 
-    // get participant info - using the global participant_id
+    // get participant info
     var study_id = jsPsych.data.getURLVariable('STUDY_ID');
     var session_id = jsPsych.data.getURLVariable('SESSION_ID');
     
@@ -275,8 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     timeline.push(instructions2);
 
-    // testing trials will go here
-    // for now create testing trials from the same CSV data to test 
+    // for now, create testing trials from the same CSV data
     shuffledTrials.forEach((trial, index) => {
         const testingTrial = createTestingTrial(trial, index + 1, participant_id, study_id, session_id, condition);
         timeline.push(testingTrial);
