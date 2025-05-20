@@ -98,17 +98,28 @@ const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "XXXXXXXX",
-    filename: () => `borrowing_continuous_${participant_id}.csv`,
+    filename: () => `borrowing_continuous_${participant_id}.csv`, // Original filename format
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-        const imageTrials = allTrials
-            .filter(trial => trial.trial_type === 'survey-text-feedback')
-            .flatMap(trial => [trial[0], trial[1]]);
+        
+        // Filter trials that are either training or testing trials
+        const relevantTrials = allTrials.filter(trial => 
+            trial.trial_type === 'training_trial' || 
+            trial.trial_type === 'testing_trial');
 
-        const headers = 'participant_id,study_id,session_id,trial_number,condition,category,shape,color,word,response,rt';
-        const rows = imageTrials.map(trial => {
-            const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id},${trial.study_id || ''},${trial.session_id || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.shape},${trial.color},${trial.response},${trial.rt}`;
+        // Create headers including trial_type as requested
+        const headers = 'shape,filename,color,word,trial_type';
+        
+        // Map trial data to the required format
+        const rows = relevantTrials.map(trial => {
+            // Extract the filename from the image path (handling potential undefined)
+            const imagePath = trial.image || '';
+            const filename = imagePath.split('/').pop() || '';
+            
+            // Determine if this is a training or testing trial
+            const trialType = trial.trial_type || '';
+            
+            return `${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${trialType}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -180,7 +191,7 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
 // Function to create testing trial
 function createTestingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
     // additional console logging for debugging 
-    console.log('Creating trial with data:', trialData);
+    console.log('Creating test trial with data:', trialData);
 
     return {
         type: jsPsychImageColorText, 
@@ -190,7 +201,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         prompt: '',
         image_width: 400,
         data: {
-            trial_type: 'training_trial',
+            trial_type: 'testing_trial',
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,

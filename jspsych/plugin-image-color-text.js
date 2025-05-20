@@ -88,14 +88,14 @@ const jsPsychImageColorText = (function (jspsych) {
           const aspectRatio = img.height / img.width;
           canvas.height = trial.image_width * aspectRatio;
   
-          // Clear the canvas first
+          // Clear the canvas 
           ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-          // Simple approach: Fill with color first, then draw the image on top
+          // Fill with color first, then draw the image on top
           ctx.fillStyle = trial.color;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
-          // Draw the image on top - the transparent parts will show the color beneath
+          // Draw the image on top
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
         img.src = trial.image;
