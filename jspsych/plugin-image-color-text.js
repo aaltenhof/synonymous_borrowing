@@ -69,7 +69,6 @@ const jsPsychImageColorText = (function (jspsych) {
               <input type="text" id="jspsych-image-color-text-textbox" 
                      style="font-size: 18px; padding: 10px; width: 300px; text-align: center; border: 2px solid #ccc; border-radius: 5px;"
                      ${trial.require_response ? '' : 'placeholder="Press Enter to continue"'}>
-              <p style="font-size: 14px; color: #666; margin-top: 10px;">Press Enter to submit</p>
             </div>
           </div>
         `;
@@ -81,13 +80,6 @@ const jsPsychImageColorText = (function (jspsych) {
         const ctx = canvas.getContext('2d');
         const textbox = display_element.querySelector('#jspsych-image-color-text-textbox');
   
-        // Enable submit button when text is entered (if require_response is true)
-        if (trial.require_response) {
-          textbox.addEventListener('input', () => {
-            // The Enter key will still be disabled if no text is entered
-            // but there's no button to disable
-          });
-        }
   
         // Load and draw the image
         const img = new Image();
@@ -100,7 +92,6 @@ const jsPsychImageColorText = (function (jspsych) {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
   
           // Simple approach: Fill with color first, then draw the image on top
-          // This works because the shape has transparent fill and opaque outline
           ctx.fillStyle = trial.color;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
@@ -141,7 +132,7 @@ const jsPsychImageColorText = (function (jspsych) {
             correct_answer: trial.correct_answer,
             image: trial.image,
             color: trial.color,
-            stimulus: trial.image  // For compatibility with jsPsych data conventions
+            stimulus: trial.image 
           };
   
           // End trial immediately
