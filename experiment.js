@@ -1,6 +1,16 @@
+// Define global variables
+var participant_id = generateParticipantId(); // Generate random ID at the start
+var novel_words = ["tinch", "neft", "bine", "palt"];
+var condition;
 
-novel_words = ["tinch", "neft", "bine", "palt"];
-novel_words = shuffle(novel_words)
+// Function to generate a random participant ID
+function generateParticipantId() {
+    const baseId = Math.floor(Math.random() * 999) + 1;
+    return `participant${baseId}`;
+}
+
+// Shuffle the novel words
+novel_words = shuffle(novel_words);
 
 // Set condition
 if (Math.floor(Math.random() * 2) == 0) {
@@ -54,14 +64,6 @@ function duplicateArray(arr) {
     }, []);
 }
 
-shuffle(novel_words);
-
-// Generate participant ID
-function generateParticipantId() {
-    const baseId = Math.floor(Math.random() * 999) + 1;
-    return `participant${baseId}`;
-}
-
 // Create consent trial
 const consent = {
     type: jsPsychHtmlButtonResponse,
@@ -97,38 +99,42 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
 const save_data = {
     type: jsPsychPipe,
     action: "save",
-    experiment_id: "XXXXXXXX",
-    filename: () => `borrowing_continuous_${participant_id}.csv`, // Original filename format
+    experiment_id: "sPY6vEQmdfQL",
+    filename: () => `borrowing_continuous_${participant_id}.csv`, 
     data_string: () => {
-        const allTrials = jsPsych.data.get().values();
-        
-        // Filter trials that are either training or testing trials
-        const relevantTrials = allTrials.filter(trial => 
-            trial.trial_type === 'training_trial' || 
-            trial.trial_type === 'testing_trial');
-
-        // Create headers including trial_type as requested
-        const headers = 'shape,filename,color,word,trial_type';
-        
-        // Map trial data to the required format
-        const rows = relevantTrials.map(trial => {
-            // Extract the filename from the image path (handling potential undefined)
-            const imagePath = trial.image || '';
-            const filename = imagePath.split('/').pop() || '';
+        try {
+            const allTrials = jsPsych.data.get().values();
             
-            // Determine if this is a training or testing trial
-            const trialType = trial.trial_type || '';
-            
-            return `${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${trialType}`;
-        });
+            // Filter trials that are either training or testing trials
+            const relevantTrials = allTrials.filter(trial => 
+                trial.trial_type === 'training_trial' || 
+                trial.trial_type === 'testing_trial');
 
-        return [headers, ...rows].join('\n');
+            // Create headers
+            const headers = 'shape,filename,color,word,trial_type';
+            
+            // map trial data to the required format
+            const rows = relevantTrials.map(trial => {
+                // Extract the filename from the image path (handling potential undefined)
+                const imagePath = trial.image || '';
+                const filename = imagePath.split('/').pop() || '';
+                
+                // Determine if this is a training or testing trial
+                const trialType = trial.trial_type || '';
+                
+                return `${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${trialType}`;
+            });
+
+            return [headers, ...rows].join('\n');
+        } catch (error) {
+            console.error("Error generating data string:", error);
+            return "shape,filename,color,word,trial_type\nerror,error,error,error,error";
+        }
     },
-    on_finish: () => {
+    on_finish: function() {
         window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
     }
 };
-
 
 const instructions = {
     type: jsPsychHtmlButtonResponse,
@@ -201,7 +207,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         prompt: '',
         image_width: 400,
         data: {
-            trial_type: 'testing_trial',
+            trial_type: 'testing_trial', 
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
@@ -224,26 +230,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // get participant info
-    var participant_id = jsPsych.data.getURLVariable('PROLIFIC_PID') || generateParticipantId();
+    // get participant info - using the global participant_id
     var study_id = jsPsych.data.getURLVariable('STUDY_ID');
     var session_id = jsPsych.data.getURLVariable('SESSION_ID');
+    
+    // If PROLIFIC_PID is provided, override the random generated ID
+    var prolific_pid = jsPsych.data.getURLVariable('PROLIFIC_PID');
+    if (prolific_pid) {
+        participant_id = prolific_pid;
+    }
 
     jsPsych.data.addProperties({
         participant_id: participant_id,
         study_id: study_id,
-        session_id: session_id
-    });
-
-    // set condition
-    let condition;
-    if (Math.floor(Math.random() * 2) == 0) {
-        condition = "between_categories";
-    } else {
-        condition = "within_category";
-    }
-
-    jsPsych.data.addProperties({
+        session_id: session_id,
         condition: condition
     });
 
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         timeline.push(trainingTrial);
     });
 
-    timeline.push(instructions2)
+    timeline.push(instructions2);
 
     // testing trials will go here
     // for now create testing trials from the same CSV data to test 
