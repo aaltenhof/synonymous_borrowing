@@ -119,13 +119,27 @@ const save_data = {
 };
 
 
-// Create instructions trial
 const instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="width: 800px;">
             <h2>Instructions</h2>
             <p>In this task, you will learn about some unfamiliar categories. You will type in the text box to label the unfamiliar categories. If you aren't sure at first, make your best guess; you will get feedback that allows you to learn.</p>
+            <p>Click "Begin" when you're ready to start.</p>
+        </div>
+    `,
+    choices: ['Begin'],
+    data: {
+        trial_type: 'instructions'
+    }
+};
+
+const instructions2 = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="width: 800px;">
+            <h2>Instructions</h2>
+            <p>UPDATE? Now you will apply your knowledge of the new categories. You will type in the text box to label the object, but you'll no longer get feedback. If you aren't sure, still make your best guess!</p>
             <p>Click "Begin" when you're ready to start.</p>
         </div>
     `,
@@ -147,6 +161,33 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
         correct_answer: trialData.word,
         prompt: '',
         feedback_duration: 2000,
+        image_width: 400,
+        data: {
+            trial_type: 'training_trial',
+            trial_number: trialNumber,
+            participant_id: participantId,
+            study_id: studyId,
+            session_id: sessionId,
+            condition: condition,
+            category: trialData.category,
+            word: trialData.word,
+            shape: trialData.shape,
+            color: trialData.color
+        }
+    };
+}
+
+// Function to create testing trial
+function createTestingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
+    // additional console logging for debugging 
+    console.log('Creating trial with data:', trialData);
+
+    return {
+        type: jsPsychImageColorText, 
+        image: `stimuli/continuous_stimuli/${trialData.filename}`,
+        color: trialData.color,
+        correct_answer: trialData.word,
+        prompt: '',
         image_width: 400,
         data: {
             trial_type: 'training_trial',
@@ -221,6 +262,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         timeline.push(trainingTrial);
     });
 
+    timeline.push(instructions2)
+
+    // testing trials will go here
+    // for now create testing trials from the same CSV data to test 
+    shuffledTrials.forEach((trial, index) => {
+        const testingTrial = createTestingTrial(trial, index + 1, participant_id, study_id, session_id, condition);
+        timeline.push(testingTrial);
+    });
+ 
     timeline.push(save_data);
     
     // Run the experiment
