@@ -34,12 +34,6 @@ const jsPsychImageColorText = (function (jspsych) {
           default: 400,
           description: 'Width of the image in pixels.'
         },
-        button_text: {
-          type: jspsych.ParameterType.STRING,
-          pretty_name: 'Button text',
-          default: 'Submit',
-          description: 'Text for the submit button.'
-        },
         case_sensitive: {
           type: jspsych.ParameterType.BOOL,
           pretty_name: 'Case sensitive',
@@ -73,11 +67,9 @@ const jsPsychImageColorText = (function (jspsych) {
             <div style="margin: 20px 0;">
               ${trial.prompt && `<p style="font-size: 18px;">${trial.prompt}</p>`}
               <input type="text" id="jspsych-image-color-text-textbox" 
-                     style="font-size: 18px; padding: 10px; width: 300px; text-align: center; border: 2px solid #ccc; border-radius: 5px;">
-              <br><br>
-              <button id="jspsych-image-color-text-submit" 
-                      style="font-size: 18px; padding: 10px 20px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;" 
-                      ${trial.require_response ? 'disabled' : ''}>${trial.button_text}</button>
+                     style="font-size: 18px; padding: 10px; width: 300px; text-align: center; border: 2px solid #ccc; border-radius: 5px;"
+                     ${trial.require_response ? '' : 'placeholder="Press Enter to continue"'}>
+              <p style="font-size: 14px; color: #666; margin-top: 10px;">Press Enter to submit</p>
             </div>
           </div>
         `;
@@ -88,13 +80,12 @@ const jsPsychImageColorText = (function (jspsych) {
         const canvas = display_element.querySelector('#jspsych-image-color-text-canvas');
         const ctx = canvas.getContext('2d');
         const textbox = display_element.querySelector('#jspsych-image-color-text-textbox');
-        const submitButton = display_element.querySelector('#jspsych-image-color-text-submit');
   
         // Enable submit button when text is entered (if require_response is true)
         if (trial.require_response) {
           textbox.addEventListener('input', () => {
-            submitButton.disabled = textbox.value.trim().length === 0;
-            submitButton.style.backgroundColor = textbox.value.trim().length === 0 ? '#cccccc' : '#4CAF50';
+            // The Enter key will still be disabled if no text is entered
+            // but there's no button to disable
           });
         }
   
@@ -150,7 +141,7 @@ const jsPsychImageColorText = (function (jspsych) {
             correct_answer: trial.correct_answer,
             image: trial.image,
             color: trial.color,
-            stimulus: trial.image  
+            stimulus: trial.image  // For compatibility with jsPsych data conventions
           };
   
           // End trial immediately
@@ -158,10 +149,12 @@ const jsPsychImageColorText = (function (jspsych) {
         };
   
         // Event listeners
-        submitButton.addEventListener('click', handleSubmit);
         textbox.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') {
-            handleSubmit();
+            // Only allow submission if there's a response or if response isn't required
+            if (!trial.require_response || textbox.value.trim().length > 0) {
+              handleSubmit();
+            }
           }
         });
       }
