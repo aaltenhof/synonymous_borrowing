@@ -3,6 +3,7 @@ var participant_id = generateParticipantId();
 var novel_words = ["tinch", "neft", "bine", "palt"];
 var condition;
 var jsPsychInstance;
+var global_trial_number = 0;
 
 // Function to generate a random participant ID
 function generateParticipantId() {
@@ -108,7 +109,7 @@ const save_data = {
             // get all trials
             const allTrials = jsPsychInstance.data.get().values();
             
-            // get only the image trials with responses 
+            // filter to get only the image trials with responses 
             const relevantTrials = allTrials.filter(trial => 
                 trial.response !== undefined && 
                 (trial.word !== undefined || trial.correct_answer !== undefined));
@@ -185,6 +186,7 @@ const instructions2 = {
 function createTrainingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
     // additional console logging for debugging 
     console.log('Creating trial with data:', trialData);
+    global_trial_number = global_trial_number + 1;
 
     return {
         type: jsPsychImageColorTextFeedback, 
@@ -196,7 +198,7 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
         image_width: 400,
         data: {
             trial_kind: 'training',
-            trial_number: trialNumber,
+            trial_number: global_trial_number,
             participant_id: participantId,
             study_id: studyId,
             session_id: sessionId,
@@ -213,6 +215,7 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
 function createTestingTrial(trialData, trialNumber, participantId, studyId, sessionId, condition) {
     // additional console logging for debugging 
     console.log('Creating test trial with data:', trialData);
+    global_trial_number = global_trial_number + 1;
 
     return {
         type: jsPsychImageColorText, 
@@ -223,7 +226,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         image_width: 400,
         data: {
             trial_kind: 'test', 
-            trial_number: trialNumber,
+            trial_number: global_trial_number,
             participant_id: participantId,
             study_id: studyId,
             session_id: sessionId,
