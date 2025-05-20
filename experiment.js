@@ -148,7 +148,7 @@ const save_data = {
     },
     on_finish: function() {
         console.log("Data saving complete, redirecting to Prolific");
-        //window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
+        window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
     }
 };
 
