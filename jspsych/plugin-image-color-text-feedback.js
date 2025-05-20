@@ -1,4 +1,3 @@
-
 const jsPsychImageColorTextFeedback = (function (jspsych) {
   'use strict';
 
@@ -41,12 +40,6 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
         default: 400,
         description: 'Width of the image in pixels.'
       },
-      button_text: {
-        type: jspsych.ParameterType.STRING,
-        pretty_name: 'Button text',
-        default: 'Submit',
-        description: 'Text for the submit button.'
-      },
       case_sensitive: {
         type: jspsych.ParameterType.BOOL,
         pretty_name: 'Case sensitive',
@@ -81,10 +74,6 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
             ${trial.prompt && `<p style="font-size: 18px;">${trial.prompt}</p>`}
             <input type="text" id="jspsych-image-color-text-feedback-textbox" 
                    style="font-size: 18px; padding: 10px; width: 300px; text-align: center; border: 2px solid #ccc; border-radius: 5px;">
-            <br><br>
-            <button id="jspsych-image-color-text-feedback-submit" 
-                    style="font-size: 18px; padding: 10px 20px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;" 
-                    ${trial.require_response ? 'disabled' : ''}>${trial.button_text}</button>
           </div>
           <div id="jspsych-image-color-text-feedback-feedback" style="margin-top: 20px; font-size: 18px; font-weight: bold; height: 50px;"></div>
         </div>
@@ -96,16 +85,7 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
       const canvas = display_element.querySelector('#jspsych-image-color-text-feedback-canvas');
       const ctx = canvas.getContext('2d');
       const textbox = display_element.querySelector('#jspsych-image-color-text-feedback-textbox');
-      const submitButton = display_element.querySelector('#jspsych-image-color-text-feedback-submit');
       const feedbackDiv = display_element.querySelector('#jspsych-image-color-text-feedback-feedback');
-
-      // Enable submit button when text is entered (if require_response is true)
-      if (trial.require_response) {
-        textbox.addEventListener('input', () => {
-          submitButton.disabled = textbox.value.trim().length === 0;
-          submitButton.style.backgroundColor = textbox.value.trim().length === 0 ? '#cccccc' : '#4CAF50';
-        });
-      }
 
       // Load and draw the image
       const img = new Image();
@@ -132,15 +112,15 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
 
       // Handle form submission
       const handleSubmit = () => {
+        // Don't submit if no response and required
+        if (trial.require_response && textbox.value.trim().length === 0) {
+          return;
+        }
+
         const endTime = performance.now();
         const rt = endTime - startTime;
         const response = textbox.value.trim();
         
-        // Don't submit if no response and required
-        if (trial.require_response && !response) {
-          return;
-        }
-
         // Check if answer is correct
         let correct = false;
         if (trial.case_sensitive) {
@@ -158,8 +138,6 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
 
         // Disable input during feedback
         textbox.disabled = true;
-        submitButton.disabled = true;
-        submitButton.style.backgroundColor = '#cccccc';
 
         // Prepare trial data
         const trialData = {
@@ -178,9 +156,8 @@ const jsPsychImageColorTextFeedback = (function (jspsych) {
         }, trial.feedback_duration);
       };
 
-      // Event listeners
-      submitButton.addEventListener('click', handleSubmit);
-      textbox.addEventListener('keypress', (e) => {
+      // Event listener for Enter key submission
+      textbox.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           handleSubmit();
         }
