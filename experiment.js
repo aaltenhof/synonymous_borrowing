@@ -105,100 +105,45 @@ const save_data = {
     },
     data_string: function() {
         try {
-            // Log all available data for debugging
-            console.log("All data:", jsPsychInstance.data.get().values());
-            
-            // Get all trials
+            // get all trials
             const allTrials = jsPsychInstance.data.get().values();
             
-            // Check what trial types we have available
-            const trialTypes = new Set();
-            allTrials.forEach(trial => {
-                if (trial.trial_type) {
-                    trialTypes.add(trial.trial_type);
-                }
-            });
-            console.log("Available trial types:", Array.from(trialTypes));
+            // get only the image trials with responses 
+            const relevantTrials = allTrials.filter(trial => 
+                trial.response !== undefined && 
+                (trial.word !== undefined || trial.correct_answer !== undefined));
             
-            // Look at all properties of the first few trials
-            console.log("First trial properties:", 
-                        allTrials.length > 0 ? Object.keys(allTrials[0]) : "No trials");
-            
-            // Get training and testing trials 
-            const relevantTrials = allTrials.filter(trial => {
-                // Log each trial and its type to debug
-                console.log("Trial:", trial);
-                
-                if (trial.trial_type) {
-                    console.log(`Trial type: ${trial.trial_type}`);
-                }
-                
-                // Check if it's related to our expected types or contains key data
-                return trial.trial_type === 'training_trial' || 
-                       trial.trial_type === 'testing_trial' ||
-                       (trial.word && trial.shape); // Backup check for relevant data
-            });
-            
-            console.log("Filtered trials count:", relevantTrials.length);
-            
-            // If we don't have any relevant trials by type, try to get all trials with response data
-            if (relevantTrials.length === 0) {
-                console.log("No trials with expected trial_type found. Trying alternative filter.");
-                const alternativeTrials = allTrials.filter(trial => 
-                    trial.response !== undefined && trial.word !== undefined);
-                
-                if (alternativeTrials.length > 0) {
-                    console.log("Found trials with response data:", alternativeTrials.length);
-                    relevantTrials.push(...alternativeTrials);
-                }
-            }
-            
-            // Create headers to match demo_data.csv structure
+            // create headers
             const headers = 'participant_id,shape,filename,color,word,response,rt,isRight,trial_type';
             
-            // If still no relevant trials, create a diagnostic row to see what's happening
-            if (relevantTrials.length === 0) {
-                console.error("No relevant trials found after all filtering attempts");
-                return headers + "\nNO_TRIALS_FOUND,,,,,,,," + 
-                       (allTrials.length > 0 ? "available_trials:" + allTrials.length : "no_trials_at_all");
-            }
-            
-            // Map trial data to the required format
-            const rows = relevantTrials.map((trial, index) => {
-                console.log(`Processing trial ${index}:`, trial);
-                
-                // Extract the filename from the image path (handling potential undefined)
+            // map trial data 
+            const rows = relevantTrials.map(trial => {
+                // extract the filename from the image path
                 const imagePath = trial.image || '';
                 const filename = imagePath.split('/').pop() || '';
                 
-                // Get response and reaction time
-                const response = trial.response || '';
-                const rt = trial.rt || '';
+                // get response and reaction time
+                const response = trial.response !== undefined ? String(trial.response) : '';
+                const rt = trial.rt !== undefined ? String(trial.rt) : '';
                 
-                // Check if response is correct
-                const isRight = (trial.response === trial.correct_answer) ? 'true' : 'false';
+                // check if response is correct
+                const isRight = (String(trial.response) === String(trial.correct_answer || trial.word)) ? 'true' : 'false';
                 
-                // Determine the trial type
-                let trialType = trial.trial_type || '';
-                // Fallback logic for trial type if missing
-                if (!trialType) {
-                    trialType = index < relevantTrials.length / 2 ? 'training_trial' : 'testing_trial';
-                }
+                // determine trial type
+                const trialType = trial.trial_type || '';
                 
-                return `${trial.participant_id || participant_id},${trial.shape || ''},${filename},${trial.color || ''},${trial.word || ''},${response},${rt},${isRight},${trialType}`;
+                return `${trial.participant_id || participant_id},${trial.shape || ''},${filename},${trial.color || ''},${trial.word || trial.correct_answer || ''},${response},${rt},${isRight},${trialType}`;
             });
 
             // Return the CSV string
             return [headers, ...rows].join('\n');
         } catch (error) {
             console.error("Error generating data string:", error);
-            console.error("Error stack:", error.stack);
             return "participant_id,shape,filename,color,word,response,rt,isRight,trial_type\nERROR," + 
                    error.toString() + ",,,,,,,";
         }
     },
     on_finish: function() {
-        // Log a success message before redirecting
         console.log("Data saving complete, redirecting to Prolific");
         //window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
     }
@@ -248,7 +193,7 @@ function createTrainingTrial(trialData, trialNumber, participantId, studyId, ses
         feedback_duration: 2000,
         image_width: 400,
         data: {
-            trial_type: 'training_trial',
+            trial_type: 'training',
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
@@ -275,7 +220,7 @@ function createTestingTrial(trialData, trialNumber, participantId, studyId, sess
         prompt: '',
         image_width: 400,
         data: {
-            trial_type: 'testing_trial', // Changed to 'testing_trial'
+            trial_type: 'test', 
             trial_number: trialNumber,
             participant_id: participantId,
             study_id: studyId,
