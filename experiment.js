@@ -132,7 +132,7 @@ const save_data = {
         }
     },
     on_finish: function() {
-        window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
+        //window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP";
     }
 };
 
