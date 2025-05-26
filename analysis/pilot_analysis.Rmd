@@ -12,6 +12,7 @@ library(here)
 library(lme4)
 library(broom.mixed)
 library(tidyboot)
+library(ggthemes)
 ```
 
 ```{r, eval = FALSE}
@@ -32,7 +33,7 @@ data <- read_csv(here("../data/pilot_data.csv")) %>%
          stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
   mutate(typicality = typicality - 1)
 
-data %>%
+p <- data %>%
   group_by(condition, participant_id) %>%
   mutate(prop_atypical = sum(typicality)/n()) %>%
   ungroup() %>%
@@ -41,7 +42,26 @@ data %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
-  ylab("proportion atypical choices")
+  ylab("proportion atypical choices") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_typicality_effect.png"),
+  bg = "transparent",
+  height = 5,
+  width = 5
+)
 ```
 
 Do people tend to choose more atypical objects when prompted with a novel word?
@@ -60,7 +80,7 @@ data <- data %>%
   mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
   ungroup() 
 
-data %>%
+p <- data %>%
   group_by(condition, participant_id, trial_number) %>%
   mutate(prop_distinct = sum(distinct_types)/n()) %>%
   ungroup() %>%
@@ -69,7 +89,26 @@ data %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
-  ylab("proportion choices of multiple types")
+  ylab("proportion choices of multiple types") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_types_effect.png"),
+  bg = "transparent",
+  height = 5,
+  width = 5
+)
   
 ```
 
@@ -84,7 +123,7 @@ glmer(distinct_types ~ condition + (1|participant_id), family = "binomial",
 ```
 
 ```{r}
-data %>%
+p <- data %>%
   group_by(condition, participant_id, category) %>%
   mutate(prop_atypical = sum(typicality)/n()) %>%
   ungroup() %>%
@@ -94,13 +133,33 @@ data %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
-  ylab("proportion atypical choices")
+  ylab("proportion atypical choices") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  strip.background =element_rect(fill="transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_atypical_by_item_effect.png"),
+  bg = "transparent",
+  height = 5,
+  width = 7
+)
 ```
 
 Examining typicality across stimulus types.
 
 ```{r}
-data %>%
+p <- data %>%
   group_by(condition, participant_id, category, trial_number) %>%
   mutate(prop_distinct = sum(distinct_types)/n()) %>%
   ungroup() %>%
@@ -110,7 +169,27 @@ data %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
-  ylab("proportion choices of multiple types")
+  ylab("proportion choices of multiple types") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  strip.background =element_rect(fill="transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_types_by_item_effect.png"),
+  bg = "transparent",
+  height = 5,
+  width = 7
+)
 ```
 
 Examining distinct type choices across stimulus types.
