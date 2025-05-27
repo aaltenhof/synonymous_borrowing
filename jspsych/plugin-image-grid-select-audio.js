@@ -95,6 +95,19 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
         max_image_width: {
             type: jspsych.ParameterType.INT,
             default: 100
+        },
+        trial_ends_after_audio: {
+            type: jspsych.ParameterType.BOOL,
+            pretty_name: "Trial ends after audio",
+            default: false
+          },
+          /** If true, then responses are allowed while the audio is playing. If false, then the audio must finish
+           * playing before a keyboard response is accepted. Once the audio has played all the way through, a valid
+           * keyboard response is allowed (including while the audio is being re-played via on-screen playback controls).
+           */
+          response_allowed_while_playing: {
+            type: jspsych.ParameterType.BOOL,
+            default: false
         }
     }
   };
@@ -143,6 +156,23 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	        this.end_trial();
 	      }
 	    };
+        if (trial.trial_ends_after_audio) {
+	        this.audio.addEventListener("ended", this.end_trial);
+	      }
+	      if (trial.prompt !== null) {
+	        display_element.innerHTML = trial.prompt;
+	      }
+	      this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
+	      if (trial.response_allowed_while_playing) {
+	        this.setup_keyboard_listener();
+	      } else if (!trial.trial_ends_after_audio) {
+	        this.audio.addEventListener("ended", this.enable_buttons); // check this
+	      }
+	      if (trial.trial_duration !== null) {
+	        this.jsPsych.pluginAPI.setTimeout(() => {
+	          this.end_trial();
+	        }, trial.trial_duration);
+	      }
 	    // method to end trial when it is time
 	    this.end_trial = () => {
 	      this.audio.stop();
