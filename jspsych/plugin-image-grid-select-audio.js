@@ -292,7 +292,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
         if (this.context !== null) {
           this.startTime = this.context.currentTime;
         }
-        audio.play();
+        this.audio.play();
     }
   }
 
