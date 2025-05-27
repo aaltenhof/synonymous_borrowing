@@ -326,7 +326,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
         });
     
     }); 
-  }
+  }}
 
   ImageGridSelectAudioPlugin.info = info;
   return ImageGridSelectAudioPlugin;
