@@ -200,16 +200,16 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
       
       this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
       if (trial.response_allowed_while_playing) {
-        this.setup_keyboard_listener();
+        this.enable_buttons_without_delay();
       } else if (!trial.trial_ends_after_audio) {
-        this.audio.addEventListener("ended", this.enable_buttons); // check this
+        this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
       }
       if (trial.trial_duration !== null) {
         this.jsPsych.pluginAPI.setTimeout(() => {
           this.end_trial();
         }, trial.trial_duration);
       }
-      
+
       // Clear display and create hidden container
       display_element.innerHTML = '';
       const mainContainer = document.createElement('div');
