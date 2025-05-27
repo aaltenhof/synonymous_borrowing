@@ -10,7 +10,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 
     const info = {
         name: 'image-grid-select-audio',
-        version,
         parameters: {
         stimulus: {
 	        type: jspsych.ParameterType.AUDIO,

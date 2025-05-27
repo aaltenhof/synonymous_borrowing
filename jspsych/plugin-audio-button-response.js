@@ -71,7 +71,9 @@ var jsPsychAudioButtonResponse=function(e){
 			(this,e),this.jsPsych=t
 		}
 		var n,a,r;
-		return n=e,(a=[{key:"trial",value:function(e,t,n){
+		return n=e,(a=[{
+			key:"trial",
+			value:function(e,t,n){
 			var a,r,i=this,
 			o=this.jsPsych.pluginAPI.audioContext(),
 			s={

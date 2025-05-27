@@ -189,7 +189,7 @@ function createImageGridTrial(category, trialNumber) {
     
     return {
         type: jsPsychImageGridSelectAudio,
-        stimulus: `audio/pick2${category}1.wav`,
+        stimulus: `audio/pick2_${category}1.wav`,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
         required_clicks: 2,
