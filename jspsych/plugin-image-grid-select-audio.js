@@ -96,6 +96,10 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
             type: jspsych.ParameterType.INT,
             default: 100
         },
+        trial_duration: {
+            type: jspsych.ParameterType.INT,
+            default: null
+          },
         trial_ends_after_audio: {
             type: jspsych.ParameterType.BOOL,
             pretty_name: "Trial ends after audio",
@@ -156,23 +160,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	        this.end_trial();
 	      }
 	    };
-        if (trial.trial_ends_after_audio) {
-	        this.audio.addEventListener("ended", this.end_trial);
-	      }
-	      if (trial.prompt !== null) {
-	        display_element.innerHTML = trial.prompt;
-	      }
-	      this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
-	      if (trial.response_allowed_while_playing) {
-	        this.setup_keyboard_listener();
-	      } else if (!trial.trial_ends_after_audio) {
-	        this.audio.addEventListener("ended", this.enable_buttons); // check this
-	      }
-	      if (trial.trial_duration !== null) {
-	        this.jsPsych.pluginAPI.setTimeout(() => {
-	          this.end_trial();
-	        }, trial.trial_duration);
-	      }
+        
 	    // method to end trial when it is time
 	    this.end_trial = () => {
 	      this.audio.stop();
@@ -206,6 +194,22 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
       const start_time = performance.now();
       let trial_data = [];
 
+      if (trial.trial_ends_after_audio) {
+        this.audio.addEventListener("ended", this.end_trial);
+      }
+      
+      this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
+      if (trial.response_allowed_while_playing) {
+        this.setup_keyboard_listener();
+      } else if (!trial.trial_ends_after_audio) {
+        this.audio.addEventListener("ended", this.enable_buttons); // check this
+      }
+      if (trial.trial_duration !== null) {
+        this.jsPsych.pluginAPI.setTimeout(() => {
+          this.end_trial();
+        }, trial.trial_duration);
+      }
+      
       // Clear display and create hidden container
       display_element.innerHTML = '';
       const mainContainer = document.createElement('div');
