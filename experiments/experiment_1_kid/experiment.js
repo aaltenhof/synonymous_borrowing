@@ -118,7 +118,7 @@ var start_button = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '',
     choices: ['smiley'],
-    button_html: '<img src=stimuli/misc/%choice%.png></img>'
+    button_html: ['<img src=stimuli/misc/%choice%.png></img>']
 }
 
 var post = {
