@@ -166,7 +166,9 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	    this.params = trial;
 	    this.display = display_element;
 	    this.context = this.jsPsych.pluginAPI.audioContext();
-	    this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+        console.log(trial.stimulus)
+	    this.audio = await this.jsPsych.pluginAPI.getAudioBuffer(trial.stimulus);
+        
 
       let clicked = 0;
       const start_time = performance.now();
@@ -283,12 +285,12 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
           display_element.innerHTML = 'Error loading images. Please try again.';
         });
 
-        //on_load();
-        //this.startTime = performance.now();
-        //if (this.context !== null) {
-        //  this.startTime = this.context.currentTime;
-        //}
-        //this.audio.play();
+        on_load();
+        this.startTime = performance.now();
+        if (this.context !== null) {
+          this.startTime = this.context.currentTime;
+        }
+        this.audio.play();
     }
   }
 
