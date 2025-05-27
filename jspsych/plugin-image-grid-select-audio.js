@@ -180,35 +180,39 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	    this.info = info;
 	  }
 
-    async trial(display_element, trial, on_load) {
-	    this.params = trial;
-	    this.display = display_element;
-	    this.context = this.jsPsych.pluginAPI.audioContext();
-        console.log(trial.stimulus)
-        this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
-        //const audio = await jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
-	    //this.audio = this.jsPsych.pluginAPI.audioContext().createBufferSource(trial.stimulus)
-        
+    trial(display_element, trial, on_load) {
+        return new Promise(async (resolve) => {
+            this.finish = resolve;
+	        this.params = trial;
+	        this.display = display_element;
+	        this.context = this.jsPsych.pluginAPI.audioContext();
+            console.log(trial.stimulus)
+            this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+            //const audio = await jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+	        //this.audio = this.jsPsych.pluginAPI.audioContext().createBufferSource(trial.stimulus)
+            if (trial.trial_ends_after_audio) {
+                this.audio.addEventListener("ended", this.end_trial);
+              }
+              
+              this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
+              if (trial.response_allowed_while_playing) {
+                this.enable_buttons_without_delay();
+              } else if (!trial.trial_ends_after_audio) {
+                this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
+              }
+              if (trial.trial_duration !== null) {
+                this.jsPsych.pluginAPI.setTimeout(() => {
+                  this.end_trial();
+                }, trial.trial_duration);
+              }
+            on_load();
+	      this.audio.play();
 
       let clicked = 0;
       const start_time = performance.now();
       let trial_data = [];
 
-      if (trial.trial_ends_after_audio) {
-        this.audio.addEventListener("ended", this.end_trial);
-      }
       
-      this.startTime = this.jsPsych.pluginAPI.audioContext()?.currentTime;
-      if (trial.response_allowed_while_playing) {
-        this.enable_buttons_without_delay();
-      } else if (!trial.trial_ends_after_audio) {
-        this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
-      }
-      if (trial.trial_duration !== null) {
-        this.jsPsych.pluginAPI.setTimeout(() => {
-          this.end_trial();
-        }, trial.trial_duration);
-      }
 
       // Clear display and create hidden container
       display_element.innerHTML = '';
@@ -320,14 +324,8 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
           console.error('Error loading images:', error);
           display_element.innerHTML = 'Error loading images. Please try again.';
         });
-
-        on_load();
-        this.startTime = performance.now();
-        if (this.context !== null) {
-          this.startTime = this.context.currentTime;
-        }
-        this.audio.play();
-    }
+    
+    }); 
   }
 
   ImageGridSelectAudioPlugin.info = info;
