@@ -303,14 +303,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
       // Wait for all images to load
       Promise.all(imagePromises)
         .then(images => {
-          // First add the instruction text
-          const promptDiv = document.createElement('div');
-          promptDiv.style.fontSize = '24px';
-          promptDiv.style.textAlign = 'center';
-          promptDiv.style.marginBottom = '20px';
-          promptDiv.innerHTML = `<p>Can you pick two ${trial.this_word}?</p>`;
-          container.appendChild(promptDiv);
-
           // Then add the grid container
           container.appendChild(gridContainer);
 
