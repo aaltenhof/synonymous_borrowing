@@ -283,6 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
     timeline.push(save_data);
     timeline.push(post);
     
+
+    console.log(timeline)
     // Run the experiment
     jsPsych.run(timeline);
 });
