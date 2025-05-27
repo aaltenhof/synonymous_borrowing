@@ -165,21 +165,21 @@ const save_data = {
     },
 };
 
-function testAudioTrial(category) {
-    return {
-        type: jsPsychAudioButtonResponse,
-        stimulus: `audio/pick2_${category}1.wav`,
-        choices: ['A','B'],
-        data: {
-            participant_id: participant_id,
-            study_id: study_id,
-            session_date: session_date,
-            session_time: session_time,
-            condition: condition,
-            category: category
-        }
-    };
-}
+// function testAudioTrial(category) {
+//     return {
+//         type: jsPsychAudioButtonResponse,
+//         stimulus: `audio/pick2_${category}1.wav`,
+//         choices: ['A','B'],
+//         data: {
+//             participant_id: participant_id,
+//             study_id: study_id,
+//             session_date: session_date,
+//             session_time: session_time,
+//             condition: condition,
+//             category: category
+//         }
+//     };
+// }
 
 // Function to create image grid trial
 function createImageGridTrial(category, trialNumber) {
@@ -263,8 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffle(practice_categories);
 
     // TEST
-    const trial = testAudioTrial("mushrooms")
-    timeline.push(trial)
+    //const trial = testAudioTrial("mushrooms")
+    //timeline.push(trial)
 
 
     // Create trials
