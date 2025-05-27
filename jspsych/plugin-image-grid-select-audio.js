@@ -167,7 +167,8 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	    this.display = display_element;
 	    this.context = this.jsPsych.pluginAPI.audioContext();
         console.log(trial.stimulus)
-	    this.audio = await this.jsPsych.pluginAPI.getAudioBuffer(trial.stimulus);
+        getAudioBuffer(trial.stimulus);
+	    this.audio = await this.context.createBufferSource()
         
 
       let clicked = 0;
