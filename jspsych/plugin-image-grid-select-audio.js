@@ -167,7 +167,8 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	    this.display = display_element;
 	    this.context = this.jsPsych.pluginAPI.audioContext();
         console.log(trial.stimulus)
-        this.audio = await jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+        this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+        //const audio = await jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
 	    //this.audio = this.jsPsych.pluginAPI.audioContext().createBufferSource(trial.stimulus)
         
 
@@ -291,7 +292,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
         if (this.context !== null) {
           this.startTime = this.context.currentTime;
         }
-        this.audio.play();
+        audio.play();
     }
   }
 
