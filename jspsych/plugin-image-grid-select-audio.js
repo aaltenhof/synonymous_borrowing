@@ -1,8 +1,59 @@
 var jsPsychImageGridSelectAudio = (function (jspsych) {
   'use strict';
 
+  function getDefaultExportFromCjs (x) {
+    return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+// Gets all non-builtin properties up the prototype chain
+const getAllProperties = object => {
+    const properties = new Set();
+
+       do {
+           for (const key of Reflect.ownKeys(object)) {
+               properties.add([object, key]);
+           }
+       } while ((object = Reflect.getPrototypeOf(object)) && object !== Object.prototype);
+
+       return properties;
+    };
+
+    var autoBind = (self, {include, exclude} = {}) => {
+       const filter = key => {
+           const match = pattern => typeof pattern === 'string' ? key === pattern : pattern.test(key);
+
+           if (include) {
+               return include.some(match);
+           }
+
+           if (exclude) {
+               return !exclude.some(match);
+           }
+
+        return true;
+    };
+
+    for (const [object, key] of getAllProperties(self.constructor.prototype)) {
+        if (key === 'constructor' || !filter(key)) {
+            continue;
+        }
+
+        const descriptor = Reflect.getOwnPropertyDescriptor(object, key);
+        if (descriptor && typeof descriptor.value === 'function') {
+            self[key] = self[key].bind(self);
+        }
+       }
+
+       return self;
+   };
+
+   var autoBind$1 = /*@__PURE__*/getDefaultExportFromCjs(autoBind);
+
+   var version = "2.0.2";
+
   const info = {
     name: 'image-grid-select-audio',
+    version,
     parameters: {
       stimulus: {
 	      type: jspsych.ParameterType.AUDIO,
@@ -55,14 +106,64 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
     return array;
   }
 
-  class ImageGridSelectPlugin {
+  class ImageGridSelectAudioPlugin {
     constructor(jsPsych) {
-      this.jsPsych = jsPsych;
+	    this.jsPsych = jsPsych;
+	    this.buttonElements = [];
+	    this.response = { rt: null, button: null };
+	    this.disable_buttons = () => {
+	      for (const button of this.buttonElements) {
+	        button.setAttribute("disabled", "disabled");
+	      }
+	    };
+	    this.enable_buttons_without_delay = () => {
+	      for (const button of this.buttonElements) {
+	        button.removeAttribute("disabled");
+	      }
+	    };
+	    this.enable_buttons_with_delay = (delay) => {
+	      this.jsPsych.pluginAPI.setTimeout(this.enable_buttons_without_delay, delay);
+	    };
+	    // function to handle responses by the subject
+	    this.after_response = (choice) => {
+	      var endTime = performance.now();
+	      var rt = Math.round(endTime - this.startTime);
+	      if (this.context !== null) {
+	        endTime = this.context.currentTime;
+	        rt = Math.round((endTime - this.startTime) * 1e3);
+	      }
+	      this.response.button = parseInt(choice);
+	      this.response.rt = rt;
+	      this.disable_buttons();
+	      if (this.params.response_ends_trial) {
+	        this.end_trial();
+	      }
+	    };
+	    // method to end trial when it is time
+	    this.end_trial = () => {
+	      this.audio.stop();
+	      this.audio.removeEventListener("ended", this.end_trial);
+	      this.audio.removeEventListener("ended", this.enable_buttons);
+	      var trial_data = {
+	        rt: this.response.rt,
+	        stimulus: this.params.stimulus,
+	        response: this.response.button
+	      };
+	      this.trial_complete(trial_data);
+	    };
+	    autoBind$1(this);
     }
 
+    static {
+	    this.info = info;
+	  }
+
     async trial(display_element, trial, on_load) {
-        //this.context = this.jsPsych.pluginAPI.audioContext();
-	    //this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+	    this.params = trial;
+	    this.display = display_element;
+	    this.context = this.jsPsych.pluginAPI.audioContext();
+	    this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
+        
       let clicked = 0;
       const start_time = performance.now();
       let trial_data = [];
@@ -187,6 +288,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
     }
   }
 
-  ImageGridSelectPlugin.info = info;
-  return ImageGridSelectPlugin;
+  ImageGridSelectAudioPlugin.info = info;
+  return ImageGridSelectAudioPlugin;
 })(jsPsychModule);

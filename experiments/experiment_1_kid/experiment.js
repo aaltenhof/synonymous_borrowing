@@ -32,6 +32,17 @@ if (Math.floor(Math.random() * 2) == 0) {
     condition = "familiar_word_condition";
 }
 
+var preload = {
+    type: jsPsychPreload,
+    audio: ['audio/pick2_apples1.wav','audio/pick2_carrots1.wav',
+        'audio/pick2_mushrooms1.wav','audio/pick2_leaves1.wav','audio/pick2_flowers1.wav','audio/pick2_shells1.wav',
+        'audio/pick2_bines1.wav','audio/pick2_palts1.wav','audio/pick2_tinches1.wav','audio/pick2_nefts1.wav'
+    ],
+    show_detailed_errors: true
+}
+
+jsPsych.run(preload)
+
 // Define all stimulus categories and their images
 const stimulusCategories = {
     'flowers': [
@@ -154,6 +165,22 @@ const save_data = {
     },
 };
 
+function testAudioTrial(category) {
+    return {
+        type: jsPsychAudioButtonResponse,
+        stimulus: `audio/pick2_${category}1.wav`,
+        choices: ['A','B'],
+        data: {
+            participant_id: participant_id,
+            study_id: study_id,
+            session_date: session_date,
+            session_time: session_time,
+            condition: condition,
+            category: category
+        }
+    };
+}
+
 // Function to create image grid trial
 function createImageGridTrial(category, trialNumber) {
     const trialWord = condition === "novel_word_condition" ? 
@@ -190,7 +217,7 @@ function createPracticeImageGridTrial(category, trialNumber) {
     
     return {
         type: jsPsychImageGridSelectAudio,
-        stimulus: `audio/pick2${category}1.wav`,
+        stimulus: `audio/pick2_${category}1.wav`,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
         required_clicks: 2,
@@ -234,6 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffle(categories);
     const practice_categories = Object.keys(practiceCategories);
     shuffle(practice_categories);
+
+    // TEST
+    const trial = testAudioTrial("mushrooms")
+    timeline.push(trial)
+
 
     // Create trials
     let trialCounter = 0;
