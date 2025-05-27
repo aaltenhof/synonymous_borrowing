@@ -142,5 +142,6 @@ var jsPsychAudioButtonResponse=function(e){
 			this.trial(i,e,(function(){
 				n(),e.response_allowed_while_playing?o():a.audio.addEventListener("ended",o)
 			}))
-		}}])&&t(n.prototype,a),r&&t(n,r),Object.defineProperty(n,"prototype",{writable:!1}),e}();return a.info=n,a}(jsPsychModule);
+		}}])&&t(n.prototype,a),r&&t(n,r),Object.defineProperty(n,"prototype",{writable:!1}),e}();return a.info=n,a
+	}(jsPsychModule);
 //# sourceMappingURL=index.browser.min.js.map

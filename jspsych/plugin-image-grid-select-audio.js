@@ -1,97 +1,54 @@
 var jsPsychImageGridSelectAudio = (function (jspsych) {
   'use strict';
 
-  function getDefaultExportFromCjs (x) {
-    return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-// Gets all non-builtin properties up the prototype chain
-const getAllProperties = object => {
-    const properties = new Set();
-
-       do {
-           for (const key of Reflect.ownKeys(object)) {
-               properties.add([object, key]);
-           }
-       } while ((object = Reflect.getPrototypeOf(object)) && object !== Object.prototype);
-
-       return properties;
-    };
-
-    var autoBind = (self, {include, exclude} = {}) => {
-       const filter = key => {
-           const match = pattern => typeof pattern === 'string' ? key === pattern : pattern.test(key);
-
-           if (include) {
-               return include.some(match);
-           }
-
-           if (exclude) {
-               return !exclude.some(match);
-           }
-
-        return true;
-    };
-
-    for (const [object, key] of getAllProperties(self.constructor.prototype)) {
-        if (key === 'constructor' || !filter(key)) {
-            continue;
+    function t(e,t){
+        for(var n=0;n<t.length;n++){
+            var a=t[n];
+            a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)
         }
+    }
 
-        const descriptor = Reflect.getOwnPropertyDescriptor(object, key);
-        if (descriptor && typeof descriptor.value === 'function') {
-            self[key] = self[key].bind(self);
+    const info = {
+        name: 'image-grid-select-audio',
+        version,
+        parameters: {
+        stimulus: {
+	        type: jspsych.ParameterType.AUDIO,
+	        default: void 0
+	    },
+        response_allowed_while_playing: {
+	        type: jspsych.ParameterType.BOOL,
+	        default: true
+	    },
+        stimulus_folder: {
+            type: jspsych.ParameterType.STRING,
+            default: undefined
+        },
+        this_word: {
+            type: jspsych.ParameterType.STRING,
+            default: undefined
+        },
+        image_names: {
+            type: jspsych.ParameterType.STRING,
+            array: true,
+            default: undefined
+        },
+        required_clicks: {
+            type: jspsych.ParameterType.INT,
+            default: 2
+        },
+        images_per_row: {
+            type: jspsych.ParameterType.INT,
+            default: 4
+        },
+        grid_spacing: {
+            type: jspsych.ParameterType.INT,
+            default: 20
+        },
+        max_image_width: {
+            type: jspsych.ParameterType.INT,
+            default: 100
         }
-       }
-
-       return self;
-   };
-
-   var autoBind$1 = /*@__PURE__*/getDefaultExportFromCjs(autoBind);
-
-   var version = "2.0.2";
-
-  const info = {
-    name: 'image-grid-select-audio',
-    version,
-    parameters: {
-      stimulus: {
-	      type: jspsych.ParameterType.AUDIO,
-	      default: void 0
-	    },
-      response_allowed_while_playing: {
-	      type: jspsych.ParameterType.BOOL,
-	      default: true
-	    },
-      stimulus_folder: {
-        type: jspsych.ParameterType.STRING,
-        default: undefined
-      },
-      this_word: {
-        type: jspsych.ParameterType.STRING,
-        default: undefined
-      },
-      image_names: {
-        type: jspsych.ParameterType.STRING,
-        array: true,
-        default: undefined
-      },
-      required_clicks: {
-        type: jspsych.ParameterType.INT,
-        default: 2
-      },
-      images_per_row: {
-        type: jspsych.ParameterType.INT,
-        default: 4
-      },
-      grid_spacing: {
-        type: jspsych.ParameterType.INT,
-        default: 20
-      },
-      max_image_width: {
-        type: jspsych.ParameterType.INT,
-        default: 100
-      }
     }
   };
 
@@ -163,7 +120,7 @@ const getAllProperties = object => {
 	    this.display = display_element;
 	    this.context = this.jsPsych.pluginAPI.audioContext();
 	    this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.stimulus);
-        
+
       let clicked = 0;
       const start_time = performance.now();
       let trial_data = [];
