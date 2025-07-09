@@ -41,8 +41,6 @@ var preload = {
     show_detailed_errors: true
 }
 
-jsPsych.run(preload)
-
 // Define all stimulus categories and their images
 const stimulusCategories = {
     'flowers': [
@@ -96,11 +94,11 @@ if (condition === "novel_word_condition") {
 }
 
 // Create pre-survey trial
-var pre_survey =  {
+var pre_survey_trial =  {
     type: jsPsychSurveyText,
     questions: [
-      {prompt: 'Participant ID', name: 'participant_id'},
-      {prompt: 'Age', name: 'age'}
+        {prompt: 'Participant ID', name: 'sub_id'},
+        {prompt: 'Age', name: 'age'}
     ]
 }
 
@@ -251,20 +249,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Create timeline
-    const timeline = [
-        pre_survey,
-        start_button
-    ];
+    const timeline = [];
+    timeline.push(preload)
+    timeline.push(pre_survey_trial)
+    timeline.push(start_button)
+
     
     // Get categories and shuffle them
     const categories = Object.keys(stimulusCategories);
     shuffle(categories);
     const practice_categories = Object.keys(practiceCategories);
     shuffle(practice_categories);
-
-    // TEST
-    //const trial = testAudioTrial("mushrooms")
-    //timeline.push(trial)
 
 
     // Create trials
