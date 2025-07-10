@@ -118,7 +118,7 @@ function generateRandomId() {
     return baseId;
 }
 
-var random_id = generateRandomId()
+const random_id = generateRandomId()
 
 var start_button = {
     type: jsPsychHtmlButtonResponse,
