@@ -137,7 +137,7 @@ var post = {
 const save_data = {
     type: jsPsychPipe,
     action: "save",
-    experiment_id: "borrowing_kids_pilot",
+    experiment_id: "sPY6vEQmdfQL",
     filename: () => `borrowing_kid_${participant_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
