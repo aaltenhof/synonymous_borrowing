@@ -103,8 +103,8 @@ if (condition === "novel_word_condition") {
 var pre_survey_trial =  {
     type: jsPsychSurveyText,
     questions: [
-        {prompt: 'Participant ID', name: 'sub_id'},
-        {prompt: 'Age', name: 'age'}
+        {prompt: 'Participant ID', name: 'participant_id'},
+        {prompt: 'Age', name: 'participant_age'}
     ]
 }
 
