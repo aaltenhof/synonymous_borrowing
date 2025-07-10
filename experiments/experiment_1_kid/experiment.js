@@ -115,7 +115,7 @@ function onSaveComplete() {
 // Generate random ID
 function generateRandomId() {
     const baseId = Math.floor(Math.random() * 999) + 1;
-    return `baseId`;
+    return baseId;
 }
 
 var start_button = {
@@ -138,7 +138,7 @@ const save_data = {
     type: jsPsychPipe,
     action: "save",
     experiment_id: "sPY6vEQmdfQL",
-    filename: () => `borrowing_kid_${participant_id}.csv`,
+    filename: () => `borrowing_kid_${random_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
 
@@ -189,7 +189,6 @@ function createImageGridTrial(category, trialNumber) {
         data: {
             trial_type: 'image_grid',
             trial_number: trialNumber,
-            participant_id: participant_id,
             study_id: study_id,
             condition: condition,
             category: category,
@@ -215,7 +214,6 @@ function createPracticeImageGridTrial(category, trialNumber) {
         data: {
             trial_type: 'image_grid',
             trial_number: trialNumber,
-            participant_id: participant_id,
             study_id: study_id,
             session_date: session_date,
             session_time: session_time,
@@ -229,8 +227,11 @@ function createPracticeImageGridTrial(category, trialNumber) {
 // Wait for document to be ready
 document.addEventListener('DOMContentLoaded', () => {
    
+    var random_id = generateRandomId()
+
     // Add properties to jsPsych data
     jsPsych.data.addProperties({
+        random_id: random_id,
         condition: condition
     });
     
