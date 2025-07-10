@@ -141,10 +141,11 @@ const save_data = {
     filename: () => `borrowing_kid_${participant_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-        console.log(allTrials)
-        const surveyTrial = allTrials.filter(trial => trial.trial_type === 'plugin-survey-text');
+
+        const surveyTrial = allTrials.filter(trial => trial.trial_type === 'survey-text')
+            .flatMap(trial => [trial[0], trial[1]]);
         console.log(surveyTrial)
-        var participant_order = "XXXX"
+        
         const imageTrials = allTrials
             .filter(trial => trial.trial_type === 'image-grid')
             .flatMap(trial => [trial[0], trial[1]]);
@@ -162,7 +163,7 @@ const save_data = {
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id},${trial.study_id || ''},${trial.participant_age || ''},${trial.session_date || ''},${trial.session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${surveyTrial.participant_id},${trial.study_id || ''},${surveyTrial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -190,8 +191,6 @@ function createImageGridTrial(category, trialNumber) {
             trial_number: trialNumber,
             participant_id: participant_id,
             study_id: study_id,
-            session_date: session_date,
-            session_time: session_time,
             condition: condition,
             category: category,
             word: trialWord
@@ -229,12 +228,9 @@ function createPracticeImageGridTrial(category, trialNumber) {
 
 // Wait for document to be ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Generate participant ID
-    participant_id = generateRandomId();
-    
+   
     // Add properties to jsPsych data
     jsPsych.data.addProperties({
-        participant_id: participant_id,
         condition: condition
     });
     
