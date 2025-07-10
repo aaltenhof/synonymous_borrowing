@@ -75,6 +75,12 @@ const practiceCategories = {
         'carrot_4.png', 'carrot_5.png', 'carrot_6.png',
         'broccoli_1.png', 'broccoli_2.png', 'broccoli_3.png',
         'broccoli_4.png', 'broccoli_5.png', 'broccoli_6.png'
+    ],
+    'apples': [
+        'apple_1.png', 'apple_2.png', 'apple_3.png',
+        'apple_4.png', 'apple_5.png', 'apple_6.png',
+        'strawberry_1.png', 'strawberry_2.png', 'strawberry_3.png',
+        'strawberry_4.png', 'strawberry_5.png', 'strawberry_6.png'
     ]
 }
 
