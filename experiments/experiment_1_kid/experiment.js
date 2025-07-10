@@ -12,9 +12,9 @@ var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
-var session_time = today.toLocaleTimeString();
+const session_time = today.toLocaleTimeString();
 
-var session_date = mm + '/' + dd + '/' + yyyy;
+const session_date = mm + '/' + dd + '/' + yyyy;
 
 jsPsych.data.addProperties({
     session_date: session_date,
@@ -105,7 +105,13 @@ var pre_survey_trial =  {
     questions: [
         {prompt: 'Participant ID', name: 'participant_id'},
         {prompt: 'Age', name: 'participant_age'}
-    ]
+    ],
+    on_finish: function(data){
+        jsPsych.data.addProperties({
+            participant_id: participant_id,
+            participant_age: participant_age
+          })
+    }
 }
 
 function onSaveComplete() {
@@ -165,7 +171,7 @@ const save_data = {
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${surveyTrial.participant_id},${trial.study_id || ''},${surveyTrial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.button},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${trial.participant_id},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.button},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
