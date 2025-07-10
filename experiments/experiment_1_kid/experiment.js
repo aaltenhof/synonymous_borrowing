@@ -146,7 +146,7 @@ const save_data = {
         console.log(surveyTrial)
         var participant_order = "XXXX"
         const imageTrials = allTrials
-            .filter(trial => trial.trial_type === 'image-grid-select')
+            .filter(trial => trial.trial_type === 'image-grid-select-audio')
             .flatMap(trial => [trial[0], trial[1]]);
 
         // Add function to extract ID and typicality from filename
