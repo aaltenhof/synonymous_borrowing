@@ -118,6 +118,8 @@ function generateRandomId() {
     return baseId;
 }
 
+var random_id = generateRandomId()
+
 var start_button = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '',
@@ -227,8 +229,6 @@ function createPracticeImageGridTrial(category, trialNumber) {
 // Wait for document to be ready
 document.addEventListener('DOMContentLoaded', () => {
    
-    var random_id = generateRandomId()
-
     // Add properties to jsPsych data
     jsPsych.data.addProperties({
         random_id: random_id,
