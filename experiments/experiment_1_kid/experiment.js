@@ -141,7 +141,7 @@ const save_data = {
     filename: () => `borrowing_kid_${participant_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-
+        console.log(allTrials)
         const surveyTrial = allTrials.filter(trial => trial.trial_type === 'plugin-survey-text');
         console.log(surveyTrial)
         var participant_order = "XXXX"
@@ -168,22 +168,6 @@ const save_data = {
         return [headers, ...rows].join('\n');
     },
 };
-
-// function testAudioTrial(category) {
-//     return {
-//         type: jsPsychAudioButtonResponse,
-//         stimulus: `audio/pick2_${category}1.wav`,
-//         choices: ['A','B'],
-//         data: {
-//             participant_id: participant_id,
-//             study_id: study_id,
-//             session_date: session_date,
-//             session_time: session_time,
-//             condition: condition,
-//             category: category
-//         }
-//     };
-// }
 
 // Function to create image grid trial
 function createImageGridTrial(category, trialNumber) {
