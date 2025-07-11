@@ -107,8 +107,10 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function(data) {
-        console.log(jsPsych.data.getLastTrialData()[0])
-        console.log(jsPsych.data.getLastTrialData()[0].participant_id)
+        jsPsych.data.addProperties({
+            participant_id: jsPsych.data.getLastTrialData().trials[0].response.participant_id,
+            participant_age: jsPsych.data.getLastTrialData().trials[0].response.participant_age
+        });
     }
 }
 
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Create timeline
     const timeline = [];
-    timeline.push(preload)
+    //timeline.push(preload)
     timeline.push(pre_survey_trial)
     timeline.push(start_button)
 
