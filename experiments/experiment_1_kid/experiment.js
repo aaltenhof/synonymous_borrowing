@@ -107,7 +107,8 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function(data) {
-        console.log(jsPsych.data.getLastTrialData())
+        console.log(jsPsych.data.getLastTrialData()[0])
+        console.log(jsPsych.data.getLastTrialData()[0].participant_id)
     }
 }
 
