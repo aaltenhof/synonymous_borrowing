@@ -107,20 +107,7 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function(data) {
-        console.log("Survey data:", data);
-        if (data.responses) {
-            const responses = JSON.parse(data.responses);
-            jsPsych.data.addProperties({
-                participant_id: responses.participant_id,
-                participant_age: responses.participant_age
-         });
-        } else {
-            console.warn("No responses found in survey data.");
-        }
-        jsPsych.data.addProperties({
-            participant_id: responses.participant_id,
-            participant_age: responses.participant_age
-        });
+        console.log(jsPsych.data.getLastTrialData())
     }
 }
 
