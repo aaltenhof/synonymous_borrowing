@@ -233,7 +233,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
         `${trial.stimulus_folder}/${name}`
       );
 
-      const imagePromises = imagePaths.map(path => {
+      const imagePromises = imagePaths.map((path, index) => {
         return new Promise((resolve, reject) => {
           const img = document.createElement('img');
           img.src = path;
@@ -271,6 +271,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
                 trial_number: trial.data.trial_number,
                 condition: trial.data.condition,
                 category: trial.data.category,
+                image_location: index,
                 image_name: filename,
                 word: trial.this_word,
                 click_order: clicked,
