@@ -107,7 +107,6 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function(data) {
-        const responses = JSON.parse(data.responses);
         console.log("Survey data:", data);
         if (data.responses) {
             const responses = JSON.parse(data.responses);
