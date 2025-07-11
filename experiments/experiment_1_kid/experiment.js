@@ -108,6 +108,16 @@ var pre_survey_trial =  {
     ],
     on_finish: function(data) {
         const responses = JSON.parse(data.responses);
+        console.log("Survey data:", data);
+        if (data.responses) {
+            const responses = JSON.parse(data.responses);
+            jsPsych.data.addProperties({
+                participant_id: responses.participant_id,
+                participant_age: responses.participant_age
+         });
+        } else {
+            console.warn("No responses found in survey data.");
+        }
         jsPsych.data.addProperties({
             participant_id: responses.participant_id,
             participant_age: responses.participant_age
