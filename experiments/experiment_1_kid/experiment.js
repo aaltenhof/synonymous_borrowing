@@ -149,11 +149,12 @@ const save_data = {
     filename: () => `borrowing_kid_${random_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-        
+        console.log(allTrials);
         const imageTrials = allTrials
             .filter(trial => trial.trial_type === 'image-grid')
             .flatMap(trial => [trial[0], trial[1]]);
 
+        console.log(imageTrials)
         // Add function to extract ID and typicality from filename
         const parseImageInfo = (filename) => {
             const parts = filename.split('_');
