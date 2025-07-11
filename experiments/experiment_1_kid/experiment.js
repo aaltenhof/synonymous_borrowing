@@ -149,10 +149,6 @@ const save_data = {
     filename: () => `borrowing_kid_${random_id}.csv`,
     data_string: () => {
         const allTrials = jsPsych.data.get().values();
-
-        const surveyTrial = allTrials.filter(trial => trial.trial_type === 'survey-text')
-            .flatMap(trial => [trial[0], trial[1]]);
-        console.log(surveyTrial)
         
         const imageTrials = allTrials
             .filter(trial => trial.trial_type === 'image-grid')
@@ -171,7 +167,7 @@ const save_data = {
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.button},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${trial.participant_id || ''},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.button},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -243,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Create timeline
     const timeline = [];
-    //timeline.push(preload)
+    timeline.push(preload)
     timeline.push(pre_survey_trial)
     timeline.push(start_button)
 
@@ -271,8 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
     timeline.push(save_data);
     timeline.push(post);
     
-
-    console.log(timeline)
     // Run the experiment
     jsPsych.run(timeline);
 });
