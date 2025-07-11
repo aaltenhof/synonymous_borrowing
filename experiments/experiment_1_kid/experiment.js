@@ -106,11 +106,12 @@ var pre_survey_trial =  {
         {prompt: 'Participant ID', name: 'participant_id'},
         {prompt: 'Age', name: 'participant_age'}
     ],
-    on_finish: function(data){
+    on_finish: function(data) {
+        const responses = JSON.parse(data.responses);
         jsPsych.data.addProperties({
-            participant_id: participant_id,
-            participant_age: participant_age
-          })
+            participant_id: responses.participant_id,
+            participant_age: responses.participant_age
+        });
     }
 }
 

@@ -65,7 +65,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	    },
         response_allowed_while_playing: {
 	        type: jspsych.ParameterType.BOOL,
-	        default: true
+	        default: false
 	    },
         stimulus_folder: {
             type: jspsych.ParameterType.STRING,
@@ -104,15 +104,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
             type: jspsych.ParameterType.BOOL,
             pretty_name: "Trial ends after audio",
             default: false
-          },
-          /** If true, then responses are allowed while the audio is playing. If false, then the audio must finish
-           * playing before a keyboard response is accepted. Once the audio has played all the way through, a valid
-           * keyboard response is allowed (including while the audio is being re-played via on-screen playback controls).
-           */
-          response_allowed_while_playing: {
-            type: jspsych.ParameterType.BOOL,
-            default: false
-        }
+          }
     }
   };
 
