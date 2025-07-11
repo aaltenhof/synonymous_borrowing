@@ -151,7 +151,7 @@ const save_data = {
         const allTrials = jsPsych.data.get().values();
         console.log(allTrials);
         const imageTrials = allTrials
-            .filter(trial => trial.trial_type === 'image-grid')
+            .filter(trial => trial.trial_type === 'image_grid')
             .flatMap(trial => [trial[0], trial[1]]);
 
         console.log(imageTrials)
