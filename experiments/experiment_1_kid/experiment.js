@@ -108,9 +108,11 @@ var pre_survey_trial =  {
     on_finish: function() {
         try {
             const responseData = jsPsych.data.getLastTrialData().values()[0].response;
-        jsPsych.data.addProperties({
-            participant_id: responseData.participant_id,
-            participant_age: responseData.participant_age
+            console.log("PID:", responseData.participant_id);
+            console.log("Age:", responseData.participant_age);
+            jsPsych.data.addProperties({
+                participant_id: responseData.participant_id,
+                participant_age: responseData.participant_age
         });
         } catch (e) {
             console.error("Error parsing survey responses:", e);
