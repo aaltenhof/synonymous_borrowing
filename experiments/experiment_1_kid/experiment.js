@@ -6,6 +6,8 @@ var jsPsych = initJsPsych({
     }
 });
 
+var pids = {}
+
 // Declare variables at the top
 var study_id = "borrowing_kids_pilot";
 var today = new Date();
@@ -110,41 +112,11 @@ var pre_survey_trial =  {
             const responseData = jsPsych.data.getLastTrialData().values()[0].response;
             console.log("PID:", responseData.participant_id);
             console.log("Age:", responseData.participant_age);
-            jsPsych.data.addProperties({
-                participant_id: responseData.participant_id,
-                participant_age: responseData.participant_age
-        });
+            pids.participant_id = responseData.participant_id
+            pids.participant_age = responseData.participant_age
         } catch (e) {
             console.error("Error parsing survey responses:", e);
         }
-
-        // Build rest of timeline once we have PIDs
-        const timeline = [];
-        timeline.push(start_button)
-
-        // Get categories and shuffle them
-        const categories = Object.keys(stimulusCategories);
-        shuffle(categories);
-        const practice_categories = Object.keys(practiceCategories);
-        shuffle(practice_categories);
-
-
-        // Create trials
-        let trialCounter = 0;
-        for (const category of practice_categories) {
-            const trial = createPracticeImageGridTrial(category, trialCounter);
-            timeline.push(trial);
-            trialCounter++;
-        }
-        for (const category of categories) {
-            const trial = createImageGridTrial(category, trialCounter);
-            timeline.push(trial);
-            trialCounter++;
-        }
-    
-        timeline.push(save_data);
-        timeline.push(post);
-        jsPsych.addNodeToEndOfTimeline({ timeline: timeline });
     }
 }
 
@@ -188,7 +160,8 @@ const save_data = {
             .flatMap(trial => [trial[0], trial[1]]);
 
         console.log(allTrials)
-
+        console.log("PIDs are")
+        console.log(pids)
         // Add function to extract ID and typicality from filename
         const parseImageInfo = (filename) => {
             const parts = filename.split('_');
@@ -199,15 +172,11 @@ const save_data = {
             };
         };
 
-        //const globalProps = jsPsych.data.get().filter({trial_type: 'survey-text'}).values()[0] || {};
-        //const pid = globalProps.participant_id || '';
-        //const age = globalProps.participant_age || '';
-
 
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id || ''},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${pids.participant_id || ''},${trial.study_id || ''},${pids.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -281,7 +250,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeline = [];
     timeline.push(preload)
     timeline.push(pre_survey_trial)
-    
+    timeline.push(start_button)
+
+    // Get categories and shuffle them
+    const categories = Object.keys(stimulusCategories);
+    shuffle(categories);
+    const practice_categories = Object.keys(practiceCategories);
+    shuffle(practice_categories);
+
+
+    // Create trials
+    let trialCounter = 0;
+    for (const category of practice_categories) {
+        const trial = createPracticeImageGridTrial(category, trialCounter);
+        timeline.push(trial);
+        trialCounter++;
+    }
+    for (const category of categories) {
+        const trial = createImageGridTrial(category, trialCounter);
+        timeline.push(trial);
+        trialCounter++;
+    }
+
+    timeline.push(save_data);
+    timeline.push(post);
     
     // Run the experiment
     jsPsych.run(timeline);
