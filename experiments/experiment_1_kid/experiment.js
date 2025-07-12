@@ -71,16 +71,16 @@ const stimulusCategories = {
 
 const practiceCategories = {
     'carrots': [
-        'carrot_1.png', 'carrot_2.png', 'carrot_3.png',
-        'carrot_4.png', 'carrot_5.png', 'carrot_6.png',
-        'broccoli_1.png', 'broccoli_2.png', 'broccoli_3.png',
-        'broccoli_4.png', 'broccoli_5.png', 'broccoli_6.png'
+        'carrot_carrot_1_0.png', 'carrot_carrot_2_0.png', 'carrot_carrot_3_0.png',
+        'carrot_carrot_4_0.png', 'carrot_carrot_5_0.png', 'carrot_carrot_6_0.png',
+        'broccoli_broccoli_1_0.png', 'broccoli_broccoli_2_0.png', 'broccoli_broccoli_3_0.png',
+        'broccoli_broccoli_4_0.png', 'broccoli_broccoli_5_0.png', 'broccoli_broccoli_6_0.png'
     ],
     'apples': [
-        'apple_1.png', 'apple_2.png', 'apple_3.png',
-        'apple_4.png', 'apple_5.png', 'apple_6.png',
-        'strawberry_1.png', 'strawberry_2.png', 'strawberry_3.png',
-        'strawberry_4.png', 'strawberry_5.png', 'strawberry_6.png'
+        'apple_apple_1_0.png', 'apple_apple_2_0.png', 'apple_apple_3_0.png',
+        'apple_apple_4_0.png', 'apple_apple_5_0.png', 'apple_apple_6_0.png',
+        'strawberry_strawberry_1_0.png', 'strawberry_strawberry_2_0.png', 'strawberry_strawberry_3_0.png',
+        'strawberry_strawberry_4_0.png', 'strawberry_strawberry_5_0.png', 'strawberry_strawberry_6_0.png'
     ]
 }
 
@@ -107,15 +107,8 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function() {
-        console.log(jsPsych.data.getLastTrialData().trials[0].response.participant_id)
-        try {
-            jsPsych.data.addProperties({
-                participant_id: jsPsych.data.getLastTrialData().trials[0].response.participant_id,
-                participant_age: jsPsych.data.getLastTrialData().trials[0].response.participant_age
-            });
-        } catch (e) {
-            console.error("Error parsing survey responses:", e);
-        }
+        const participant_id = jsPsych.data.getLastTrialData().trials[0].response.participant_id
+        const participant_age = jsPsych.data.getLastTrialData().trials[0].response.participant_age
     }
 }
 
@@ -179,7 +172,7 @@ const save_data = {
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${trial.participant_id || ''},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${participant_id || ''},${trial.study_id || ''},${participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
