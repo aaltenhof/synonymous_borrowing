@@ -114,7 +114,32 @@ var pre_survey_trial =  {
         } catch (e) {
             console.error("Error parsing survey responses:", e);
         }
+        timeline.push(start_button)
+
     
+        // Get categories and shuffle them
+        const categories = Object.keys(stimulusCategories);
+        shuffle(categories);
+        const practice_categories = Object.keys(practiceCategories);
+        shuffle(practice_categories);
+
+
+        // Create trials
+        let trialCounter = 0;
+        for (const category of practice_categories) {
+            const trial = createPracticeImageGridTrial(category, trialCounter);
+            timeline.push(trial);
+            trialCounter++;
+        }
+        for (const category of categories) {
+            const trial = createImageGridTrial(category, trialCounter);
+            timeline.push(trial);
+            trialCounter++;
+        }
+    
+        timeline.push(save_data);
+        timeline.push(post);
+        jsPsych.run(timeline);
     }
 }
 
@@ -201,8 +226,6 @@ function createImageGridTrial(category, trialNumber) {
         max_image_width: 200,
         image_names: stimulusCategories[category],
         data: {
-            participant_id: jsPsych.data.get().participant_id,
-            participant_age: jsPsych.data.get().participant_age,
             trial_type: 'image_grid',
             trial_number: trialNumber,
             study_id: study_id,
@@ -228,8 +251,6 @@ function createPracticeImageGridTrial(category, trialNumber) {
         max_image_width: 200,
         image_names: practiceCategories[category],
         data: {
-            participant_id: jsPsych.data.get().participant_id,
-            participant_age: jsPsych.data.get().participant_age,
             trial_type: 'image_grid',
             trial_number: trialNumber,
             study_id: study_id,
@@ -255,31 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeline = [];
     timeline.push(preload)
     timeline.push(pre_survey_trial)
-    timeline.push(start_button)
-
     
-    // Get categories and shuffle them
-    const categories = Object.keys(stimulusCategories);
-    shuffle(categories);
-    const practice_categories = Object.keys(practiceCategories);
-    shuffle(practice_categories);
-
-
-    // Create trials
-    let trialCounter = 0;
-    for (const category of practice_categories) {
-        const trial = createPracticeImageGridTrial(category, trialCounter);
-        timeline.push(trial);
-        trialCounter++;
-    }
-    for (const category of categories) {
-        const trial = createImageGridTrial(category, trialCounter);
-        timeline.push(trial);
-        trialCounter++;
-    }
-    
-    timeline.push(save_data);
-    timeline.push(post);
     
     // Run the experiment
     jsPsych.run(timeline);
