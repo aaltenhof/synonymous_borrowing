@@ -99,7 +99,6 @@ if (condition === "novel_word_condition") {
     shuffle(novel_words);
 }
 
-// Create pre-survey trial
 var pre_survey_trial =  {
     type: jsPsychSurveyText,
     questions: [
@@ -107,8 +106,15 @@ var pre_survey_trial =  {
         {prompt: 'Age', name: 'participant_age'}
     ],
     on_finish: function() {
-        const participant_id = jsPsych.data.getLastTrialData().trials[0].response.participant_id
-        const participant_age = jsPsych.data.getLastTrialData().trials[0].response.participant_age
+        try {
+            jsPsych.data.addProperties({
+                participant_id: jsPsych.data.getLastTrialData().trials[0].response.participant_id,
+                participant_age: jsPsych.data.getLastTrialData().trials[0].response.participant_age
+            });
+        } catch (e) {
+            console.error("Error parsing survey responses:", e);
+        }
+    
     }
 }
 
@@ -116,7 +122,6 @@ function onSaveComplete() {
     console.log('Data saved');
 }
 
-// Generate random ID
 function generateRandomId() {
     const baseId = Math.floor(Math.random() * 999) + 1;
     return baseId;
@@ -172,7 +177,7 @@ const save_data = {
         const headers = 'participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality';
         const rows = imageTrials.map(trial => {
             const imageInfo = parseImageInfo(trial.image_name);
-            return `${participant_id || ''},${trial.study_id || ''},${participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
+            return `${trial.participant_id || ''},${trial.study_id || ''},${trial.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.condition},${trial.category},${trial.image_name},${trial.image_location},${trial.word},${trial.click_order},${trial.rt},${imageInfo.id},${imageInfo.typicality}`;
         });
 
         return [headers, ...rows].join('\n');
@@ -196,6 +201,8 @@ function createImageGridTrial(category, trialNumber) {
         max_image_width: 200,
         image_names: stimulusCategories[category],
         data: {
+            participant_id: jsPsych.data.get().participant_id,
+            participant_age: jsPsych.data.get().participant_age,
             trial_type: 'image_grid',
             trial_number: trialNumber,
             study_id: study_id,
@@ -221,6 +228,8 @@ function createPracticeImageGridTrial(category, trialNumber) {
         max_image_width: 200,
         image_names: practiceCategories[category],
         data: {
+            participant_id: jsPsych.data.get().participant_id,
+            participant_age: jsPsych.data.get().participant_age,
             trial_type: 'image_grid',
             trial_number: trialNumber,
             study_id: study_id,
