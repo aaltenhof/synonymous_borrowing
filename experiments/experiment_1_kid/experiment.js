@@ -144,7 +144,7 @@ var pre_survey_trial =  {
     
         timeline.push(save_data);
         timeline.push(post);
-        jsPsych.run(timeline);
+        jsPsych.addNodeToEndOfTimeline({ timeline: timeline });
     }
 }
 
