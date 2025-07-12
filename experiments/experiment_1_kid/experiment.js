@@ -114,9 +114,11 @@ var pre_survey_trial =  {
         } catch (e) {
             console.error("Error parsing survey responses:", e);
         }
+
+        // Build rest of timeline once we have PIDs
+        const timeline = [];
         timeline.push(start_button)
 
-    
         // Get categories and shuffle them
         const categories = Object.keys(stimulusCategories);
         shuffle(categories);
