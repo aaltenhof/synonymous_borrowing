@@ -1,0 +1,125 @@
+---
+title: "pilot_child_analysis"
+output: html_document
+date: "2025-07-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(viridis)
+library(tidyboot)
+```
+
+```{r, eval = FALSE}
+raw_data <- list.files( path=here("../data/pilot_child_raw_data"), full.names=TRUE ) %>% 
+  map_dfr( read_csv )
+
+data <- raw_data %>%
+  filter(participant_id > 0,
+         participant_age > 0,
+         participant_age < 6) 
+
+write_csv(data, here("../data/pilot_child_data.csv"))
+```
+
+```{r}
+data <- read_csv(here("../data/pilot_child_data.csv"))
+```
+
+```{r}
+data <- data %>%
+  mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
+         stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
+  mutate(typicality = typicality - 1)
+
+data %>%
+  ggplot(aes(x = rt)) +
+  geom_histogram()
+
+data %>%
+  mutate(x_position = (image_location + 1) %% 4,
+         y_position = case_when(image_location <= 3 ~ 1,
+                                image_location <= 7 ~ 2,
+                                .default = 3)) %>% 
+  count(participant_age, x_position, y_position) %>% 
+  ggplot(aes(x = x_position, y = y_position, fill = n)) +
+  geom_tile() +
+  facet_wrap(~participant_age)
+```
+
+```{r}
+data %>%
+  filter(trial_number <= 1) %>%
+  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
+  group_by(participant_id, participant_age) %>%
+  summarise(mean_acc = mean(accuracy)) %>% 
+  ggplot(aes(x = participant_age, y = mean_acc, alpha = 0.5)) +
+  geom_jitter(height = 0, width = 0.2)
+
+```
+
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() %>%
+  group_by(condition, participant_id, trial_number) %>%
+  mutate(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(condition) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion choices of multiple types")
+```
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(condition, participant_id) %>%
+  mutate(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion atypical choices")
+```
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() %>%
+  group_by(condition, participant_id, category, trial_number) %>%
+  mutate(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(condition, category) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  facet_wrap(~category) +
+  ylab("proportion choices of multiple types")
+
+```
+
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(condition, participant_id, category) %>%
+  mutate(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition, category) %>%
+  tidyboot_mean(prop_atypical) %>% 
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  facet_wrap(~category) +
+  ylab("proportion atypical choices")
+```
