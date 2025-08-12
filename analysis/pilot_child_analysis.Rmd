@@ -1,6 +1,6 @@
 ---
 title: "pilot_child_analysis"
-output: html_document
+output: pdf_document
 date: "2025-07-24"
 ---
 
@@ -11,44 +11,65 @@ library(here)
 library(ggplot2)
 library(viridis)
 library(tidyboot)
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 ```
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, include = FALSE}
 raw_data <- list.files( path=here("../data/pilot_child_raw_data"), full.names=TRUE ) %>% 
   map_dfr( read_csv )
 
 data <- raw_data %>%
-  filter(participant_id > 0,
+  filter(participant_id > 0,  # get rid of debug runs
          participant_age > 0,
-         participant_age < 6) 
+         participant_age < 6) %>%
+  mutate(participant_id = if_else(participant_id == 15 & participant_age == 4, 14, participant_id), # manually fix errors in age + id logging
+         participant_age = if_else(participant_id == 14, 3, participant_age), # all errors reported by RAs and logged correctly in participant sheet
+         participant_id = if_else(participant_id == 16 & as.character(session_time) == "15:21:46", 17, participant_id),
+         participant_id = if_else(participant_id == 17 & as.character(session_time) == "15:33:15", 18, participant_id),
+         participant_age = if_else(participant_id == 18 & as.character(session_time) == "15:33:15", 3, participant_age),
+         participant_id = if_else(participant_id == 48 & as.character(session_time) == "14:21:16", 55, participant_id)) %>%
+  filter(participant_id != 43) # exclude second run of participant who was run twice
+# note: we've moved a second participant 48 to subid 55, but this participant currently doesn't have a row in our separate participant sheet
 
 write_csv(data, here("../data/pilot_child_data.csv"))
 ```
 
-```{r}
+```{r, include = FALSE}
 data <- read_csv(here("../data/pilot_child_data.csv"))
-```
 
-```{r}
 data <- data %>%
   mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
          stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
   mutate(typicality = typicality - 1)
 
+n_kids <- data %>% count(participant_id) %>% nrow()
+
+n_three <- data %>% filter(participant_age == 3) %>% count(participant_id) %>% nrow()
+n_four <- data %>% filter(participant_age == 4) %>% count(participant_id) %>% nrow()
+n_five <- data %>% filter(participant_age == 5) %>% count(participant_id) %>% nrow()
+```
+
+We currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
+
+```{r, eval=FALSE, include = FALSE}
 data %>%
   ggplot(aes(x = rt)) +
   geom_histogram()
+```
 
+```{r}
 data %>%
   mutate(x_position = (image_location + 1) %% 4,
-         y_position = case_when(image_location <= 3 ~ 1,
+         y_position = case_when(image_location <= 3 ~ 3,
                                 image_location <= 7 ~ 2,
-                                .default = 3)) %>% 
+                                .default = 1)) %>% 
   count(participant_age, x_position, y_position) %>% 
   ggplot(aes(x = x_position, y = y_position, fill = n)) +
   geom_tile() +
   facet_wrap(~participant_age)
 ```
+
+Heatmap of where on the screen children tapped, by age. Possibly a slight bias toward the left and right edges and middle row (likely where their hands rest). Image positions were randomized so this isn't a confound.
 
 ```{r}
 data %>%
@@ -58,30 +79,31 @@ data %>%
   summarise(mean_acc = mean(accuracy)) %>% 
   ggplot(aes(x = participant_age, y = mean_acc, alpha = 0.5)) +
   geom_jitter(height = 0, width = 0.2)
-
 ```
+
+Accuracy on practice trials ("Tap on two carrots" and "Tap on two apples"). Almost all children choose 100% accurately.
 
 ```{r}
 data %>%
   filter(trial_number > 1) %>%
-  group_by(participant_id, trial_number) %>%
-  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
-  ungroup() %>%
-  group_by(condition, participant_id, trial_number) %>%
-  mutate(prop_distinct = sum(distinct_types)/n()) %>%
+  group_by(participant_id, condition, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
   ungroup() %>%
   group_by(condition) %>%
-  tidyboot_mean(prop_distinct) %>%
+  tidyboot_mean(n_distinct) %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   ylab("proportion choices of multiple types")
 ```
+
+Choices of multiple subtypes of stimuli. Our prediction is that children choose multiple subtypes more often when prompted with a familiar word (sampling across the category) and choose one subtype more often when prompted with a novel word (inferring the novel word refers to a specific subtype of the category). Children are currently patterning in line with our prediction.
+
 ```{r}
 data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_id) %>%
-  mutate(prop_atypical = sum(typicality)/n()) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
   ungroup() %>%
   group_by(condition) %>%
   tidyboot_mean(prop_atypical) %>%
@@ -90,30 +112,63 @@ data %>%
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   ylab("proportion atypical choices")
 ```
+
+Choices of atypical stimuli. Our prediction is that children will choose more typical stimuli when prompted with a familiar word, and will choose more atypical stimuli when prompted with a novel word (inferring the novel word refers to an atypical subtype of the category). Children are patterning in line with our prediction.
+
 ```{r}
 data %>%
   filter(trial_number > 1) %>%
-  group_by(participant_id, trial_number) %>%
-  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  group_by(participant_id, condition, category, participant_age, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
   ungroup() %>%
-  group_by(condition, participant_id, category, trial_number) %>%
-  mutate(prop_distinct = sum(distinct_types)/n()) %>%
-  ungroup() %>%
-  group_by(condition, category) %>%
-  tidyboot_mean(prop_distinct) %>%
+  group_by(condition, participant_age) %>%
+  tidyboot_mean(n_distinct) %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
-  facet_wrap(~category) +
-  ylab("proportion choices of multiple types")
+  ylab("proportion choices of multiple types") +
+  facet_wrap(~participant_age)
 
 ```
 
 ```{r}
 data %>%
   filter(trial_number > 1) %>%
+  group_by(condition, participant_age, participant_id) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition, participant_age) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion atypical choices") +
+  facet_wrap(~participant_age)
+
+```
+
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(participant_id, condition, category, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() %>%
+  group_by(condition, category) %>%
+  tidyboot_mean(n_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  facet_wrap(~category) +
+  ylab("proportion choices of multiple types")
+```
+
+Choices of multiple types, by stimulus item.
+
+```{r}
+data %>%
+  filter(trial_number > 1) %>%
   group_by(condition, participant_id, category) %>%
-  mutate(prop_atypical = sum(typicality)/n()) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
   ungroup() %>%
   group_by(condition, category) %>%
   tidyboot_mean(prop_atypical) %>% 
@@ -123,3 +178,5 @@ data %>%
   facet_wrap(~category) +
   ylab("proportion atypical choices")
 ```
+
+Choices of atypical items, by stimulus item. Mushrooms are potentially a difficult item.
