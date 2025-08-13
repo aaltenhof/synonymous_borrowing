@@ -11,12 +11,16 @@ library(here)
 library(ggplot2)
 library(viridis)
 library(tidyboot)
+library(lme4)
+library(broom.mixed)
 knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 ```
 
 ```{r, eval = FALSE, include = FALSE}
 raw_data <- list.files( path=here("../data/pilot_child_raw_data"), full.names=TRUE ) %>% 
   map_dfr( read_csv )
+
+raw_subjects <- read_csv(here("../data/child_pilot_subject_sheet_raw.csv"))
 
 data <- raw_data %>%
   filter(participant_id > 0,  # get rid of debug runs
@@ -27,9 +31,10 @@ data <- raw_data %>%
          participant_id = if_else(participant_id == 16 & as.character(session_time) == "15:21:46", 17, participant_id),
          participant_id = if_else(participant_id == 17 & as.character(session_time) == "15:33:15", 18, participant_id),
          participant_age = if_else(participant_id == 18 & as.character(session_time) == "15:33:15", 3, participant_age),
-         participant_id = if_else(participant_id == 48 & as.character(session_time) == "14:21:16", 55, participant_id)) %>%
-  filter(participant_id != 43) # exclude second run of participant who was run twice
-# note: we've moved a second participant 48 to subid 55, but this participant currently doesn't have a row in our separate participant sheet
+         participant_id = if_else(participant_id == 48 & as.character(session_time) == "14:21:16", 55, participant_id)) %>% # note: we've moved a second participant 48 to subid 55, but this participant currently doesn't have a row in our separate participant sheet
+  filter(participant_id != 43) %>% # exclude second run of participant who was run twice
+  left_join(raw_subjects %>% select(-child_name), by = c("participant_id" = "sub_id")) %>%
+  mutate(exact_age = as.numeric(mdy(experiment_date) - mdy(date_of_birth))/30.43)
 
 write_csv(data, here("../data/pilot_child_data.csv"))
 ```
@@ -75,10 +80,10 @@ Heatmap of where on the screen children tapped, by age. Possibly a slight bias t
 data %>%
   filter(trial_number <= 1) %>%
   mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
-  group_by(participant_id, participant_age) %>%
+  group_by(participant_id, exact_age) %>%
   summarise(mean_acc = mean(accuracy)) %>% 
-  ggplot(aes(x = participant_age, y = mean_acc, alpha = 0.5)) +
-  geom_jitter(height = 0, width = 0.2)
+  ggplot(aes(x = exact_age, y = mean_acc, alpha = 0.5)) +
+  geom_point(height = 0, width = 0.2)
 ```
 
 Accuracy on practice trials ("Tap on two carrots" and "Tap on two apples"). Almost all children choose 100% accurately.
@@ -180,3 +185,37 @@ data %>%
 ```
 
 Choices of atypical items, by stimulus item. Mushrooms are potentially a difficult item.
+
+```{r}
+mean_age <- data %>%
+  distinct(participant_id, exact_age) %>%
+  summarise(mean_age = mean(exact_age, na.rm = TRUE)) %>%
+  pull()
+
+model_data <- data %>%
+  filter(trial_number > 1) %>%
+  group_by(participant_id, exact_age, condition, category, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1,
+            n_atypical = sum(typicality)) %>%
+  ungroup() %>%
+  mutate(participant_id = as.factor(participant_id),
+         exact_age = exact_age - mean_age)
+
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition * exact_age + (1 | participant_id) + (1 | category), family = "binomial",
+      data = model_data) %>%
+  tidy()
+```
+
+```{r}
+model_data %>%
+  group_by(participant_id, exact_age, condition) %>%
+  summarise(prop_multiple = mean(n_distinct)) %>% 
+  ggplot(aes(x = prop_multiple)) +
+  geom_histogram() +
+  facet_wrap(~condition)
+
+
+glmer(n_distinct ~ condition * exact_age + (1 | category) + (1 | participant_id), family = "binomial",
+      data = model_data) %>%
+  tidy()
+```
