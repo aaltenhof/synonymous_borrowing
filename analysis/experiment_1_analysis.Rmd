@@ -12,6 +12,7 @@ library(here)
 library(lme4)
 library(broom.mixed)
 library(tidyboot)
+library(svglite)
 library(ggthemes)
 ```
 
@@ -57,8 +58,7 @@ p <- data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/pilot_typicality_effect.png"),
-  bg = "transparent",
+  filename = here("plots/pilot_typicality_effect.svg"),
   height = 5,
   width = 5
 )
@@ -69,7 +69,7 @@ Do people tend to choose more atypical objects when prompted with a novel word?
 Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
 
 ```{r}
-glmer(typicality ~ condition + (1|participant_id), family = "binomial",
+glmer(typicality ~ condition + (1|participant_id) + (1 | category), family = "binomial",
       data = data) %>%
   tidy()
 ```
@@ -104,8 +104,7 @@ p <- data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/pilot_types_effect.png"),
-  bg = "transparent",
+  filename = here("plots/pilot_types_effect.svg"),
   height = 5,
   width = 5
 )
@@ -117,7 +116,7 @@ Do people tend to choose more varied objects when prompted with familiar vs. nov
 Above, participants' choices of exemplars; they have two choices on each trial. A score of 0 reflects that they chose all of one subtype, and a score of 1 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
 
 ```{r}
-glmer(distinct_types ~ condition + (1|participant_id), family = "binomial",
+glmer(distinct_types ~ condition + (1|participant_id) + (1 | category), family = "binomial",
       data = data) %>%
   tidy()
 ```
@@ -149,7 +148,7 @@ p <- data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/pilot_atypical_by_item_effect.png"),
+  filename = here("plots/pilot_atypical_by_item_effect.svg"),
   bg = "transparent",
   height = 5,
   width = 7
@@ -169,7 +168,7 @@ p <- data %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
-  ylab("proportion choices of multiple types") +
+  ylab("proportion choices of multiple distinct subtypes") +
   theme_few() + theme(
   panel.background = element_rect(fill = "transparent",
                                   colour = NA_character_), # necessary to avoid drawing panel outline

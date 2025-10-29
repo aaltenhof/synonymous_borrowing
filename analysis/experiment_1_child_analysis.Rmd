@@ -13,6 +13,8 @@ library(viridis)
 library(tidyboot)
 library(lme4)
 library(broom.mixed)
+library(svglite)
+library(ggthemes)
 knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 ```
 
@@ -89,7 +91,7 @@ data %>%
 Accuracy on practice trials ("Tap on two carrots" and "Tap on two apples"). Almost all children choose 100% accurately.
 
 ```{r}
-data %>%
+p <- data %>%
   filter(trial_number > 1) %>%
   group_by(participant_id, condition, trial_number) %>%
   summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
@@ -99,13 +101,31 @@ data %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
-  ylab("proportion choices of multiple types")
+  ylab("proportion choices of multiple types")  +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_child_types_effect.svg"),
+  bg = "transparent",
+  height = 5,
+  width = 5)
 ```
 
 Choices of multiple subtypes of stimuli. Our prediction is that children choose multiple subtypes more often when prompted with a familiar word (sampling across the category) and choose one subtype more often when prompted with a novel word (inferring the novel word refers to a specific subtype of the category). Children are currently patterning in line with our prediction.
 
 ```{r}
-data %>%
+p <- data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_id) %>%
   summarise(prop_atypical = sum(typicality)/n()) %>%
@@ -115,7 +135,25 @@ data %>%
   ungroup() %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
-  ylab("proportion atypical choices")
+  ylab("proportion atypical choices")  +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/pilot_child_atypical_effect.svg"),
+  bg = "transparent",
+  height = 5,
+  width = 5)
 ```
 
 Choices of atypical stimuli. Our prediction is that children will choose more typical stimuli when prompted with a familiar word, and will choose more atypical stimuli when prompted with a novel word (inferring the novel word refers to an atypical subtype of the category). Children are patterning in line with our prediction.
@@ -165,12 +203,13 @@ data %>%
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   facet_wrap(~category) +
   ylab("proportion choices of multiple types")
+
 ```
 
 Choices of multiple types, by stimulus item.
 
 ```{r}
-data %>%
+p <- data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_id, category) %>%
   summarise(prop_atypical = sum(typicality)/n()) %>%
