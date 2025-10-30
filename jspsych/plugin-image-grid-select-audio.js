@@ -191,7 +191,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
               if (trial.response_allowed_while_playing) {
                 this.enable_buttons_without_delay();
               } else if (!trial.response_allowed_while_playing) {
-                can_respond = true
+                this.audio.addEventListener("ended", can_respond = true);
                 this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
               }
               if (trial.trial_duration !== null) {
