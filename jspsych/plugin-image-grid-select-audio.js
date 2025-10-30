@@ -262,7 +262,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
           });
 
           img.addEventListener('click', () => {
-            if (clicked < trial.required_clicks && this.can_respond == true) {
+            if (clicked < trial.required_clicks && can_respond == true) {
               clicked++;
               const rt = Math.round(performance.now() - start_time);
               const filename = path.split('/').pop();
