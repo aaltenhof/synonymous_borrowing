@@ -128,11 +128,13 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      for (const button of this.buttonElements) {
 	        button.setAttribute("disabled", "disabled");
 	      }
+        this.can_respond = false
 	    };
 	    this.enable_buttons_without_delay = () => {
 	      for (const button of this.buttonElements) {
 	        button.removeAttribute("disabled");
 	      }
+        this.can_respond = true
 	    };
 	    this.enable_buttons_with_delay = (delay) => {
 	      this.jsPsych.pluginAPI.setTimeout(this.enable_buttons_without_delay, delay);
@@ -158,6 +160,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      this.audio.stop();
 	      this.audio.removeEventListener("ended", this.end_trial);
 	      this.audio.removeEventListener("ended", this.enable_buttons);
+        this.can_respond = false
 	      var trial_data = {
 	        rt: this.response.rt,
 	        stimulus: this.params.stimulus,
@@ -173,7 +176,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	  }
 
     trial(display_element, trial, on_load) {
-        let can_respond = false
         return new Promise(async (resolve) => {
             this.finish = resolve;
 	        this.params = trial;
@@ -191,7 +193,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
               if (trial.response_allowed_while_playing) {
                 this.enable_buttons_without_delay();
               } else if (!trial.response_allowed_while_playing) {
-                this.audio.addEventListener("ended", can_respond = true);
                 this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
               }
               if (trial.trial_duration !== null) {
@@ -257,7 +258,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
           });
 
           img.addEventListener('click', () => {
-            if (clicked < trial.required_clicks && can_respond == true) {
+            if (clicked < trial.required_clicks && this.can_respond == true) {
               clicked++;
               const rt = Math.round(performance.now() - start_time);
               const filename = path.split('/').pop();
