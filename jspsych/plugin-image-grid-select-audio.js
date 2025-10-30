@@ -135,6 +135,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	        button.removeAttribute("disabled");
 	      }
         this.can_respond = true
+        can_respond = true
 	    };
 	    this.enable_buttons_with_delay = (delay) => {
 	      this.jsPsych.pluginAPI.setTimeout(this.enable_buttons_without_delay, delay);
@@ -149,7 +150,6 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      }
 	      this.response.button = parseInt(choice);
 	      this.response.rt = rt;
-	      this.disable_buttons();
 	      if (this.params.response_ends_trial) {
 	        this.end_trial();
 	      }
@@ -205,6 +205,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 
       let clicked = 0;
       this.disable_buttons()
+      let can_respond = false
       const start_time = performance.now();
       let trial_data = [];
 
