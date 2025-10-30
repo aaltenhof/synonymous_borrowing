@@ -128,14 +128,11 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      for (const button of this.buttonElements) {
 	        button.setAttribute("disabled", "disabled");
 	      }
-        this.can_respond = false
 	    };
 	    this.enable_buttons_without_delay = () => {
 	      for (const button of this.buttonElements) {
 	        button.removeAttribute("disabled");
 	      }
-        this.can_respond = true
-        can_respond = true
 	    };
 	    this.enable_buttons_with_delay = (delay) => {
 	      this.jsPsych.pluginAPI.setTimeout(this.enable_buttons_without_delay, delay);
@@ -206,10 +203,16 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
       let clicked = 0;
       this.disable_buttons()
       let can_respond = false
+      console.log("disabled responding")
       const start_time = performance.now();
       let trial_data = [];
 
       
+
+      this.audio.addEventListener("ended", () => {
+            can_respond = true;
+            console.log("activated responding")
+          });
 
       // Clear display and create hidden container
       display_element.innerHTML = '';
