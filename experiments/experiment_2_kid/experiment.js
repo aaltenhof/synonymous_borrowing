@@ -217,7 +217,7 @@ function createImageGridTrial(category, trialNumber) {
     
     return {
         type: jsPsychImageGridSelectAudio,
-        stimulus: `audio/pick2_${trialWord}1.wav`,
+        stimulus: `audio/pick_two_${trialWord}.wav`,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
         required_clicks: 2,
@@ -242,7 +242,7 @@ function createPracticeImageGridTrial(category, trialNumber) {
     
     return {
         type: jsPsychImageGridSelectAudio,
-        stimulus: `audio/pick2_${category}1.wav`,
+        stimulus: `audio/pick_two_${category}.wav`,
         stimulus_folder: `stimuli/${category}`,
         this_word: trialWord,
         required_clicks: 2,
