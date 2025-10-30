@@ -173,6 +173,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	  }
 
     trial(display_element, trial, on_load) {
+        let can_respond = false
         return new Promise(async (resolve) => {
             this.finish = resolve;
 	        this.params = trial;
@@ -190,6 +191,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
               if (trial.response_allowed_while_playing) {
                 this.enable_buttons_without_delay();
               } else if (!trial.response_allowed_while_playing) {
+                can_respond = true
                 this.audio.addEventListener("ended", this.enable_buttons_without_delay()); // check this
               }
               if (trial.trial_duration !== null) {
@@ -201,6 +203,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      this.audio.play();
 
       let clicked = 0;
+      
       const start_time = performance.now();
       let trial_data = [];
 
@@ -254,12 +257,12 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
           });
 
           img.addEventListener('click', () => {
-            if (clicked < trial.required_clicks) {
+            if (clicked < trial.required_clicks && can_respond == true) {
               clicked++;
               const rt = Math.round(performance.now() - start_time);
               const filename = path.split('/').pop();
 
-              img.style.border = '3px solid #4CAF50';
+              img.style.border = '3px solid #787c78ff';
               img.style.transform = 'scale(1)';
               img.style.pointerEvents = 'none';
 
