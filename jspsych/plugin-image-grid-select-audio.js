@@ -204,7 +204,7 @@ var jsPsychImageGridSelectAudio = (function (jspsych) {
 	      this.audio.play();
 
       let clicked = 0;
-      
+      this.disable_buttons()
       const start_time = performance.now();
       let trial_data = [];
 
