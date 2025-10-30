@@ -40,7 +40,7 @@ var preload = {
         'audio/pick_two_mushrooms.wav','audio/pick_two_leaves.wav','audio/pick_two_flowers.wav','audio/pick_two_shells.wav',
         'audio/pick_two_cups.wav', 'audio/pick_two_spoons.wav', 'audio/pick_two_hats.wav', 'audio/pick_two_shoes.wav',
         'audio/pick_two_bines.wav','audio/pick_two_palts.wav','audio/pick_two_tinches.wav','audio/pick_two_nefts.wav',
-        'audio/pick_two_daches.wav', 'audio/pick_two_serns.wav', 'audio/pick_two_leams.wav', 'audio/pick_two_gades.wav'
+        'audio/pick_two_datches.wav', 'audio/pick_two_serns.wav', 'audio/pick_two_leams.wav', 'audio/pick_two_gades.wav'
     ],
     show_detailed_errors: true
 }
