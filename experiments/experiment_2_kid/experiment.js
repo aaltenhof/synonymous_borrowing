@@ -25,7 +25,7 @@ jsPsych.data.addProperties({
 
 let condition;
 
-const novel_words = ["tinches", "nefts", "bines", "palts", "daches", "serns", "gades", "leams"];
+const novel_words = ["tinches", "nefts", "bines", "palts", "datches", "serns", "gades", "leams"];
 
 // Set condition
 if (Math.floor(Math.random() * 2) == 0) {
