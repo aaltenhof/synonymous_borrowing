@@ -89,7 +89,7 @@ const stimulusCategories = {
         'spoon_slotted_1_2.png', 'spoon_slotted_2_2.png', 'spoon_slotted_3_2.png',
         'spoon_square_1_2.png', 'spoon_square_2_2.png', 'spoon_square_3_2.png'
     ],
-    'hat': [
+    'hats': [
         'hat_ballcap_1_1.png', 'hat_ballcap_2_1.png', 'hat_ballcap_3_1.png',
         'hat_sun_1_1.png', 'hat_sun_2_1.png', 'hat_sun_3_1.png',
         'hat_jester_1_2.png', 'hat_jester_2_2.png', 'hat_jester_3_2.png',
