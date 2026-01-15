@@ -11,6 +11,14 @@ function generateRandomId() {
     return baseId;
 }
 
+// reCAPTCHA object
+var recaptcha = {
+    type: "external-html",
+    url: "recaptcha.html",
+    cont_btn: "submit_button",
+    execute_script: true
+};
+
 const random_id = generateRandomId()
 
 
@@ -250,7 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create timeline
     const timeline = [
         consent,
-        instructions
+        instructions,
+        recaptcha
     ];
 
     // Get categories and shuffle them
