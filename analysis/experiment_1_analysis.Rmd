@@ -14,6 +14,7 @@ library(broom.mixed)
 library(tidyboot)
 library(svglite)
 library(ggthemes)
+library(ggrepel)
 ```
 
 ```{r, eval = FALSE}
@@ -192,3 +193,110 @@ ggsave(
 ```
 
 Examining distinct type choices across stimulus types.
+
+```{r, eval = FALSE}
+
+adult_data <- adult_data %>%
+  mutate(age = "Adults") %>%
+  select(-study_id, -session_id)
+
+plot_data <- data %>%
+  filter(category != "carrots", category != "apples") %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() %>%
+  select(participant_id, trial_number, condition, category, image_name, word, click_order, rt, id, typicality,
+         stimulus_subclass, distinct_types) %>%
+  mutate(age = "3- to 5-year-olds") %>%
+  rbind(adult_data) 
+
+p <- plot_data %>%
+  group_by(age, condition, participant_id, trial_number) %>%
+  summarise(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(age, condition) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean, color = age)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = age),
+            position = position_dodge(width = 0.2)) +
+  ylab("proportion choices of multiple types") +
+  scale_color_brewer(palette = "Dark2") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+) +
+  geom_text_repel(
+    data = . %>%
+      group_by(age) %>%
+      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
+      ungroup(),
+    aes(label = age),
+    nudge_x = 0.1,
+    show.legend = FALSE,
+    direction = "y",
+    hjust = 0,
+    segment.color = NA
+  )
+
+ggsave(
+  plot = p,
+  filename = here("plots/overall_types_effect.svg"),
+  height = 5,
+  width = 6
+)
+
+p <- plot_data %>%
+  group_by(age, condition, participant_id) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(age, condition) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean, color = age)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = age), position = position_dodge(width = 0.2)) +
+  ylab("proportion atypical choices") +
+  scale_color_brewer(palette = "Dark2") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+) +
+  geom_text_repel(
+    data = . %>%
+      group_by(age) %>%
+      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
+      ungroup(),
+    aes(label = age),
+    nudge_x = 0.1,
+    show.legend = FALSE,
+    direction = "y",
+    hjust = 0,
+    segment.color = NA
+  )
+
+ggsave(
+  plot = p,
+  filename = here("plots/overall_typicality_effect.svg"),
+  height = 5,
+  width = 6
+)
+
+```

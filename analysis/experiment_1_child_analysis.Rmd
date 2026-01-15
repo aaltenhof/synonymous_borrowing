@@ -38,7 +38,7 @@ data <- raw_data %>%
   left_join(raw_subjects %>% select(-child_name), by = c("participant_id" = "sub_id")) %>%
   mutate(exact_age = as.numeric(mdy(experiment_date) - mdy(date_of_birth))/30.43)
 
-write_csv(data, here("../data/pilot_child_data.csv"))
+#write_csv(data, here("../data/pilot_child_data.csv"))
 ```
 
 ```{r, include = FALSE}
@@ -238,7 +238,10 @@ model_data <- data %>%
             n_atypical = sum(typicality)) %>%
   ungroup() %>%
   mutate(participant_id = as.factor(participant_id),
-         exact_age = exact_age - mean_age)
+         exact_age = exact_age - mean_age,
+         condition = as.factor(condition))
+
+contrasts(model_data$condition) = contr.sum(2)
 
 glmer(cbind(n_atypical, 2-n_atypical) ~ condition * exact_age + (1 | participant_id) + (1 | category), family = "binomial",
       data = model_data) %>%
