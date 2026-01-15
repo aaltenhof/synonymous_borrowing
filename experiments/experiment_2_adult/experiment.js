@@ -15,14 +15,15 @@ function generateRandomId() {
 var recaptcha = {
     type: jsPsychExternalHtml,
     url: "recaptcha.html",
-    cont_btn: "submit_button",
+    cont_btn: "proceed_button",
+    force_refresh: true,
     execute_script: true
 };
 
 const random_id = generateRandomId()
 
 
-// Declare variables at the top
+// Declare vars
 var study_id = "borrowing_adult_artifacts";
 var participant_id = jsPsych.data.getURLVariable('PROLIFIC_PID')  || random_id;
 var session_id = jsPsych.data.getURLVariable('SESSION_ID');
