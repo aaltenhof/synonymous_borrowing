@@ -8,7 +8,7 @@ documentation: docs.jspsych.org
 
 jsPsych.plugins['external-html'] = (function() {
 
-  var plugin = {};
+  var externalHtmlPlugin = {};
 
   plugin.info = {
     name: 'external-html',
@@ -108,5 +108,5 @@ jsPsych.plugins['external-html'] = (function() {
     xmlhttp.send();
   }
 
-  return plugin;
+  return externalHtmlPlugin;
 })();
