@@ -13,7 +13,7 @@ function generateRandomId() {
 
 // reCAPTCHA object
 var recaptcha = {
-    type: externalHtml,
+    type: jsPsychExternalHtml,
     url: "recaptcha.html",
     cont_btn: "submit_button",
     execute_script: true
