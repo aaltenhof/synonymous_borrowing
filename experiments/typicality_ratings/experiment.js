@@ -94,6 +94,22 @@ const stimulusCategories = {
         'sun': ['hat_sun_1_1.png', 'hat_sun_2_1.png', 'hat_sun_3_1.png'],
         'jester': ['hat_jester_1_2.png', 'hat_jester_2_2.png', 'hat_jester_3_2.png'],
         'party': ['hat_party_1_2.png', 'hat_party_2_2.png', 'hat_party_3_2.png']
+    },
+    'carrots': {
+        'carrot': ['carrot_carrot_1_0.png', 'carrot_carrot_2_0.png', 'carrot_carrot_3_0.png',
+        'carrot_carrot_4_0.png', 'carrot_carrot_5_0.png', 'carrot_carrot_6_0.png']
+    },
+    'broccoli':{
+        'broccoli': ['broccoli_broccoli_1_0.png', 'broccoli_broccoli_2_0.png', 'broccoli_broccoli_3_0.png',
+        'broccoli_broccoli_4_0.png', 'broccoli_broccoli_5_0.png', 'broccoli_broccoli_6_0.png']
+    },
+    'apples': {
+        'apple':['[apple_apple_1_0.png', 'apple_apple_2_0.png', 'apple_apple_3_0.png',
+        'apple_apple_4_0.png', 'apple_apple_5_0.png', 'apple_apple_6_0.png']
+    },
+    'strawberries': {
+        'strawberry': ['strawberry_strawberry_1_0.png', 'strawberry_strawberry_2_0.png', 'strawberry_strawberry_3_0.png',
+        'strawberry_strawberry_4_0.png', 'strawberry_strawberry_5_0.png', 'strawberry_strawberry_6_0.png']
     }
 };
 
@@ -144,7 +160,7 @@ var instructions = {
             <p>In this task, you’ll be asked to rate drawings of objects for how typical they are.</p>
             <p>For each picture, we want you to rate <strong>how typical</strong> (usual, common, or normal) that object is of its category. For example, a goldfish is a very typical fish, but a blowfish might be considered atypical (unusual, rare, abnormal). </p>
             <p>For example, if you see a picture of a flower, think about how typical it is as a flower.</p>
-            <p>You'll use a slider to indicate your rating, from Very atypical to Very yypical.</p>
+            <p>You'll use a slider to indicate your rating, from Very atypical to Very atypical.</p>
             <p>On each trial, click and drag the slider to make your rating, then click "Continue" to move on.</p>
         </div>
     `,
@@ -153,13 +169,30 @@ var instructions = {
 
 
 function createTypicalityTrial(stimulusInfo, trialNumber) {
+    // deal with leaves --> leaf and a apple --> an apple
+    const singularMap = {
+        'leaves': 'leaf',
+        'mushrooms': 'mushroom',
+        'flowers': 'flower',
+        'shells': 'shell',
+        'cups': 'cup',
+        'shoes': 'shoe',
+        'spoons': 'spoon',
+        'hats': 'hat',
+        'apples': 'apple',
+        'carrots': 'carrot'
+    };
+
+    const singular = singularMap[stimulusInfo.category] || stimulusInfo.category.slice(0, -1);
+    const article = ['a', 'e', 'i', 'o', 'u'].includes(singular[0].toLowerCase()) ? 'an' : 'a';
+
     return {
         type: jsPsychImageSliderResponse,
         stimulus: stimulusInfo.image_path,
         stimulus_width: 300,
         stimulus_height: 300,
         maintain_aspect_ratio: true,
-        prompt: `<p style="font-size: 20px; margin-top: 20px;">How typical is this object for a <strong>${stimulusInfo.category.slice(0, -1)}</strong>?</p>`,
+        prompt: `<p style="font-size: 20px; margin-top: 20px;">How typical is this object for ${article} <strong>${singular}</strong>?</p>`,
         labels: ['Very atypical ', 'Somewhat typical', 'Very typical'],
         slider_width: 500,
         min: 0,
@@ -224,7 +257,6 @@ const save_data = {
         );
 
         console.log("Rating trials:", ratingTrials);
-        console.log("PIDs:", pids);
 
         const headers = 'participant_id,study_id,session_date,session_time,trial_number,trial_type,category,subtype,image_name,id,designed_typicality,rating,rt';
         
