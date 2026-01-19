@@ -183,6 +183,37 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
     };
 }
 
+const consent = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="width: 800px;">
+            <h3>Consent to Participate in Research</h3>
+            <p>Protocol Director: Robert Hawkins </p>
+            <p>Protocol Title: Communication and social cognition in natural audiovisual contexts IRB# 77226 </p>
+
+            <p>DESCRIPTION: You are invited to participate in a research study about language and communication. The purpose of the research is to understand how you use and learn about words. This research will be conducted through the Prolific platform, including participants from the US, UK, and Canada. If you decide to participate in this research, you will play a short language game. </p>
+            <p>TIME INVOLVEMENT: The task is estimated to last less than 5 minutes. You are free to withdraw from the study at any time. </p>
+            <p>RISKS AND BENEFITS: You may become frustrated or bored if you do not like the task. Study data will be stored securely, in compliance with Stanford University standards, minimizing the risk of confidentiality breach. This study advances our scientific understanding of how people communicate. We cannot and do not guarantee or promise that you will receive any benefits from this study.</p>
+            <p>PAYMENTS: You will receive payment in the amount advertised on Prolific. If you do not complete this study, you will receive prorated payment based on the time that you have spent if you contact the experimenters.</p>
+            <p>PARTICIPANT'S RIGHTS: If you have read this form and have decided to participate in this project, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled. The alternative is not to participate. You have the right to refuse to answer particular questions. The results of this research study may be presented at scientific or professional meetings or published in scientific journals. Your individual privacy will be maintained in all published and written data resulting from the study. In accordance with scientific norms, the data from this study may be used or shared with other researchers for future research (after removing personally identifying information) without additional consent from you.</p>
+            <p>CONTACT INFORMATION: Questions: If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director, Robert Hawkins (
+rdhawkins@stanford.edu, 217-549-6923). </p>
+            <p>Independent Contact: If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906, or email at irbnonmed@stanford.edu. You can also write to the Stanford IRB, Stanford University, 1705 El Camino Real, Palo Alto, CA 94306. Please save or print a copy of this page for your records.</p>
+            <p>Please click "I Agree" if you wish to participate.</p>
+        </div>
+    `,
+    choices: ['I Agree', 'I Do Not Agree'],
+    button_html: ['<button class="jspsych-btn">%choice%</button>', '<button class="jspsych-btn">%choice%</button>'],
+    data: {
+        trial_type: 'consent'
+    },
+    on_finish: function(data) {
+        if(data.response == 1) {
+            jsPsych.endExperiment('Thank you for your time. The experiment has been ended.');
+        }
+    }
+};
+
 
 // Configure save_data trial
 const save_data = {
