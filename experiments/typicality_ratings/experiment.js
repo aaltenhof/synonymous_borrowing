@@ -141,15 +141,15 @@ var instructions = {
     stimulus: `
         <div style="max-width: 800px; margin: auto; text-align: left; font-size: 18px;">
             <h2 style="text-align: center;">Instructions</h2>
-            <p>In this task, you will see pictures of different objects one at a time.</p>
-            <p>For each picture, we want you to rate <strong>how typical</strong> that object is of its category.</p>
-            <p>For example, if you see a picture of a flower, think about how typical (usual, common, or normal) it is as a flower.</p>
-            <p>Use the slider to indicate your rating:</p>
+            <p>In this task, you’ll be asked to rate drawings of objects for how typical they are.</p>
+            <p>For each picture, we want you to rate <strong>how typical</strong> (usual, common, or normal) that object is of its category. For example, a goldfish is a very typical fish, but a blowfish might be considered atypical (unusual, rare, abnormal). </p>
+            <p>For example, if you see a picture of a flower, think about how typical it is as a flower.</p>
+            <p>You'll use a slider to indicate your rating:</p>
             <ul>
-                <li><strong>Left side</strong> = Not at all typical (an unusual, rare or abnormal) example)</li>
-                <li><strong>Right side</strong> = Very typical (a usual, common, normal example)</li>
+                <li><strong>Left side</strong> = Not at all typical example)</li>
+                <li><strong>Right side</strong> = Very typical </li>
             </ul>
-            <p>Click and drag the slider to make your rating, then click "Continue" to move on.</p>
+            <p>On each trial, click and drag the slider to make your rating, then click "Continue" to move on.</p>
         </div>
     `,
     choices: ['Start']
