@@ -125,7 +125,7 @@ function shuffle(array) {
 }
 
 // select one random exemplar from each subtype
-function selectOnePerSubtype(categoryData, exemplarId) {
+function selectOnePerSubtype(categoryData, conditionId) {
     const selectedStimuli = [];
     
     for (const [category, subtypes] of Object.entries(categoryData)) {
