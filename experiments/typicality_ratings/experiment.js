@@ -284,7 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
         instructions,
         recaptcha
     ];
-    
+
+    let trialCounter = 0;
 
     // select stimuli (one per subtype)
     const selectedStimuli = selectOnePerSubtype(stimulusCategories);
