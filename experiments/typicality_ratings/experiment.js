@@ -203,7 +203,6 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
         </div>
     `,
     choices: ['I Agree', 'I Do Not Agree'],
-    button_html: ['<button class="jspsych-btn">%choice%</button>', '<button class="jspsych-btn">%choice%</button>'],
     data: {
         trial_type: 'consent'
     },
