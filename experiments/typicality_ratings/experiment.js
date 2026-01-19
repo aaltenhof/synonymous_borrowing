@@ -234,7 +234,7 @@ const save_data = {
         const headers = 'participant_id,study_id,session_date,session_time,trial_number,trial_type,category,subtype,image_name,id,designed_typicality,rating,rt';
         
         const rows = ratingTrials.map(trial => {
-            return `${pids.participant_id || ''},${trial.study_id || ''},${pids.participant_age || ''},${session_date || ''},${session_time || ''},${trial.trial_number},${trial.trial_type},${trial.category},${trial.subtype},${trial.image_name},${trial.id},${trial.designed_typicality},${trial.response},${trial.rt}`;
+            return `${participant_id},${trial.study_id || ''},${session_date},${session_time},${trial.trial_number},${trial.trial_type},${trial.category},${trial.subtype},${trial.image_name},${trial.id},${trial.designed_typicality},${trial.response},${trial.rt}`;
         });
 
         return [headers, ...rows].join('\n');
