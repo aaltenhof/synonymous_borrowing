@@ -10,7 +10,6 @@ function generateRandomId() {
     return baseId;
 }
 
-const exemplat_condition = M
 
 // reCAPTCHA object
 var recaptcha = {
