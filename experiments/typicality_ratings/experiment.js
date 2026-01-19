@@ -104,7 +104,7 @@ const stimulusCategories = {
         'broccoli_broccoli_4_0.png', 'broccoli_broccoli_5_0.png', 'broccoli_broccoli_6_0.png']
     },
     'apples': {
-        'apple':['[apple_apple_1_0.png', 'apple_apple_2_0.png', 'apple_apple_3_0.png',
+        'apple':['apple_apple_1_0.png', 'apple_apple_2_0.png', 'apple_apple_3_0.png',
         'apple_apple_4_0.png', 'apple_apple_5_0.png', 'apple_apple_6_0.png']
     },
     'strawberries': {
@@ -130,23 +130,29 @@ function selectOnePerSubtype(categoryData, exemplarId) {
     
     for (const [category, subtypes] of Object.entries(categoryData)) {
         for (const [subtype, exemplars] of Object.entries(subtypes)) {
-            const selectedImage = exemplars[exemplarId];
             
-            const parts = selectedImage.replace('.png', '').split('_');
-            const typicality = parts[parts.length - 1];
-            const id = parts[parts.length - 2];
+            // put two of each practice stim in because subtypes don't matter 
+            const numToSelect = exemplars.length === 6 ? 2 : 1;
+            const startIndex = conditionId * numToSelect;
             
-            selectedStimuli.push({
-                category: category,
-                subtype: subtype,
-                image_name: selectedImage,
-                image_path: `stimuli/${category}/${selectedImage}`,
-                id: id,
-                designed_typicality: typicality
-            });
+            for (let i = 0; i < numToSelect; i++) {
+                const selectedImage = exemplars[startIndex + i];
+                
+                const parts = selectedImage.replace('.png', '').split('_');
+                const typicality = parts[parts.length - 1];
+                const id = parts[parts.length - 2];
+                
+                selectedStimuli.push({
+                    category: category,
+                    subtype: subtype,
+                    image_name: selectedImage,
+                    image_path: `stimuli/${category}/${selectedImage}`,
+                    id: id,
+                    designed_typicality: typicality
+                });
+            }
         }
     }
-    
     return shuffle(selectedStimuli);
 }
 
