@@ -10,6 +10,8 @@ function generateRandomId() {
     return baseId;
 }
 
+const exemplat_condition = M
+
 // reCAPTCHA object
 var recaptcha = {
     type: jsPsychExternalHtml,
@@ -108,13 +110,12 @@ function shuffle(array) {
 }
 
 // select one random exemplar from each subtype
-function selectOnePerSubtype(categoryData) {
+function selectOnePerSubtype(categoryData, exemplarId) {
     const selectedStimuli = [];
     
     for (const [category, subtypes] of Object.entries(categoryData)) {
         for (const [subtype, exemplars] of Object.entries(subtypes)) {
-            const randomIndex = Math.floor(Math.random() * exemplars.length);
-            const selectedImage = exemplars[randomIndex];
+            const selectedImage = exemplars[exemplarId];
             
             const parts = selectedImage.replace('.png', '').split('_');
             const typicality = parts[parts.length - 1];
@@ -144,11 +145,7 @@ var instructions = {
             <p>In this task, you’ll be asked to rate drawings of objects for how typical they are.</p>
             <p>For each picture, we want you to rate <strong>how typical</strong> (usual, common, or normal) that object is of its category. For example, a goldfish is a very typical fish, but a blowfish might be considered atypical (unusual, rare, abnormal). </p>
             <p>For example, if you see a picture of a flower, think about how typical it is as a flower.</p>
-            <p>You'll use a slider to indicate your rating:</p>
-            <ul>
-                <li><strong>Left side</strong> = Not at all typical example)</li>
-                <li><strong>Right side</strong> = Very typical </li>
-            </ul>
+            <p>You'll use a slider to indicate your rating, from Very atypical to Very yypical.</p>
             <p>On each trial, click and drag the slider to make your rating, then click "Continue" to move on.</p>
         </div>
     `,
@@ -164,7 +161,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         stimulus_height: 300,
         maintain_aspect_ratio: true,
         prompt: `<p style="font-size: 20px; margin-top: 20px;">How typical is this object for a <strong>${stimulusInfo.category.slice(0, -1)}</strong>?</p>`,
-        labels: ['Very Atypical ', 'Somewhat typical', 'Very typical'],
+        labels: ['Very atypical ', 'Somewhat typical', 'Very typical'],
         slider_width: 500,
         min: 0,
         max: 100,
@@ -254,10 +251,15 @@ var end_screen = {
     choices: ['Finish']
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    const exemplar_condition = await jsPsychPipe.getCondition("ErJNDaCcNYUh");
+    console.log("Assigned condition:", exemplar_condition);
+
     
     jsPsych.data.addProperties({
-        random_id: random_id
+        random_id: random_id,
+        exemplar_condition: exemplar_condition
     });
     
     // get all image paths for preloading
@@ -287,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let trialCounter = 0;
 
     // select stimuli (one per subtype)
-    const selectedStimuli = selectOnePerSubtype(stimulusCategories);
+    const selectedStimuli = selectOnePerSubtype(stimulusCategories, exemplar_condition);
     
     console.log("selected stimuli:", selectedStimuli);
 
