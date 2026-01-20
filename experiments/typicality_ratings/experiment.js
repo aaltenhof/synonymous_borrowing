@@ -207,6 +207,29 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         max: 100,
         slider_start: 50,
         require_movement: true,
+        on_load: function() {
+            const slider = document.querySelector('input[type="range"]');
+
+            // hide the slider thing until they click
+            cslider.style.setProperty('--thumb-opacity', '0');
+            slider.classList.add('thumb-hidden');
+
+            // style stuff to hide it 
+            const style = document.createElement('style');
+            style.textContent = `
+                input[type="range"].thumb-hidden::-webkit-slider-thumb {
+                opacity: 0;
+                }
+                input[type="range"].thumb-hidden::-moz-range-thumb {
+                opacity: 0;
+                }
+            `;
+            document.head.appendChild(style);
+
+            slider.addEventListener('mousedown', function() {
+            slider.classList.remove('thumb-hidden');
+            });
+        },
         data: {
             task: 'typicality_rating',
             trial_number: trialNumber,
