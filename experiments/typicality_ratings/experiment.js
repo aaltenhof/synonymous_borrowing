@@ -99,7 +99,7 @@ const stimulusCategories = {
         'carrot': ['carrot_carrot_1_0.png', 'carrot_carrot_2_0.png', 'carrot_carrot_3_0.png',
         'carrot_carrot_4_0.png', 'carrot_carrot_5_0.png', 'carrot_carrot_6_0.png']
     },
-    'broccolis':{
+    'broccoli':{
         'broccoli': ['broccoli_broccoli_1_0.png', 'broccoli_broccoli_2_0.png', 'broccoli_broccoli_3_0.png',
         'broccoli_broccoli_4_0.png', 'broccoli_broccoli_5_0.png', 'broccoli_broccoli_6_0.png']
     },
