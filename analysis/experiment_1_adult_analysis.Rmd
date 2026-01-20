@@ -1,5 +1,5 @@
 ---
-title: "pilot analysis"
+title: "e1 adult analysis"
 output: pdf_document
 date: "2025-03-12"
 ---
@@ -18,7 +18,7 @@ library(ggrepel)
 ```
 
 ```{r, eval = FALSE}
-raw_data <- list.files( path=here("../data/pilot_raw_data"), full.names=TRUE ) %>% 
+raw_data <- list.files( path=here("../data/e1_adult_raw_data"), full.names=TRUE ) %>% 
   map_dfr( read_csv )
 
 data <- raw_data %>%
@@ -26,11 +26,11 @@ data <- raw_data %>%
          !is.na(study_id)) %>%
   select(-prolific_id) 
 
-write_csv(data, here("../data/pilot_data.csv"))
+write_csv(data, here("../data/e1_adult_data.csv"))
 ```
 
 ```{r}
-data <- read_csv(here("../data/pilot_data.csv")) %>%
+data <- read_csv(here("../data/e1_adult_data.csv")) %>%
   mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
          stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
   mutate(typicality = typicality - 1)

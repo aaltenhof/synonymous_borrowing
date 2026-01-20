@@ -1,0 +1,441 @@
+participant_id,study_id,participant_age,session_date,session_time,trial_number,condition,category,image_name,image_location,word,click_order,rt,id,typicality,experiment_date,date_of_birth,experimenter,notes,exclude,exclusion_reason,exact_age
+12,exp_2_child,4,11/04/2025,09:56:40,0,familiar_word_condition,carrots,carrot_carrot_4_0.png,11,carrots,1,10911,4,0,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,0,familiar_word_condition,carrots,carrot_carrot_2_0.png,10,carrots,2,18507,2,0,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,1,familiar_word_condition,apples,apple_apple_4_0.png,10,apples,1,3897,4,0,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,1,familiar_word_condition,apples,apple_apple_2_0.png,6,apples,2,7582,2,0,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,2,familiar_word_condition,cups,cup_teacup_2_1.png,9,cups,1,3598,2,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,2,familiar_word_condition,cups,cup_teacup_1_1.png,6,cups,2,5491,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,3,familiar_word_condition,spoons,spoon_teaspoon_1_1.png,10,spoons,1,3485,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,3,familiar_word_condition,spoons,spoon_teaspoon_3_1.png,1,spoons,2,6588,3,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,4,familiar_word_condition,flowers,flower_round_1_1.png,10,flowers,1,3900,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,4,familiar_word_condition,flowers,flower_round_3_1.png,9,flowers,2,4831,3,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,5,familiar_word_condition,leaves,leaf_oak_2_1.png,11,leaves,1,3294,2,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,5,familiar_word_condition,leaves,leaf_droplet_1_1.png,10,leaves,2,4129,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,6,familiar_word_condition,hats,hat_ballcap_1_1.png,10,hats,1,4474,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,6,familiar_word_condition,hats,hat_party_1_2.png,9,hats,2,5298,1,2,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,7,familiar_word_condition,mushrooms,mushroom_toadstool_1_1.png,10,mushrooms,1,4159,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,7,familiar_word_condition,mushrooms,mushroom_toadstool_2_1.png,4,mushrooms,2,5680,2,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,8,familiar_word_condition,shells,shell_fan_2_1.png,10,shells,1,5396,2,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,8,familiar_word_condition,shells,shell_fan_3_1.png,9,shells,2,6161,3,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,9,familiar_word_condition,shoes,shoe_sneaker_3_1.png,8,shoes,1,5071,3,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+12,exp_2_child,4,11/04/2025,09:56:40,9,familiar_word_condition,shoes,shoe_sneaker_1_1.png,4,shoes,2,7063,1,1,11/4/2025,08/01/2025,CB,NA,FALSE,NA,3.1219191587249426
+30,exp_2_child,3,12/02/2025,09:12:33,0,familiar_word_condition,apples,apple_apple_2_0.png,6,apples,1,3264,2,0,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,0,familiar_word_condition,apples,apple_apple_4_0.png,5,apples,2,3701,4,0,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,1,familiar_word_condition,carrots,carrot_carrot_2_0.png,7,carrots,1,2647,2,0,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,1,familiar_word_condition,carrots,carrot_carrot_1_0.png,6,carrots,2,3373,1,0,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,2,familiar_word_condition,spoons,spoon_soup_3_1.png,7,spoons,1,2590,3,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,2,familiar_word_condition,spoons,spoon_square_2_2.png,5,spoons,2,4159,2,2,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,3,familiar_word_condition,cups,cup_twohandled_1_2.png,11,cups,1,2897,1,2,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,3,familiar_word_condition,cups,cup_teacup_2_1.png,10,cups,2,3780,2,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,4,familiar_word_condition,hats,hat_party_1_2.png,7,hats,1,3360,1,2,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,4,familiar_word_condition,hats,hat_jester_2_2.png,6,hats,2,4981,2,2,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,5,familiar_word_condition,mushrooms,mushroom_toadstool_3_1.png,6,mushrooms,1,4212,3,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,5,familiar_word_condition,mushrooms,mushroom_toadstool_2_1.png,7,mushrooms,2,7529,2,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,6,familiar_word_condition,leaves,leaf_oak_2_1.png,11,leaves,1,2728,2,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,6,familiar_word_condition,leaves,leaf_oak_1_1.png,9,leaves,2,3996,1,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,7,familiar_word_condition,flowers,flower_iris_2_2.png,3,flowers,1,3747,2,2,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,7,familiar_word_condition,flowers,flower_star_1_1.png,7,flowers,2,5147,1,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,8,familiar_word_condition,shells,shell_spiral_2_1.png,3,shells,1,3647,2,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,8,familiar_word_condition,shells,shell_spiral_3_1.png,2,shells,2,4831,3,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,9,familiar_word_condition,shoes,shoe_loafer_1_1.png,7,shoes,1,3396,1,1,NA,NA,NA,NA,FALSE,NA,NA
+30,exp_2_child,3,12/02/2025,09:12:33,9,familiar_word_condition,shoes,shoe_elf_1_2.png,6,shoes,2,4396,1,2,NA,NA,NA,NA,FALSE,NA,NA
+25,exp_2_child,4,11/13/2025,13:32:35,0,familiar_word_condition,carrots,carrot_carrot_3_0.png,10,carrots,1,3677,3,0,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,0,familiar_word_condition,carrots,carrot_carrot_2_0.png,5,carrots,2,4759,2,0,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,1,familiar_word_condition,apples,apple_apple_5_0.png,6,apples,1,4309,5,0,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,1,familiar_word_condition,apples,apple_apple_2_0.png,5,apples,2,5144,2,0,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,2,familiar_word_condition,hats,hat_party_1_2.png,0,hats,1,3403,1,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,2,familiar_word_condition,hats,hat_party_3_2.png,5,hats,2,4498,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,3,familiar_word_condition,mushrooms,mushroom_toadstool_2_1.png,5,mushrooms,1,3845,2,1,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,3,familiar_word_condition,mushrooms,mushroom_disc_3_2.png,6,mushrooms,2,4745,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,4,familiar_word_condition,spoons,spoon_slotted_3_2.png,10,spoons,1,3049,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,4,familiar_word_condition,spoons,spoon_square_1_2.png,3,spoons,2,4431,1,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,5,familiar_word_condition,flowers,flower_iris_1_2.png,10,flowers,1,3973,1,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,5,familiar_word_condition,flowers,flower_trumpet_2_2.png,6,flowers,2,5330,2,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,6,familiar_word_condition,shells,shell_spiral_1_1.png,10,shells,1,3549,1,1,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,6,familiar_word_condition,shells,shell_fan_2_1.png,6,shells,2,5864,2,1,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,7,familiar_word_condition,leaves,leaf_heart_3_2.png,3,leaves,1,3363,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,7,familiar_word_condition,leaves,leaf_heart_2_2.png,2,leaves,2,4546,2,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,8,familiar_word_condition,shoes,shoe_elf_1_2.png,10,shoes,1,3449,1,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,8,familiar_word_condition,shoes,shoe_elf_3_2.png,6,shoes,2,4280,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,9,familiar_word_condition,cups,cup_sherry_1_2.png,0,cups,1,2713,1,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+25,exp_2_child,4,11/13/2025,13:32:35,9,familiar_word_condition,cups,cup_sherry_3_2.png,4,cups,2,3443,3,2,11/13/2025,4/13/2021,OL,NA,FALSE,NA,55.04436411436083
+6,exp_2_child,4,10/30/2025,13:50:26,0,novel_word_condition,apples,apple_apple_4_0.png,6,apples,1,4886,4,0,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,0,novel_word_condition,apples,apple_apple_1_0.png,5,apples,2,6611,1,0,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,1,novel_word_condition,carrots,carrot_carrot_5_0.png,0,carrots,1,3028,5,0,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,1,novel_word_condition,carrots,carrot_carrot_2_0.png,4,carrots,2,3762,2,0,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,2,novel_word_condition,spoons,spoon_square_2_2.png,1,leams,1,13684,2,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,2,novel_word_condition,spoons,spoon_teaspoon_2_1.png,3,leams,2,15844,2,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,3,novel_word_condition,cups,cup_sherry_3_2.png,0,serns,1,3347,3,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,3,novel_word_condition,cups,cup_twohandled_1_2.png,1,serns,2,4614,1,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,4,novel_word_condition,mushrooms,mushroom_bell_2_2.png,3,bines,1,2997,2,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,4,novel_word_condition,mushrooms,mushroom_bell_3_2.png,2,bines,2,3864,3,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,5,novel_word_condition,shells,shell_stingray_1_2.png,1,palts,1,3763,1,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,5,novel_word_condition,shells,shell_fan_2_1.png,2,palts,2,4828,2,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,6,novel_word_condition,hats,hat_ballcap_2_1.png,2,nefts,1,2845,2,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,6,novel_word_condition,hats,hat_jester_3_2.png,1,nefts,2,3498,3,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,7,novel_word_condition,shoes,shoe_loafer_1_1.png,2,gades,1,4431,1,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,7,novel_word_condition,shoes,shoe_ghillie_3_2.png,0,gades,2,5846,3,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,8,novel_word_condition,flowers,flower_iris_1_2.png,2,tinches,1,3098,1,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,8,novel_word_condition,flowers,flower_star_2_1.png,1,tinches,2,4814,2,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,9,novel_word_condition,leaves,leaf_heart_2_2.png,2,datches,1,2980,2,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+6,exp_2_child,4,10/30/2025,13:50:26,9,novel_word_condition,leaves,leaf_oak_3_1.png,1,datches,2,4030,3,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
+17,exp_2_child,4,11/04/2025,12:57:20,0,novel_word_condition,apples,apple_apple_3_0.png,11,apples,1,4430,3,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,0,novel_word_condition,apples,apple_apple_6_0.png,7,apples,2,5412,6,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,1,novel_word_condition,carrots,carrot_carrot_3_0.png,6,carrots,1,3713,3,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,1,novel_word_condition,carrots,carrot_carrot_4_0.png,11,carrots,2,4513,4,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,2,novel_word_condition,spoons,spoon_slotted_1_2.png,4,leams,1,12131,1,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,2,novel_word_condition,spoons,spoon_slotted_3_2.png,7,leams,2,13345,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,3,novel_word_condition,flowers,flower_trumpet_3_2.png,8,nefts,1,6400,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,3,novel_word_condition,flowers,flower_trumpet_1_2.png,11,nefts,2,9997,1,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,4,novel_word_condition,hats,hat_jester_1_2.png,11,serns,1,6495,1,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,4,novel_word_condition,hats,hat_jester_3_2.png,7,serns,2,7329,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,5,novel_word_condition,mushrooms,mushroom_disc_3_2.png,5,gades,1,6174,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,5,novel_word_condition,mushrooms,mushroom_disc_1_2.png,3,gades,2,7329,1,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,6,novel_word_condition,cups,cup_twohandled_3_2.png,8,palts,1,4307,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,6,novel_word_condition,cups,cup_twohandled_2_2.png,11,palts,2,5446,2,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,7,novel_word_condition,shells,shell_stingray_3_2.png,8,tinches,1,6895,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,7,novel_word_condition,shells,shell_stingray_2_2.png,7,tinches,2,8114,2,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,8,novel_word_condition,leaves,leaf_heart_2_2.png,8,bines,1,6014,2,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,8,novel_word_condition,leaves,leaf_heart_3_2.png,4,bines,2,9299,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,9,novel_word_condition,shoes,shoe_ghillie_1_2.png,4,datches,1,4959,1,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+17,exp_2_child,4,11/04/2025,12:57:20,9,novel_word_condition,shoes,shoe_ghillie_3_2.png,6,datches,2,6046,3,2,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
+20,exp_2_child,3,11/06/2025,08:31:40,0,novel_word_condition,carrots,carrot_carrot_4_0.png,7,carrots,1,3579,4,0,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,0,novel_word_condition,carrots,carrot_carrot_3_0.png,10,carrots,2,4846,3,0,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,1,novel_word_condition,apples,apple_apple_5_0.png,11,apples,1,3299,5,0,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,1,novel_word_condition,apples,apple_apple_2_0.png,3,apples,2,4362,2,0,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,2,novel_word_condition,hats,hat_party_1_2.png,9,bines,1,9632,1,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,2,novel_word_condition,hats,hat_party_2_2.png,6,bines,2,12165,2,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,3,novel_word_condition,leaves,leaf_droplet_1_1.png,3,leams,1,3679,1,1,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,3,novel_word_condition,leaves,leaf_droplet_3_1.png,6,leams,2,6513,3,1,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,4,novel_word_condition,mushrooms,mushroom_disc_1_2.png,11,datches,1,4331,1,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,4,novel_word_condition,mushrooms,mushroom_disc_3_2.png,10,datches,2,9196,3,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,5,novel_word_condition,flowers,flower_iris_1_2.png,7,palts,1,3929,1,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,5,novel_word_condition,flowers,flower_iris_3_2.png,11,palts,2,4845,3,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,6,novel_word_condition,cups,cup_twohandled_2_2.png,10,tinches,1,3481,2,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,6,novel_word_condition,cups,cup_twohandled_3_2.png,4,tinches,2,10197,3,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,7,novel_word_condition,spoons,spoon_slotted_3_2.png,7,serns,1,3180,3,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,7,novel_word_condition,spoons,spoon_slotted_1_2.png,1,serns,2,4863,1,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,8,novel_word_condition,shells,shell_spiral_3_1.png,10,gades,1,3148,3,1,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,8,novel_word_condition,shells,shell_spiral_2_1.png,9,gades,2,3981,2,1,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,9,novel_word_condition,shoes,shoe_ghillie_1_2.png,8,nefts,1,4411,1,2,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+20,exp_2_child,3,11/06/2025,08:31:40,9,novel_word_condition,shoes,shoe_sneaker_2_1.png,9,nefts,2,5294,2,1,11/6/2025,3/23/2022,CB,NA,FALSE,NA,43.50969438054551
+26,exp_2_child,3,11/18/2025,10:00:01,0,novel_word_condition,apples,apple_apple_5_0.png,0,apples,1,20266,5,0,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,0,novel_word_condition,apples,strawberry_strawberry_3_0.png,5,apples,2,21574,3,0,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,1,novel_word_condition,carrots,carrot_carrot_1_0.png,2,carrots,1,8592,1,0,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,1,novel_word_condition,carrots,carrot_carrot_2_0.png,6,carrots,2,9677,2,0,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,2,novel_word_condition,flowers,flower_round_1_1.png,9,serns,1,5916,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,2,novel_word_condition,flowers,flower_iris_1_2.png,10,serns,2,8543,1,2,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,3,novel_word_condition,shells,shell_spiral_1_1.png,10,leams,1,7400,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,3,novel_word_condition,shells,shell_fan_3_1.png,9,leams,2,9901,3,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,4,novel_word_condition,shoes,shoe_loafer_2_1.png,10,nefts,1,9164,2,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,4,novel_word_condition,shoes,shoe_loafer_1_1.png,11,nefts,2,10730,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,5,novel_word_condition,leaves,leaf_oak_1_1.png,9,tinches,1,10164,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,5,novel_word_condition,leaves,leaf_oak_3_1.png,8,tinches,2,12232,3,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,6,novel_word_condition,spoons,spoon_slotted_3_2.png,9,palts,1,5265,3,2,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,6,novel_word_condition,spoons,spoon_square_2_2.png,8,palts,2,6748,2,2,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,7,novel_word_condition,hats,hat_ballcap_1_1.png,9,bines,1,8396,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,7,novel_word_condition,hats,hat_party_3_2.png,10,bines,2,8996,3,2,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,8,novel_word_condition,cups,cup_glass_1_1.png,9,gades,1,4630,1,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,8,novel_word_condition,cups,cup_sherry_3_2.png,11,gades,2,10100,3,2,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,9,novel_word_condition,mushrooms,mushroom_enoki_3_1.png,7,datches,1,8209,3,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+26,exp_2_child,3,11/18/2025,10:00:01,9,novel_word_condition,mushrooms,mushroom_toadstool_2_1.png,10,datches,2,9377,2,1,11/18/25,12/12/2021,CB,She had trouble clicking and would change her answer if it didn't work the first time. she also was mostly just clicking the bottom row and resting her hand on the table.,FALSE,NA,47.2231350640815
+28,exp_2_child,3,11/18/2025,14:10:12,0,familiar_word_condition,apples,apple_apple_6_0.png,4,apples,1,5077,6,0,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,0,familiar_word_condition,apples,apple_apple_4_0.png,0,apples,2,6743,4,0,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,1,familiar_word_condition,carrots,carrot_carrot_3_0.png,4,carrots,1,2943,3,0,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,1,familiar_word_condition,carrots,carrot_carrot_6_0.png,5,carrots,2,3846,6,0,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,2,familiar_word_condition,shells,shell_fan_1_1.png,4,shells,1,3290,1,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,2,familiar_word_condition,shells,shell_fan_3_1.png,10,shells,2,5025,3,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,3,familiar_word_condition,mushrooms,mushroom_enoki_1_1.png,0,mushrooms,1,5319,1,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,3,familiar_word_condition,mushrooms,mushroom_enoki_2_1.png,2,mushrooms,2,6820,2,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,4,familiar_word_condition,shoes,shoe_sneaker_2_1.png,0,shoes,1,3112,2,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,4,familiar_word_condition,shoes,shoe_elf_3_2.png,1,shoes,2,6113,3,2,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,5,familiar_word_condition,hats,hat_ballcap_3_1.png,1,hats,1,4714,3,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,5,familiar_word_condition,hats,hat_ballcap_1_1.png,2,hats,2,7248,1,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,6,familiar_word_condition,spoons,spoon_slotted_3_2.png,4,spoons,1,4160,3,2,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,6,familiar_word_condition,spoons,spoon_slotted_1_2.png,1,spoons,2,5145,1,2,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,7,familiar_word_condition,flowers,flower_star_1_1.png,0,flowers,1,2879,1,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,7,familiar_word_condition,flowers,flower_round_2_1.png,5,flowers,2,4729,2,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,8,familiar_word_condition,leaves,leaf_droplet_1_1.png,4,leaves,1,5281,1,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,8,familiar_word_condition,leaves,leaf_droplet_3_1.png,8,leaves,2,6829,3,1,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,9,familiar_word_condition,cups,cup_sherry_1_2.png,0,cups,1,4967,1,2,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+28,exp_2_child,3,11/18/2025,14:10:12,9,familiar_word_condition,cups,cup_sherry_3_2.png,4,cups,2,6178,3,2,11/18/2025,3/8/2022,OL,NA,FALSE,NA,44.396976667762075
+14,exp_2_child,4,11/04/2025,10:04:00,0,novel_word_condition,apples,apple_apple_2_0.png,7,apples,1,5654,2,0,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,0,novel_word_condition,apples,apple_apple_4_0.png,6,apples,2,7253,4,0,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,1,novel_word_condition,carrots,carrot_carrot_1_0.png,7,carrots,1,3648,1,0,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,1,novel_word_condition,carrots,carrot_carrot_2_0.png,2,carrots,2,4998,2,0,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,2,novel_word_condition,leaves,leaf_oak_2_1.png,5,nefts,1,13001,2,1,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,2,novel_word_condition,leaves,leaf_oak_1_1.png,8,nefts,2,15696,1,1,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,3,novel_word_condition,flowers,flower_trumpet_1_2.png,6,palts,1,3650,1,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,3,novel_word_condition,flowers,flower_trumpet_3_2.png,5,palts,2,5218,3,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,4,novel_word_condition,cups,cup_twohandled_1_2.png,7,serns,1,3716,1,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,4,novel_word_condition,cups,cup_twohandled_3_2.png,10,serns,2,6363,3,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,5,novel_word_condition,hats,hat_jester_2_2.png,11,gades,1,4609,2,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,5,novel_word_condition,hats,hat_jester_3_2.png,3,gades,2,6276,3,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,6,novel_word_condition,shells,shell_stingray_1_2.png,2,bines,1,11399,1,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,6,novel_word_condition,shells,shell_stingray_2_2.png,4,bines,2,15615,2,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,7,novel_word_condition,shoes,shoe_elf_1_2.png,11,tinches,1,3665,1,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,7,novel_word_condition,shoes,shoe_elf_2_2.png,8,tinches,2,5128,2,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,8,novel_word_condition,mushrooms,mushroom_enoki_3_1.png,4,datches,1,4099,3,1,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,8,novel_word_condition,mushrooms,mushroom_enoki_1_1.png,7,datches,2,5450,1,1,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,9,novel_word_condition,spoons,spoon_slotted_3_2.png,5,leams,1,3405,3,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+14,exp_2_child,4,11/04/2025,10:04:00,9,novel_word_condition,spoons,spoon_slotted_2_2.png,2,leams,2,4763,2,2,11/4/2025,05/06/2021,CB,NA,FALSE,NA,53.99277029247453
+31,exp_2_child,3,12/04/2025,09:26:40,0,novel_word_condition,carrots,carrot_carrot_2_0.png,9,carrots,1,14301,2,0,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,0,novel_word_condition,carrots,carrot_carrot_3_0.png,11,carrots,2,18165,3,0,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,1,novel_word_condition,apples,apple_apple_5_0.png,10,apples,1,4450,5,0,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,1,novel_word_condition,apples,apple_apple_6_0.png,8,apples,2,7121,6,0,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,2,novel_word_condition,cups,cup_glass_2_1.png,9,serns,1,5344,2,1,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,2,novel_word_condition,cups,cup_glass_1_1.png,11,serns,2,7824,1,1,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,3,novel_word_condition,shells,shell_stingray_2_2.png,4,leams,1,8584,2,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,3,novel_word_condition,shells,shell_stingray_1_2.png,1,leams,2,16099,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,4,novel_word_condition,shoes,shoe_elf_1_2.png,9,bines,1,4150,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,4,novel_word_condition,shoes,shoe_ghillie_1_2.png,10,bines,2,6066,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,5,novel_word_condition,spoons,spoon_teaspoon_3_1.png,8,palts,1,4810,3,1,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,5,novel_word_condition,spoons,spoon_teaspoon_2_1.png,9,palts,2,8010,2,1,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,6,novel_word_condition,leaves,leaf_bean_1_2.png,2,gades,1,6829,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,6,novel_word_condition,leaves,leaf_bean_3_2.png,3,gades,2,8930,3,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,7,novel_word_condition,mushrooms,mushroom_enoki_3_1.png,11,datches,1,2948,3,1,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,7,novel_word_condition,mushrooms,mushroom_disc_1_2.png,10,datches,2,9730,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,8,novel_word_condition,hats,hat_party_3_2.png,10,tinches,1,11580,3,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,8,novel_word_condition,hats,hat_party_2_2.png,11,tinches,2,19098,2,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,9,novel_word_condition,flowers,flower_iris_1_2.png,9,nefts,1,3563,1,2,NA,NA,NA,NA,FALSE,NA,NA
+31,exp_2_child,3,12/04/2025,09:26:40,9,novel_word_condition,flowers,flower_round_3_1.png,8,nefts,2,10709,3,1,NA,NA,NA,NA,FALSE,NA,NA
+9,exp_2_child,4,11/04/2025,09:09:48,0,novel_word_condition,carrots,carrot_carrot_6_0.png,2,carrots,1,24570,6,0,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,0,novel_word_condition,carrots,carrot_carrot_2_0.png,6,carrots,2,28668,2,0,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,1,novel_word_condition,apples,apple_apple_5_0.png,9,apples,1,4595,5,0,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,1,novel_word_condition,apples,apple_apple_2_0.png,6,apples,2,6581,2,0,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,2,novel_word_condition,cups,cup_glass_1_1.png,7,tinches,1,10579,1,1,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,2,novel_word_condition,cups,cup_glass_3_1.png,8,tinches,2,12148,3,1,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,3,novel_word_condition,spoons,spoon_slotted_1_2.png,9,gades,1,6862,1,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,3,novel_word_condition,spoons,spoon_slotted_3_2.png,6,gades,2,8996,3,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,4,novel_word_condition,shells,shell_urn_3_2.png,10,datches,1,5449,3,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,4,novel_word_condition,shells,shell_urn_2_2.png,1,datches,2,12829,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,5,novel_word_condition,mushrooms,mushroom_bell_2_2.png,5,bines,1,6797,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,5,novel_word_condition,mushrooms,mushroom_bell_1_2.png,0,bines,2,9581,1,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,6,novel_word_condition,hats,hat_party_1_2.png,9,leams,1,6696,1,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,6,novel_word_condition,hats,hat_party_2_2.png,7,leams,2,8594,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,7,novel_word_condition,flowers,flower_trumpet_1_2.png,11,palts,1,3832,1,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,7,novel_word_condition,flowers,flower_trumpet_2_2.png,8,palts,2,6014,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,8,novel_word_condition,shoes,shoe_loafer_1_1.png,11,nefts,1,3862,1,1,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,8,novel_word_condition,shoes,shoe_elf_2_2.png,2,nefts,2,7913,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,9,novel_word_condition,leaves,leaf_heart_2_2.png,10,serns,1,3531,2,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+9,exp_2_child,4,11/04/2025,09:09:48,9,novel_word_condition,leaves,leaf_heart_1_2.png,5,serns,2,7228,1,2,11/4/2025,6/10/2021,CB,NA,FALSE,NA,52.842589549786396
+27,exp_2_child,4,11/18/2025,12:45:32,0,novel_word_condition,apples,apple_apple_6_0.png,4,apples,1,4400,6,0,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,0,novel_word_condition,apples,apple_apple_3_0.png,5,apples,2,4864,3,0,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,1,novel_word_condition,carrots,carrot_carrot_2_0.png,10,carrots,1,3693,2,0,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,1,novel_word_condition,carrots,carrot_carrot_4_0.png,11,carrots,2,4059,4,0,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,2,novel_word_condition,shells,shell_urn_2_2.png,4,tinches,1,9349,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,2,novel_word_condition,shells,shell_stingray_1_2.png,9,tinches,2,13676,1,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,3,novel_word_condition,mushrooms,mushroom_enoki_3_1.png,3,datches,1,4137,3,1,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,3,novel_word_condition,mushrooms,mushroom_enoki_2_1.png,11,datches,2,6586,2,1,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,4,novel_word_condition,spoons,spoon_square_2_2.png,2,leams,1,3857,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,4,novel_word_condition,spoons,spoon_square_3_2.png,6,leams,2,5414,3,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,5,novel_word_condition,hats,hat_jester_2_2.png,10,gades,1,4799,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,5,novel_word_condition,hats,hat_jester_1_2.png,5,gades,2,5793,1,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,6,novel_word_condition,shoes,shoe_elf_2_2.png,6,serns,1,3917,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,6,novel_word_condition,shoes,shoe_elf_3_2.png,10,serns,2,4612,3,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,7,novel_word_condition,flowers,flower_trumpet_2_2.png,2,nefts,1,7543,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,7,novel_word_condition,flowers,flower_trumpet_1_2.png,7,nefts,2,8710,1,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,8,novel_word_condition,leaves,leaf_oak_3_1.png,4,palts,1,5493,3,1,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,8,novel_word_condition,leaves,leaf_oak_1_1.png,9,palts,2,6558,1,1,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,9,novel_word_condition,cups,cup_sherry_3_2.png,1,bines,1,4631,3,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+27,exp_2_child,4,11/18/2025,12:45:32,9,novel_word_condition,cups,cup_sherry_2_2.png,7,bines,2,7717,2,2,11/18/2025,06/05/2021,OL,NA,FALSE,NA,53.46697338153138
+8,exp_2_child,4,11/04/2025,08:21:52,0,familiar_word_condition,apples,apple_apple_4_0.png,11,apples,1,3784,4,0,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,0,familiar_word_condition,apples,apple_apple_3_0.png,7,apples,2,4771,3,0,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,1,familiar_word_condition,carrots,carrot_carrot_6_0.png,9,carrots,1,5979,6,0,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,1,familiar_word_condition,carrots,carrot_carrot_5_0.png,3,carrots,2,7445,5,0,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,2,familiar_word_condition,cups,cup_twohandled_2_2.png,11,cups,1,3564,2,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,2,familiar_word_condition,cups,cup_twohandled_3_2.png,5,cups,2,7564,3,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,3,familiar_word_condition,flowers,flower_star_1_1.png,10,flowers,1,4061,1,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,3,familiar_word_condition,flowers,flower_round_2_1.png,0,flowers,2,5530,2,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,4,familiar_word_condition,spoons,spoon_slotted_2_2.png,7,spoons,1,4293,2,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,4,familiar_word_condition,spoons,spoon_slotted_1_2.png,2,spoons,2,5912,1,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,5,familiar_word_condition,shoes,shoe_sneaker_3_1.png,7,shoes,1,13830,3,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,5,familiar_word_condition,shoes,shoe_sneaker_2_1.png,8,shoes,2,17446,2,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,6,familiar_word_condition,mushrooms,mushroom_bell_1_2.png,4,mushrooms,1,4946,1,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,6,familiar_word_condition,mushrooms,mushroom_bell_2_2.png,0,mushrooms,2,7478,2,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,7,familiar_word_condition,hats,hat_party_1_2.png,5,hats,1,3502,1,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,7,familiar_word_condition,hats,hat_party_2_2.png,8,hats,2,5100,2,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,8,familiar_word_condition,shells,shell_fan_1_1.png,7,shells,1,3730,1,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,8,familiar_word_condition,shells,shell_fan_2_1.png,8,shells,2,7064,2,1,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,9,familiar_word_condition,leaves,leaf_heart_3_2.png,7,leaves,1,5944,3,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+8,exp_2_child,4,11/04/2025,08:21:52,9,familiar_word_condition,leaves,leaf_heart_2_2.png,6,leaves,2,23529,2,2,11/4/2025,10/30/2021,CB,NA,FALSE,NA,48.176141965165954
+23,exp_2_child,3,11/06/2025,14:02:42,0,familiar_word_condition,carrots,carrot_carrot_6_0.png,10,carrots,1,3634,6,0,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,0,familiar_word_condition,carrots,carrot_carrot_1_0.png,9,carrots,2,4820,1,0,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,1,familiar_word_condition,apples,apple_apple_2_0.png,11,apples,1,4379,2,0,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,1,familiar_word_condition,apples,apple_apple_5_0.png,10,apples,2,5162,5,0,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,2,familiar_word_condition,leaves,leaf_oak_1_1.png,5,leaves,1,3147,1,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,2,familiar_word_condition,leaves,leaf_oak_3_1.png,6,leaves,2,4948,3,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,3,familiar_word_condition,hats,hat_sun_1_1.png,4,hats,1,3792,1,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,3,familiar_word_condition,hats,hat_ballcap_1_1.png,8,hats,2,4436,1,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,4,familiar_word_condition,mushrooms,mushroom_disc_1_2.png,5,mushrooms,1,3025,1,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,4,familiar_word_condition,mushrooms,mushroom_toadstool_1_1.png,6,mushrooms,2,3590,1,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,5,familiar_word_condition,flowers,flower_round_3_1.png,5,flowers,1,4364,3,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,5,familiar_word_condition,flowers,flower_trumpet_3_2.png,6,flowers,2,5395,3,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,6,familiar_word_condition,spoons,spoon_soup_2_1.png,6,spoons,1,3346,2,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,6,familiar_word_condition,spoons,spoon_teaspoon_3_1.png,10,spoons,2,4382,3,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,7,familiar_word_condition,shells,shell_fan_2_1.png,6,shells,1,3460,2,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,7,familiar_word_condition,shells,shell_fan_3_1.png,5,shells,2,3980,3,1,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,8,familiar_word_condition,shoes,shoe_elf_2_2.png,2,shoes,1,3450,2,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,8,familiar_word_condition,shoes,shoe_elf_1_2.png,7,shoes,2,7965,1,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,9,familiar_word_condition,cups,cup_twohandled_2_2.png,7,cups,1,2875,2,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+23,exp_2_child,3,11/06/2025,14:02:42,9,familiar_word_condition,cups,cup_twohandled_3_2.png,11,cups,2,3570,3,2,11/6/25,2/25/22,OL,NA,FALSE,NA,44.36411436082813
+19,exp_2_child,4,11/04/2025,13:46:51,0,familiar_word_condition,carrots,carrot_carrot_5_0.png,3,carrots,1,4630,5,0,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,0,familiar_word_condition,carrots,carrot_carrot_6_0.png,6,carrots,2,6296,6,0,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,1,familiar_word_condition,apples,apple_apple_6_0.png,2,apples,1,3163,6,0,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,1,familiar_word_condition,apples,apple_apple_2_0.png,6,apples,2,4262,2,0,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,2,familiar_word_condition,flowers,flower_round_2_1.png,1,flowers,1,4430,2,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,2,familiar_word_condition,flowers,flower_round_1_1.png,11,flowers,2,6881,1,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,3,familiar_word_condition,shoes,shoe_loafer_2_1.png,1,shoes,1,3614,2,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,3,familiar_word_condition,shoes,shoe_sneaker_1_1.png,7,shoes,2,6830,1,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,4,familiar_word_condition,mushrooms,mushroom_disc_2_2.png,2,mushrooms,1,3547,2,2,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,4,familiar_word_condition,mushrooms,mushroom_bell_3_2.png,10,mushrooms,2,4997,3,2,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,5,familiar_word_condition,leaves,leaf_oak_2_1.png,6,leaves,1,2898,2,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,5,familiar_word_condition,leaves,leaf_oak_3_1.png,3,leaves,2,3847,3,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,6,familiar_word_condition,hats,hat_party_1_2.png,1,hats,1,2797,1,2,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,6,familiar_word_condition,hats,hat_jester_1_2.png,2,hats,2,4980,1,2,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,7,familiar_word_condition,cups,cup_teacup_1_1.png,2,cups,1,3198,1,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,7,familiar_word_condition,cups,cup_glass_3_1.png,3,cups,2,4316,3,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,8,familiar_word_condition,shells,shell_spiral_2_1.png,7,shells,1,2806,2,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,8,familiar_word_condition,shells,shell_spiral_3_1.png,9,shells,2,4595,3,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,9,familiar_word_condition,spoons,spoon_teaspoon_1_1.png,3,spoons,1,2683,1,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+19,exp_2_child,4,11/04/2025,13:46:51,9,familiar_word_condition,spoons,spoon_teaspoon_3_1.png,7,spoons,2,4179,3,1,11/4/2025,5/28/2021,OL,NA,FALSE,NA,53.2697995399277
+21,exp_2_child,3,11/06/2025,09:39:33,0,familiar_word_condition,carrots,carrot_carrot_4_0.png,11,carrots,1,14724,4,0,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,0,familiar_word_condition,carrots,carrot_carrot_2_0.png,7,carrots,2,25484,2,0,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,1,familiar_word_condition,apples,apple_apple_4_0.png,1,apples,1,10199,4,0,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,1,familiar_word_condition,apples,apple_apple_5_0.png,0,apples,2,16364,5,0,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,2,familiar_word_condition,shells,shell_spiral_1_1.png,8,shells,1,11557,1,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,2,familiar_word_condition,shells,shell_spiral_3_1.png,9,shells,2,31426,3,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,3,familiar_word_condition,leaves,leaf_oak_1_1.png,0,leaves,1,14707,1,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,3,familiar_word_condition,leaves,leaf_bean_1_2.png,6,leaves,2,23647,1,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,4,familiar_word_condition,hats,hat_party_3_2.png,2,hats,1,10346,3,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,4,familiar_word_condition,hats,hat_party_1_2.png,0,hats,2,16188,1,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,5,familiar_word_condition,mushrooms,mushroom_bell_3_2.png,2,mushrooms,1,12305,3,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,5,familiar_word_condition,mushrooms,mushroom_enoki_2_1.png,1,mushrooms,2,21580,2,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,6,familiar_word_condition,flowers,flower_trumpet_3_2.png,11,flowers,1,3840,3,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,6,familiar_word_condition,flowers,flower_iris_2_2.png,7,flowers,2,9358,2,2,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,7,familiar_word_condition,spoons,spoon_soup_2_1.png,9,spoons,1,3360,2,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,7,familiar_word_condition,spoons,spoon_soup_3_1.png,10,spoons,2,14712,3,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,8,familiar_word_condition,cups,cup_glass_2_1.png,7,cups,1,3498,2,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,8,familiar_word_condition,cups,cup_glass_1_1.png,6,cups,2,13360,1,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,9,familiar_word_condition,shoes,shoe_loafer_2_1.png,6,shoes,1,10367,2,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+21,exp_2_child,3,11/06/2025,09:39:33,9,familiar_word_condition,shoes,shoe_loafer_3_1.png,10,shoes,2,18896,3,1,11/6/2025,10/13/2022,CB,Had a lot of dificulty clicking the items but didnt seem to switch her choices,FALSE,NA,36.805783766020376
+11,exp_2_child,3,11/04/2025,09:46:52,0,familiar_word_condition,apples,apple_apple_1_0.png,5,apples,1,5323,1,0,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,0,familiar_word_condition,apples,apple_apple_3_0.png,4,apples,2,8185,3,0,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,1,familiar_word_condition,carrots,carrot_carrot_3_0.png,5,carrots,1,2926,3,0,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,1,familiar_word_condition,carrots,carrot_carrot_6_0.png,6,carrots,2,6180,6,0,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,2,familiar_word_condition,mushrooms,mushroom_enoki_2_1.png,5,mushrooms,1,3044,2,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,2,familiar_word_condition,mushrooms,mushroom_disc_2_2.png,6,mushrooms,2,5963,2,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,3,familiar_word_condition,leaves,leaf_oak_2_1.png,5,leaves,1,3245,2,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,3,familiar_word_condition,leaves,leaf_heart_1_2.png,6,leaves,2,5615,1,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,4,familiar_word_condition,shoes,shoe_loafer_2_1.png,10,shoes,1,10064,2,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,4,familiar_word_condition,shoes,shoe_sneaker_2_1.png,9,shoes,2,11445,2,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,5,familiar_word_condition,cups,cup_twohandled_3_2.png,9,cups,1,2581,3,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,5,familiar_word_condition,cups,cup_glass_3_1.png,8,cups,2,3897,3,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,6,familiar_word_condition,shells,shell_fan_3_1.png,10,shells,1,6899,3,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,6,familiar_word_condition,shells,shell_stingray_1_2.png,9,shells,2,8161,1,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,7,familiar_word_condition,flowers,flower_trumpet_1_2.png,10,flowers,1,4186,1,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,7,familiar_word_condition,flowers,flower_star_1_1.png,9,flowers,2,5687,1,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,8,familiar_word_condition,spoons,spoon_slotted_2_2.png,9,spoons,1,2413,2,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,8,familiar_word_condition,spoons,spoon_slotted_1_2.png,10,spoons,2,3917,1,2,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,9,familiar_word_condition,hats,hat_ballcap_3_1.png,10,hats,1,7044,3,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+11,exp_2_child,3,11/04/2025,09:46:52,9,familiar_word_condition,hats,hat_sun_2_1.png,9,hats,2,9288,2,1,11/4/2025,7/30/2022,CB,NA,FALSE,NA,39.20473217219849
+16,exp_2_child,4,11/04/2025,11:09:58,0,novel_word_condition,carrots,carrot_carrot_6_0.png,11,carrots,1,3333,6,0,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,0,novel_word_condition,carrots,carrot_carrot_4_0.png,9,carrots,2,4017,4,0,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,1,novel_word_condition,apples,apple_apple_2_0.png,11,apples,1,2830,2,0,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,1,novel_word_condition,apples,apple_apple_5_0.png,7,apples,2,3346,5,0,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,2,novel_word_condition,shoes,shoe_sneaker_3_1.png,10,serns,1,10295,3,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,2,novel_word_condition,shoes,shoe_sneaker_2_1.png,11,serns,2,10893,2,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,3,novel_word_condition,leaves,leaf_droplet_3_1.png,2,palts,1,7219,3,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,3,novel_word_condition,leaves,leaf_droplet_2_1.png,3,palts,2,8854,2,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,4,novel_word_condition,spoons,spoon_slotted_2_2.png,4,datches,1,5657,2,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,4,novel_word_condition,spoons,spoon_slotted_3_2.png,0,datches,2,6345,3,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,5,novel_word_condition,flowers,flower_trumpet_1_2.png,2,leams,1,9082,1,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,5,novel_word_condition,flowers,flower_trumpet_2_2.png,1,leams,2,9613,2,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,6,novel_word_condition,hats,hat_jester_1_2.png,3,nefts,1,3906,1,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,6,novel_word_condition,hats,hat_jester_2_2.png,7,nefts,2,4617,2,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,7,novel_word_condition,shells,shell_spiral_3_1.png,1,gades,1,5395,3,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,7,novel_word_condition,shells,shell_spiral_2_1.png,6,gades,2,5962,2,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,8,novel_word_condition,cups,cup_teacup_3_1.png,6,bines,1,5398,3,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,8,novel_word_condition,cups,cup_teacup_2_1.png,7,bines,2,8262,2,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,9,novel_word_condition,mushrooms,mushroom_disc_2_2.png,9,tinches,1,3751,2,2,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+16,exp_2_child,4,11/04/2025,11:09:58,9,novel_word_condition,mushrooms,mushroom_toadstool_1_1.png,11,tinches,2,4348,1,1,11/4/2025,2/28/2021,CB,NA,FALSE,NA,56.19454485704897
+22,exp_2_child,3,11/06/2025,09:46:18,0,familiar_word_condition,apples,strawberry_strawberry_5_0.png,5,apples,1,7662,5,0,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,0,familiar_word_condition,apples,apple_apple_1_0.png,6,apples,2,13741,1,0,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,1,familiar_word_condition,carrots,carrot_carrot_4_0.png,7,carrots,1,9032,4,0,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,1,familiar_word_condition,carrots,carrot_carrot_3_0.png,10,carrots,2,12349,3,0,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,2,familiar_word_condition,shells,shell_fan_3_1.png,5,shells,1,36263,3,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,2,familiar_word_condition,shells,shell_spiral_2_1.png,1,shells,2,40698,2,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,3,familiar_word_condition,spoons,spoon_teaspoon_1_1.png,0,spoons,1,12531,1,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,3,familiar_word_condition,spoons,spoon_slotted_3_2.png,1,spoons,2,20230,3,2,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,4,familiar_word_condition,flowers,flower_iris_1_2.png,3,flowers,1,17494,1,2,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,4,familiar_word_condition,flowers,flower_star_3_1.png,2,flowers,2,21747,3,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,5,familiar_word_condition,shoes,shoe_sneaker_2_1.png,6,shoes,1,7082,2,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,5,familiar_word_condition,shoes,shoe_elf_1_2.png,7,shoes,2,10844,1,2,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,6,familiar_word_condition,mushrooms,mushroom_toadstool_1_1.png,9,mushrooms,1,8464,1,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,6,familiar_word_condition,mushrooms,mushroom_toadstool_3_1.png,10,mushrooms,2,12130,3,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,7,familiar_word_condition,hats,hat_sun_1_1.png,11,hats,1,4518,1,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,7,familiar_word_condition,hats,hat_sun_2_1.png,10,hats,2,6846,2,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,8,familiar_word_condition,cups,cup_glass_1_1.png,11,cups,1,4299,1,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,8,familiar_word_condition,cups,cup_glass_3_1.png,10,cups,2,6032,3,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,9,familiar_word_condition,leaves,leaf_heart_2_2.png,11,leaves,1,3792,2,2,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+22,exp_2_child,3,11/06/2025,09:46:18,9,familiar_word_condition,leaves,leaf_droplet_2_1.png,10,leaves,2,5531,2,1,11/6/2025,9/8/2022,CB,Speaks spanish mostly but understands and speaks english pretty well too,FALSE,NA,37.95596450870851
+13,exp_2_child,4,11/04/2025,10:00:33,0,familiar_word_condition,carrots,carrot_carrot_2_0.png,9,carrots,1,3353,2,0,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,0,familiar_word_condition,carrots,carrot_carrot_5_0.png,8,carrots,2,4286,5,0,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,1,familiar_word_condition,apples,apple_apple_3_0.png,8,apples,1,3712,3,0,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,1,familiar_word_condition,apples,apple_apple_5_0.png,9,apples,2,4381,5,0,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,2,familiar_word_condition,leaves,leaf_droplet_3_1.png,8,leaves,1,2963,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,2,familiar_word_condition,leaves,leaf_droplet_2_1.png,9,leaves,2,3679,2,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,3,familiar_word_condition,shells,shell_fan_3_1.png,8,shells,1,3026,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,3,familiar_word_condition,shells,shell_spiral_2_1.png,9,shells,2,3814,2,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,4,familiar_word_condition,spoons,spoon_soup_3_1.png,6,spoons,1,5132,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,4,familiar_word_condition,spoons,spoon_teaspoon_3_1.png,5,spoons,2,6131,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,5,familiar_word_condition,cups,cup_glass_3_1.png,4,cups,1,3731,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,5,familiar_word_condition,cups,cup_teacup_1_1.png,5,cups,2,5247,1,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,6,familiar_word_condition,hats,hat_sun_2_1.png,4,hats,1,2545,2,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,6,familiar_word_condition,hats,hat_party_3_2.png,5,hats,2,3246,3,2,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,7,familiar_word_condition,mushrooms,mushroom_disc_1_2.png,5,mushrooms,1,4062,1,2,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,7,familiar_word_condition,mushrooms,mushroom_enoki_2_1.png,4,mushrooms,2,4837,2,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,8,familiar_word_condition,flowers,flower_star_3_1.png,4,flowers,1,3271,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,8,familiar_word_condition,flowers,flower_iris_2_2.png,5,flowers,2,4007,2,2,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,9,familiar_word_condition,shoes,shoe_ghillie_1_2.png,4,shoes,1,3226,1,2,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+13,exp_2_child,4,11/04/2025,10:00:33,9,familiar_word_condition,shoes,shoe_sneaker_3_1.png,0,shoes,2,3931,3,1,11/4/2025,8/28/2021,CB,NA,FALSE,NA,50.246467302004604
+10,exp_2_child,3,11/04/2025,09:24:50,0,familiar_word_condition,carrots,carrot_carrot_5_0.png,9,carrots,1,5021,5,0,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,0,familiar_word_condition,carrots,carrot_carrot_6_0.png,10,carrots,2,5921,6,0,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,1,familiar_word_condition,apples,strawberry_strawberry_3_0.png,9,apples,1,3038,3,0,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,1,familiar_word_condition,apples,apple_apple_6_0.png,10,apples,2,6333,6,0,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,2,familiar_word_condition,leaves,leaf_droplet_2_1.png,6,leaves,1,4849,2,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,2,familiar_word_condition,leaves,leaf_heart_3_2.png,5,leaves,2,5664,3,2,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,3,familiar_word_condition,shoes,shoe_sneaker_1_1.png,9,shoes,1,3726,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,3,familiar_word_condition,shoes,shoe_loafer_3_1.png,10,shoes,2,5079,3,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,4,familiar_word_condition,flowers,flower_round_1_1.png,8,flowers,1,3730,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,4,familiar_word_condition,flowers,flower_star_1_1.png,9,flowers,2,4617,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,5,familiar_word_condition,mushrooms,mushroom_bell_1_2.png,10,mushrooms,1,4725,1,2,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,5,familiar_word_condition,mushrooms,mushroom_toadstool_3_1.png,9,mushrooms,2,5811,3,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,6,familiar_word_condition,hats,hat_sun_1_1.png,8,hats,1,2615,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,6,familiar_word_condition,hats,hat_sun_3_1.png,4,hats,2,3711,3,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,7,familiar_word_condition,spoons,spoon_soup_2_1.png,9,spoons,1,3213,2,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,7,familiar_word_condition,spoons,spoon_teaspoon_1_1.png,5,spoons,2,4747,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,8,familiar_word_condition,cups,cup_glass_2_1.png,9,cups,1,3213,2,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,8,familiar_word_condition,cups,cup_glass_1_1.png,8,cups,2,5098,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,9,familiar_word_condition,shells,shell_spiral_3_1.png,10,shells,1,7565,3,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+10,exp_2_child,3,11/04/2025,09:24:50,9,familiar_word_condition,shells,shell_spiral_1_1.png,4,shells,2,12646,1,1,11/4/2025,9/23/2022,CB,NA,FALSE,NA,37.39730529083142
+15,exp_2_child,4,11/04/2025,10:49:45,0,familiar_word_condition,carrots,carrot_carrot_3_0.png,11,carrots,1,8467,3,0,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,0,familiar_word_condition,carrots,carrot_carrot_4_0.png,6,carrots,2,10468,4,0,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,1,familiar_word_condition,apples,apple_apple_1_0.png,10,apples,1,4013,1,0,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,1,familiar_word_condition,apples,apple_apple_3_0.png,5,apples,2,12246,3,0,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,2,familiar_word_condition,flowers,flower_star_2_1.png,7,flowers,1,6097,2,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,2,familiar_word_condition,flowers,flower_star_3_1.png,10,flowers,2,9030,3,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,3,familiar_word_condition,mushrooms,mushroom_bell_2_2.png,7,mushrooms,1,6829,2,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,3,familiar_word_condition,mushrooms,mushroom_bell_3_2.png,10,mushrooms,2,8163,3,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,4,familiar_word_condition,cups,cup_teacup_2_1.png,10,cups,1,3310,2,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,4,familiar_word_condition,cups,cup_teacup_1_1.png,9,cups,2,8431,1,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,5,familiar_word_condition,spoons,spoon_teaspoon_3_1.png,9,spoons,1,5761,3,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,5,familiar_word_condition,spoons,spoon_teaspoon_1_1.png,5,spoons,2,7361,1,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,6,familiar_word_condition,shoes,shoe_elf_2_2.png,11,shoes,1,9314,2,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,6,familiar_word_condition,shoes,shoe_elf_1_2.png,10,shoes,2,12613,1,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,7,familiar_word_condition,leaves,leaf_bean_3_2.png,10,leaves,1,4313,3,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,7,familiar_word_condition,leaves,leaf_bean_2_2.png,9,leaves,2,5763,2,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,8,familiar_word_condition,shells,shell_spiral_3_1.png,7,shells,1,2880,3,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,8,familiar_word_condition,shells,shell_spiral_2_1.png,8,shells,2,4112,2,1,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,9,familiar_word_condition,hats,hat_jester_3_2.png,9,hats,1,8162,3,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
+15,exp_2_child,4,11/04/2025,10:49:45,9,familiar_word_condition,hats,hat_jester_2_2.png,3,hats,2,9979,2,2,11/4/2025,5/24/2021,CB,NA,FALSE,NA,53.40124876766349
