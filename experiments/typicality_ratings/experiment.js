@@ -210,7 +210,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
             const slider = document.querySelector('input[type="range"]');
 
             // hide the slider thing until they click
-            cslider.style.setProperty('--thumb-opacity', '0');
+            slider.style.setProperty('--thumb-opacity', '0');
             slider.classList.add('thumb-hidden');
 
             // style stuff to hide it 
