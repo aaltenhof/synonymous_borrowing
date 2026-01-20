@@ -160,7 +160,7 @@ rdhawkins@stanford.edu, 217-549-6923). </p>
 
 function onSaveComplete() {
     console.log('Data saved');
-    window.location = "https://app.prolific.com/submissions/complete?cc=CGQ0UW9E";  // Replace XXXXXX with your code
+    window.location = "https://app.prolific.com/submissions/complete?cc=CGQ0UW9E";  
 }
 
 
@@ -197,7 +197,7 @@ const save_data = {
         return [headers, ...rows].join('\n');
     },
     on_finish: () => {
-        window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP"; //update with new prolifci complete
+        window.location.href = "https://app.prolific.com/submissions/complete?cc=CGQ0UW9E"; 
     }
 };
 

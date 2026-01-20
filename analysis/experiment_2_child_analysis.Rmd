@@ -1,5 +1,5 @@
 ---
-title: "e1_child_analysis"
+title: "pilot_child_analysis"
 output: pdf_document
 date: "2025-07-24"
 ---
@@ -19,32 +19,38 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 ```
 
 ```{r, eval = FALSE, include = FALSE}
-raw_data <- list.files( path=here("../data/e1_child_raw_data"), full.names=TRUE ) %>% 
-  map_dfr( read_csv )
+raw_data <- list.files( path=here("../data/e2_child_raw_data"), full.names=TRUE ) %>% 
+  lapply(read_csv) %>%
+  lapply(\(x) mutate(x, across(participant_id, as.double))) %>%
+  lapply(\(x) mutate(x, across(participant_age, as.double))) %>%
+  bind_rows() %>%
+  mutate(study_id = "exp_2_child")
 
-raw_subjects <- read_csv(here("../data/child_pilot_subject_sheet_raw.csv"))
+raw_subjects <- read_csv(here("../data/e2_child_subject_sheet_raw.csv"))
 
 data <- raw_data %>%
   filter(participant_id > 0,  # get rid of debug runs
          participant_age > 0,
          participant_age < 6) %>%
-  mutate(participant_id = if_else(participant_id == 15 & participant_age == 4, 14, participant_id), # manually fix errors in age + id logging
-         participant_age = if_else(participant_id == 14, 3, participant_age), # all errors reported by RAs and logged correctly in participant sheet
-         participant_id = if_else(participant_id == 16 & as.character(session_time) == "15:21:46", 17, participant_id),
-         participant_id = if_else(participant_id == 17 & as.character(session_time) == "15:33:15", 18, participant_id),
-         participant_age = if_else(participant_id == 18 & as.character(session_time) == "15:33:15", 3, participant_age),
-         participant_id = if_else(participant_id == 48 & as.character(session_time) == "14:21:16", 55, participant_id)) %>% # note: we've moved a second participant 48 to subid 55, but this participant currently doesn't have a row in our separate participant sheet
-  filter(participant_id != 43) %>% # exclude second run of participant who was run twice
   left_join(raw_subjects %>% select(-child_name), by = c("participant_id" = "sub_id")) %>%
+  filter(!exclude) %>%
   mutate(exact_age = as.numeric(mdy(experiment_date) - mdy(date_of_birth))/30.43)
 
-#write_csv(data, here("../data/e1_child_data.csv"))
+#write_csv(data, here("../data/e2_child_data.csv"))
 ```
 
 ```{r, include = FALSE}
-data <- read_csv(here("../data/e1_child_data.csv"))
+data <- read_csv(here("../data/pilot_child_data.csv"))
+
+# make sure to exclude any child who did not finish the experiment or who
+# (because of refreshing) saw items multiple times
+# these should already be excluded; this is an additional check
+trial_exclusions <- data %>%
+  count(participant_id) %>%
+  filter(n != 20)
 
 data <- data %>%
+  filter(!(participant_id %in% trial_exclusions$participant_id)) %>%
   mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
          stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
   mutate(typicality = typicality - 1)
@@ -57,12 +63,6 @@ n_five <- data %>% filter(participant_age == 5) %>% count(participant_id) %>% nr
 ```
 
 We currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
-
-```{r, eval=FALSE, include = FALSE}
-data %>%
-  ggplot(aes(x = rt)) +
-  geom_histogram()
-```
 
 ```{r}
 data %>%
@@ -86,6 +86,16 @@ data %>%
   summarise(mean_acc = mean(accuracy)) %>% 
   ggplot(aes(x = exact_age, y = mean_acc, alpha = 0.5)) +
   geom_point(height = 0, width = 0.2)
+
+practice_exclusions <- data %>%
+  filter(trial_number <= 1) %>%
+  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
+  group_by(participant_id) %>%
+  summarise(n_correct = sum(accuracy)) %>%
+  filter(n_correct < 4)
+
+data <- data %>%
+  filter(!(participant_id %in% practice_exclusions$participant_id))
 ```
 
 Accuracy on practice trials ("Tap on two carrots" and "Tap on two apples"). Almost all children choose 100% accurately.
