@@ -99,7 +99,7 @@ const stimulusCategories = {
         'carrot': ['carrot_carrot_1_0.png', 'carrot_carrot_2_0.png', 'carrot_carrot_3_0.png',
         'carrot_carrot_4_0.png', 'carrot_carrot_5_0.png', 'carrot_carrot_6_0.png']
     },
-    'broccoli':{
+    'broccolis':{
         'broccoli': ['broccoli_broccoli_1_0.png', 'broccoli_broccoli_2_0.png', 'broccoli_broccoli_3_0.png',
         'broccoli_broccoli_4_0.png', 'broccoli_broccoli_5_0.png', 'broccoli_broccoli_6_0.png']
     },
@@ -166,7 +166,7 @@ var instructions = {
             <p>In this task, you’ll be asked to rate drawings of objects for how typical they are.</p>
             <p>For each picture, we want you to rate <strong>how typical</strong> (usual, common, or normal) that object is of its category. For example, a goldfish is a very typical fish, but a blowfish might be considered atypical (unusual, rare, abnormal). </p>
             <p>For example, if you see a picture of a flower, think about how typical it is as a flower.</p>
-            <p>You'll use a slider to indicate your rating, from Very atypical to Very atypical.</p>
+            <p>You'll use a slider to indicate your rating, from Very atypical to Very typical.</p>
             <p>On each trial, click and drag the slider to make your rating, then click "Continue" to move on.</p>
         </div>
     `,
@@ -186,7 +186,9 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         'spoons': 'spoon',
         'hats': 'hat',
         'apples': 'apple',
-        'carrots': 'carrot'
+        'carrots': 'carrot',
+        'broccoli': 'broccoli',
+        'strawberries': 'strawberry'
     };
 
     const singular = singularMap[stimulusInfo.category] || stimulusInfo.category.slice(0, -1);
@@ -206,7 +208,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         slider_start: 50,
         require_movement: true,
         data: {
-            trial_type: 'typicality_rating',
+            task: 'typicality_rating',
             trial_number: trialNumber,
             study_id: study_id,
             category: stimulusInfo.category,
@@ -259,7 +261,7 @@ const save_data = {
         const allTrials = jsPsych.data.get().values();
 
         const ratingTrials = allTrials.filter(trial => 
-            trial.trial_type === 'typicality_rating'
+            trial.task === 'typicality_rating'
         );
 
         console.log("Rating trials:", ratingTrials);
@@ -267,7 +269,7 @@ const save_data = {
         const headers = 'participant_id,study_id,session_date,session_time,trial_number,trial_type,category,subtype,image_name,id,designed_typicality,rating,rt';
         
         const rows = ratingTrials.map(trial => {
-            return `${participant_id},${trial.study_id || ''},${session_date},${session_time},${trial.trial_number},${trial.trial_type},${trial.category},${trial.subtype},${trial.image_name},${trial.id},${trial.designed_typicality},${trial.response},${trial.rt}`;
+            return `${participant_id},${trial.study_id || ''},${session_date},${session_time},${trial.trial_number},${trial.task},${trial.category},${trial.subtype},${trial.image_name},${trial.id},${trial.designed_typicality},${trial.response},${trial.rt}`;
         });
 
         return [headers, ...rows].join('\n');
