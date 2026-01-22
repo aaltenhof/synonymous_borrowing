@@ -298,7 +298,7 @@ const save_data = {
         return [headers, ...rows].join('\n');
     },
         on_finish: () => {
-        window.location.href = "https://app.prolific.com/submissions/complete?cc=CR3289CP"; //update with new prolifcic completion code
+        window.location.href = "https://app.prolific.com/submissions/complete?cc=CUJNCIYB"; //update with new prolifcic completion code
     }
 };
 
