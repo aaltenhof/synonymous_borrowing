@@ -195,7 +195,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
     const article = ['a', 'e', 'i', 'o', 'u'].includes(singular[0].toLowerCase()) ? 'an' : 'a';
 
     return {
-        type: jsPsychImageSliderResponse,
+        type: jsPsychAboveImageSliderResponse,
         stimulus: stimulusInfo.image_path,
         stimulus_width: 300,
         stimulus_height: 300,
