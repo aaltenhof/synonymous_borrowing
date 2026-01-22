@@ -1,5 +1,6 @@
 var jsPsych = initJsPsych({
     override_safe_mode: true,
+    show_progress_bar: true,
     on_finish: function() {
         console.log('Experiment finished');
     }
@@ -200,7 +201,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         stimulus_height: 300,
         maintain_aspect_ratio: true,
         prompt: `<p style="font-size: 20px; margin-top: 20px;">How typical is this object for ${article} <strong>${singular}</strong>?</p>`,
-        labels: ['Very atypical (unusual, rare, abnormal)', 'Somewhat typical', 'Very typical (usual, common, or normal)'],
+        labels: ['Very atypical\n(unusual, rare, abnormal)', 'Somewhat typical', 'Very typical\n(usual, common, normal)'],
         slider_width: 500,
         min: 0,
         max: 100,
