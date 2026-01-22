@@ -207,10 +207,11 @@ var jsPsychAboveImageSliderResponse = (function (jspsych) {
         slider_container.innerHTML = html;
         content_wrapper.insertBefore(canvas, content_wrapper.firstElementChild);
         content_wrapper.insertBefore(slider_container, canvas.nextElementSibling);
-        display_element.insertBefore(content_wrapper, null);
+        
         if (trial.prompt !== null) {
           display_element.insertAdjacentHTML("beforeend", trial.prompt);
         }
+        display_element.insertBefore(content_wrapper, null);
         if (img.complete && Number.isFinite(width) && Number.isFinite(height)) {
           ctx.drawImage(img, 0, 0, width, height);
           image_drawn = true;

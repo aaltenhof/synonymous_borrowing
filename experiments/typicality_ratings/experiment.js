@@ -165,7 +165,7 @@ var instructions = {
         <div style="max-width: 800px; margin: auto; text-align: left; font-size: 18px;">
             <h2 style="text-align: center;">Instructions</h2>
             <p>In this task, you’ll be asked to rate drawings of objects for how <b>typical</b> they are.</p>
-            <p>For each picture, rate how typical the object is of its category. For example, you might consider a goldfish a very typical fish (usual, common, or normal), and might consider a pufferfish a very atypical fish (unusual, rare, abnormal).</p>
+            <p>For each picture, rate how typical the object is of its category. For example, you might consider a goldfish a very typical fish (usual, common, or normal), and might consider a pufferfish a very atypical fish (unusual, rare, or abnormal).</p>
             <p>You'll use a slider to indicate your rating, from very atypical to very typical. </p>
             <p>On each trial, click and drag the slider to make your rating, then click "Continue" to move on.</p>
         </div>
@@ -201,7 +201,7 @@ function createTypicalityTrial(stimulusInfo, trialNumber) {
         stimulus_height: 300,
         maintain_aspect_ratio: true,
         prompt: `<p style="font-size: 20px; margin-top: 20px;">How typical is this object for ${article} <strong>${singular}</strong>?</p>`,
-        labels: ['Very atypical\n(unusual, rare, abnormal)', 'Somewhat typical', 'Very typical\n(usual, common, normal)'],
+        labels: ['Very atypical<br>(unusual, rare, abnormal)', 'Somewhat typical', 'Very typical<br>(usual, common, normal)'],
         slider_width: 500,
         min: 0,
         max: 100,
