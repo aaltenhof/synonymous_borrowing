@@ -59,7 +59,7 @@ p <- data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/pilot_typicality_effect.svg"),
+  filename = here("plots/adult_1_typicality_effect.svg"),
   height = 5,
   width = 5
 )
@@ -71,7 +71,7 @@ Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "nef
 
 ```{r}
 glmer(typicality ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data) %>%
+      data = data, contrasts = list(condition = contr.sum)) %>%
   tidy()
 ```
 
@@ -118,7 +118,7 @@ Above, participants' choices of exemplars; they have two choices on each trial. 
 
 ```{r}
 glmer(distinct_types ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data) %>%
+      data = data, contrasts = list(condition = contr.sum)) %>%
   tidy()
 ```
 

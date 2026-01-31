@@ -1,5 +1,5 @@
 ---
-title: "pilot_child_analysis"
+title: "e2_child_analysis"
 output: pdf_document
 date: "2025-07-24"
 ---
@@ -28,19 +28,35 @@ raw_data <- list.files( path=here("../data/e2_child_raw_data"), full.names=TRUE 
 
 raw_subjects <- read_csv(here("../data/e2_child_subject_sheet_raw.csv"))
 
+raw_data %>% group_by(participant_id, session_date) %>%
+  count() %>% View()
+
 data <- raw_data %>%
   filter(participant_id > 0,  # get rid of debug runs
          participant_age > 0,
-         participant_age < 6) %>%
+         participant_age < 6) %>% # sanity check
   left_join(raw_subjects %>% select(-child_name), by = c("participant_id" = "sub_id")) %>%
-  filter(!exclude) %>%
+  mutate(participant_id = if_else(participant_id == 31 & session_date == "01/29/2026", 
+                                  41, participant_id)) %>% # fix a mislabeled participant id
   mutate(exact_age = as.numeric(mdy(experiment_date) - mdy(date_of_birth))/30.43)
+
+data %>%
+  group_by(participant_id, session_date) %>%
+  count() %>% View()
 
 #write_csv(data, here("../data/e2_child_data.csv"))
 ```
 
 ```{r, include = FALSE}
-data <- read_csv(here("../data/pilot_child_data.csv"))
+data <- read_csv(here("../data/e2_child_data.csv")) %>%
+  filter(participant_id > 5) # first filter pilot participants
+
+# error exclusions: if a child saw stimuli twice due to technical error and refresh
+error_exclusions <- data %>%
+  filter(exclude == TRUE) %>%
+  count(participant_id)
+
+n_error_exclusions <- error_exclusions %>% nrow() 
 
 # make sure to exclude any child who did not finish the experiment or who
 # (because of refreshing) saw items multiple times
@@ -49,18 +65,57 @@ trial_exclusions <- data %>%
   count(participant_id) %>%
   filter(n != 20)
 
+n_trial_exclusions <- trial_exclusions %>% nrow() 
+
 data <- data %>%
-  filter(!(participant_id %in% trial_exclusions$participant_id)) %>%
   mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
          stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
-  mutate(typicality = typicality - 1)
+  mutate(typicality = typicality - 1) %>%
+  mutate(stimulus_type = if_else(category %in% c("shells","mushrooms","leaves","flowers"),
+                                 "natural", "artifact")) 
+
+# children who did not get 100% on practice trials
+practice_exclusions <- data %>%
+  filter(trial_number <= 1) %>%
+  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
+  group_by(participant_id) %>%
+  summarise(n_correct = sum(accuracy)) %>%
+  filter(n_correct < 4)
+
+n_practice_exclusions <- practice_exclusions %>% nrow() 
+
+n_before_exclusions <- data %>% count(participant_id) %>% nrow() 
+
+# get n's in each age before exclusions
+n_three_before_exclusions <- data %>% 
+  filter(participant_age == 3) %>% 
+  count(participant_id) %>% nrow()
+n_four_before_exclusions <- data %>% 
+  filter(participant_age == 4) %>% 
+  count(participant_id) %>% nrow()
+n_five_before_exclusions <- data %>% 
+  filter(participant_age == 5) %>% 
+  count(participant_id) %>% nrow()
+
+
+data <- data %>%
+  filter(!(participant_id %in% practice_exclusions$participant_id)) %>%
+  filter(!(participant_id %in% trial_exclusions$participant_id)) %>%
+  filter(!(participant_id %in% error_exclusions$participant_id))
+
 
 n_kids <- data %>% count(participant_id) %>% nrow()
 
 n_three <- data %>% filter(participant_age == 3) %>% count(participant_id) %>% nrow()
 n_four <- data %>% filter(participant_age == 4) %>% count(participant_id) %>% nrow()
 n_five <- data %>% filter(participant_age == 5) %>% count(participant_id) %>% nrow()
+
+# one child's data (participant_id = 39) seemingly lost due to OSF data loss.
 ```
+
+Before exclusions, we had `r n_before_exclusions` kids total, with `r n_three_before_exclusions` three-year-olds, `r n_four_before_exclusions` four-year-olds, and `r `n_five_before_exclusions` five-year-olds.
+
+We exclude `r n_error_exclusions` children because of technical or experimenter errors that caused the child to see stimuli twice, `r n_practice_exclusions` because the child did not get 100% on practice trials, and `r n_trial_exclusions` children because they did not finish the task.
 
 We currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
 
@@ -78,30 +133,12 @@ data %>%
 
 Heatmap of where on the screen children tapped, by age. Possibly a slight bias toward the left and right edges and middle row (likely where their hands rest). Image positions were randomized so this isn't a confound.
 
-```{r}
-data %>%
-  filter(trial_number <= 1) %>%
-  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
-  group_by(participant_id, exact_age) %>%
-  summarise(mean_acc = mean(accuracy)) %>% 
-  ggplot(aes(x = exact_age, y = mean_acc, alpha = 0.5)) +
-  geom_point(height = 0, width = 0.2)
 
-practice_exclusions <- data %>%
-  filter(trial_number <= 1) %>%
-  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
-  group_by(participant_id) %>%
-  summarise(n_correct = sum(accuracy)) %>%
-  filter(n_correct < 4)
-
-data <- data %>%
-  filter(!(participant_id %in% practice_exclusions$participant_id))
-```
 
 Accuracy on practice trials ("Tap on two carrots" and "Tap on two apples"). Almost all children choose 100% accurately.
 
 ```{r}
-p <- data %>%
+data %>%
   filter(trial_number > 1) %>%
   group_by(participant_id, condition, trial_number) %>%
   summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
@@ -123,19 +160,12 @@ p <- data %>%
   legend.box.background = element_rect(fill = "transparent"),
   legend.key = element_rect(fill = "transparent")
 )
-
-ggsave(
-  plot = p,
-  filename = here("plots/pilot_child_types_effect.svg"),
-  bg = "transparent",
-  height = 5,
-  width = 5)
 ```
 
 Choices of multiple subtypes of stimuli. Our prediction is that children choose multiple subtypes more often when prompted with a familiar word (sampling across the category) and choose one subtype more often when prompted with a novel word (inferring the novel word refers to a specific subtype of the category). Children are currently patterning in line with our prediction.
 
 ```{r}
-p <- data %>%
+data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_id) %>%
   summarise(prop_atypical = sum(typicality)/n()) %>%
@@ -157,13 +187,6 @@ p <- data %>%
   legend.box.background = element_rect(fill = "transparent"),
   legend.key = element_rect(fill = "transparent")
 )
-
-ggsave(
-  plot = p,
-  filename = here("plots/pilot_child_atypical_effect.svg"),
-  bg = "transparent",
-  height = 5,
-  width = 5)
 ```
 
 Choices of atypical stimuli. Our prediction is that children will choose more typical stimuli when prompted with a familiar word, and will choose more atypical stimuli when prompted with a novel word (inferring the novel word refers to an atypical subtype of the category). Children are patterning in line with our prediction.
@@ -219,7 +242,7 @@ data %>%
 Choices of multiple types, by stimulus item.
 
 ```{r}
-p <- data %>%
+data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_id, category) %>%
   summarise(prop_atypical = sum(typicality)/n()) %>%
@@ -243,7 +266,7 @@ mean_age <- data %>%
 
 model_data <- data %>%
   filter(trial_number > 1) %>%
-  group_by(participant_id, exact_age, condition, category, trial_number) %>%
+  group_by(participant_id, exact_age, condition, stimulus_type, category, trial_number) %>%
   summarise(n_distinct = n_distinct(stimulus_subclass) - 1,
             n_atypical = sum(typicality)) %>%
   ungroup() %>%
@@ -253,8 +276,8 @@ model_data <- data %>%
 
 contrasts(model_data$condition) = contr.sum(2)
 
-glmer(cbind(n_atypical, 2-n_atypical) ~ condition * exact_age + (1 | participant_id) + (1 | category), family = "binomial",
-      data = model_data) %>%
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition * exact_age + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
 
@@ -267,7 +290,122 @@ model_data %>%
   facet_wrap(~condition)
 
 
-glmer(n_distinct ~ condition * exact_age + (1 | category) + (1 | participant_id), family = "binomial",
-      data = model_data) %>%
+glmer(n_distinct ~ condition * exact_age  + stimulus_type + (1 | category) + (1 | participant_id), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
+```
+```{r, eval = FALSE}
+
+adult_data <- read_csv(here("../data/e2_adult_data.csv")) %>%
+  mutate(age = "Adults") %>%
+  select(-study_id, -session_id) %>%
+  mutate(stimulus_subclass = str_remove(image_name, "^[^_]*_"),
+         stimulus_subclass = str_remove(stimulus_subclass, "_.*")) %>%
+  mutate(stimulus_type = if_else(category %in% c("shells","mushrooms","leaves","flowers"),
+                                 "natural", "artifact")) %>%
+  mutate(typicality = typicality - 1) %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() 
+
+plot_data <- data %>%
+  filter(category != "carrots", category != "apples") %>%
+  group_by(participant_id, trial_number) %>%
+  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
+  ungroup() %>%
+  select(participant_id, trial_number, condition, category, 
+         stimulus_type, image_name, word, click_order, rt, id, typicality,
+         stimulus_subclass, distinct_types) %>%
+  mutate(age = "3- to 5-year-olds") %>%
+  rbind(adult_data) 
+
+p <- plot_data %>%
+  group_by(age, condition, participant_id, trial_number) %>%
+  summarise(prop_distinct = sum(distinct_types)/n()) %>%
+  ungroup() %>%
+  group_by(age, condition) %>%
+  tidyboot_mean(prop_distinct) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean, color = age)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = age),
+            position = position_dodge(width = 0.2)) +
+  ylab("proportion choices of multiple types") +
+  scale_color_brewer(palette = "Dark2") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+) +
+  geom_text_repel(
+    data = . %>%
+      group_by(age) %>%
+      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
+      ungroup(),
+    aes(label = age),
+    nudge_x = 0.1,
+    show.legend = FALSE,
+    direction = "y",
+    hjust = 0,
+    segment.color = NA
+  )
+
+ggsave(
+  plot = p,
+  filename = here("plots/e3_4_overall_types_effect.svg"),
+  height = 5,
+  width = 6
+)
+
+p <- plot_data %>%
+  group_by(age, condition, participant_id) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(age, condition) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = condition, y = mean, color = age)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = age), position = position_dodge(width = 0.2)) +
+  ylab("proportion atypical choices") +
+  scale_color_brewer(palette = "Dark2") +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  legend.key = element_rect(fill = "transparent")
+) +
+  geom_text_repel(
+    data = . %>%
+      group_by(age) %>%
+      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
+      ungroup(),
+    aes(label = age),
+    nudge_x = 0.1,
+    show.legend = FALSE,
+    direction = "y",
+    hjust = 0,
+    segment.color = NA
+  )
+
+ggsave(
+  plot = p,
+  filename = here("plots/e3_4_overall_typicality_effect.svg"),
+  height = 5,
+  width = 6
+)
+
 ```

@@ -92,8 +92,8 @@ Do people tend to choose more atypical objects when prompted with a novel word?
 Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
 
 ```{r}
-glmer(typicality ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data) %>%
+glmer(typicality ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
+      data = data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
 
@@ -135,8 +135,8 @@ Do people tend to choose more varied objects when prompted with familiar vs. nov
 Above, participants' choices of exemplars; they have two choices on each trial. A score of 0 reflects that they chose all of one subtype, and a score of 1 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
 
 ```{r}
-glmer(distinct_types ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data) %>%
+glmer(distinct_types ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
+      data = data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
 

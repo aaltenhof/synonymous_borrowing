@@ -1,0 +1,113 @@
+---
+title: "typicality_judgments"
+output: html_document
+date: "2026-01-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+library(tidyverse)
+library(here)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+library(tidyboot)
+library(svglite)
+library(ggthemes)
+library(ggrepel)
+```
+
+```{r, eval = FALSE}
+raw_data <- list.files( path=here("../data/typicality_raw_data"), full.names=TRUE ) %>% 
+  lapply(read_csv) %>%
+  lapply(\(x) mutate(x, across(participant_id, as.character))) %>%
+  bind_rows()
+
+data <- raw_data %>%
+  filter("study_id" != "UNSAVED_STUDY",
+         !is.na(study_id)) %>%
+  filter(!(participant_id == "undefined"),
+         str_length(participant_id) > 4) %>% # get rid of non-prolific test runs of experiment
+  rename(prolific_id = participant_id) %>%
+  group_by(prolific_id) %>%
+  mutate(participant_id = cur_group_id()) %>%
+  ungroup() %>%
+  select(-prolific_id) # for anonymity
+
+#write_csv(data, here("../data/typicality_judgments.csv"))
+```
+
+```{r}
+data <- read_csv(here("../data/typicality_judgments.csv"))
+
+practice_items <- c("apple", "carrot", "broccoli", "strawberry")
+
+trial_judgments <- data %>%
+  filter(!(subtype %in% practice_items)) 
+
+trial_mean_judgments <- trial_judgments %>%
+  group_by(category, subtype, image_name, designed_typicality) %>%
+  summarise(mean_rating = mean(rating))
+
+practice_judgments <- data %>%
+  filter(subtype %in% practice_items) 
+
+practice_mean_judgments <- practice_judgments %>%
+  group_by(category, subtype, image_name, designed_typicality) %>%
+  summarise(mean_rating = mean(rating))
+```
+
+```{r}
+e1_categories <- c("leaves", "mushrooms", "shells", "flowers")
+e2_categories <- c("hats", "shoes", "spoons", "cups")
+
+# Overall test
+t.test(rating ~ designed_typicality, data = trial_judgments)
+
+# E1 overall test 
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category %in% e1_categories))
+
+# E2 overall test 
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category %in% e2_categories))
+
+# E1 by-category tests
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "leaves")) # 80 vs 29
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "mushrooms")) # 67 vs 47
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "shells")) # 60 vs 40
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "flowers")) # 81 vs 46
+
+# E2 by-category tests
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "hats")) # 84 vs 39
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "shoes")) # 81 vs 47
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "spoons")) # 86 vs 45
+t.test(rating ~ designed_typicality, data = trial_judgments %>% filter(category == "cups")) # 82 vs 37
+
+trial_judgments %>%
+  mutate(nat_art = if_else(category %in% e1_categories, "natural", "artificial")) %>%
+  group_by(nat_art, category, designed_typicality, subtype) %>%
+  summarise(mean_rating = mean(rating)) %>%
+  pivot_wider()
+
+# Test artifacts vs. natural
+model <- lmer(rating ~ designed_typicality * nat_art + (1 | subtype), data = trial_judgments %>% mutate(nat_art = if_else(category %in% e1_categories, "natural", "artificial"))) %>% tidy()
+
+trial_judgments %>%
+  mutate(designed_typicality = if_else(designed_typicality == 1, "high_typicality", "low_typicality")) %>%
+  group_by(category, designed_typicality) %>%
+  tidyboot_mean(rating) %>% 
+  ungroup() %>%
+  ggplot(aes(x = designed_typicality, y = mean)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  facet_wrap(~category) 
+
+trial_judgments %>%
+  mutate(designed_typicality = if_else(designed_typicality == 1, "high_typicality", "low_typicality")) %>%
+  group_by(category, subtype, designed_typicality) %>%
+  tidyboot_mean(rating) %>% 
+  ungroup() %>%
+  ggplot(aes(x = designed_typicality, y = mean, color = subtype)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  facet_wrap(~category) 
+  
+```

@@ -54,6 +54,16 @@ n_kids <- data %>% count(participant_id) %>% nrow()
 n_three <- data %>% filter(participant_age == 3) %>% count(participant_id) %>% nrow()
 n_four <- data %>% filter(participant_age == 4) %>% count(participant_id) %>% nrow()
 n_five <- data %>% filter(participant_age == 5) %>% count(participant_id) %>% nrow()
+
+practice_exclusions <- data %>%
+  filter(trial_number <= 1) %>%
+  mutate(accuracy = if_else(str_remove(word, "s") == stimulus_subclass, 1, 0)) %>%
+  group_by(participant_id) %>%
+  summarise(n_correct = sum(accuracy)) %>%
+  filter(n_correct < 4)
+
+data <- data %>%
+  filter(!(participant_id %in% practice_exclusions$participant_id))
 ```
 
 We currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
@@ -240,6 +250,11 @@ model_data <- data %>%
   mutate(participant_id = as.factor(participant_id),
          exact_age = exact_age - mean_age,
          condition = as.factor(condition))
+
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(condition) %>%
+  summarise(mean = mean(typicality))
 
 contrasts(model_data$condition) = contr.sum(2)
 
