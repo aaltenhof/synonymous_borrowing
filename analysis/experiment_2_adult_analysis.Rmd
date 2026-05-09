@@ -92,8 +92,16 @@ Do people tend to choose more atypical objects when prompted with a novel word?
 Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
 
 ```{r}
-glmer(typicality ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
-      data = data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+model_data <- data %>%
+  group_by(participant_id, condition, stimulus_type, category, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1,
+            n_atypical = sum(typicality)) %>%
+  ungroup() %>%
+  mutate(participant_id = as.factor(participant_id),
+         condition = as.factor(condition))
+
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
 
@@ -135,10 +143,35 @@ Do people tend to choose more varied objects when prompted with familiar vs. nov
 Above, participants' choices of exemplars; they have two choices on each trial. A score of 0 reflects that they chose all of one subtype, and a score of 1 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
 
 ```{r}
-glmer(distinct_types ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
-      data = data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+glmer(n_distinct ~ condition + stimulus_type + (1|participant_id) + (1 | category), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
+
+```{r exploratory-continuous}
+typicality_judgments <- read_csv(here("../data/typicality_judgments.csv")) 
+
+typicality_differential <- typicality_judgments %>%
+  filter(!(category %in% c("apples", "broccoli", "carrots", "strawberries"))) %>%
+  mutate(designed_typicality = if_else(designed_typicality == 1, "typical", "atypical")) %>%
+  group_by(category, designed_typicality) %>%
+  summarise(mean_rating = mean(rating)) %>%
+  pivot_wider(names_from = designed_typicality, values_from = mean_rating) %>%
+  mutate(differential = typical - atypical) %>%
+  select(category, differential)
+
+typicality_model_data <- model_data %>%
+  left_join(typicality_differential, by = c("category"))
+
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition * differential + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
+      data = typicality_model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+  tidy()
+
+glmer(n_distinct ~ condition * differential + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
+      data = typicality_model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+  tidy()
+```
+
 
 ```{r}
 p <- data %>%
@@ -241,7 +274,7 @@ data %>%
 Examining distinct type choices across stimulus types.
 
 ```{r}
-data %>%
+p <- data %>%
   group_by(condition, participant_id, stimulus_type, trial_number) %>%
   mutate(prop_distinct = sum(distinct_types)/n()) %>%
   ungroup() %>%
@@ -262,6 +295,13 @@ data %>%
   legend.box.background = element_rect(fill = "transparent"),
   strip.background =element_rect(fill="transparent"),
   legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/e3_e4_stimulus_type_effect.svg"),
+  height = 5,
+  width = 6
 )
 
 ```
@@ -322,7 +362,7 @@ p <- plot_data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/overall_types_effect.svg"),
+  filename = here("plots/e3_e4_overall_types_effect.svg"),
   height = 5,
   width = 6
 )
@@ -366,7 +406,7 @@ p <- plot_data %>%
 
 ggsave(
   plot = p,
-  filename = here("plots/overall_typicality_effect.svg"),
+  filename = here("plots/e3_e4_overall_typicality_effect.svg"),
   height = 5,
   width = 6
 )

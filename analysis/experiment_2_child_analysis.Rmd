@@ -38,6 +38,7 @@ data <- raw_data %>%
   left_join(raw_subjects %>% select(-child_name), by = c("participant_id" = "sub_id")) %>%
   mutate(participant_id = if_else(participant_id == 31 & session_date == "01/29/2026", 
                                   41, participant_id)) %>% # fix a mislabeled participant id
+  mutate(date_of_birth = if_else(participant_id == 7, "5/27/2021", date_of_birth)) %>%
   mutate(exact_age = as.numeric(mdy(experiment_date) - mdy(date_of_birth))/30.43)
 
 data %>%
@@ -113,11 +114,11 @@ n_five <- data %>% filter(participant_age == 5) %>% count(participant_id) %>% nr
 # one child's data (participant_id = 39) seemingly lost due to OSF data loss.
 ```
 
-Before exclusions, we had `r n_before_exclusions` kids total, with `r n_three_before_exclusions` three-year-olds, `r n_four_before_exclusions` four-year-olds, and `r `n_five_before_exclusions` five-year-olds.
+Before exclusions, we had `r n_before_exclusions` kids total, with `r n_three_before_exclusions` three-year-olds, `r n_four_before_exclusions` four-year-olds, and `r n_five_before_exclusions` five-year-olds.
 
 We exclude `r n_error_exclusions` children because of technical or experimenter errors that caused the child to see stimuli twice, `r n_practice_exclusions` because the child did not get 100% on practice trials, and `r n_trial_exclusions` children because they did not finish the task.
 
-We currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
+After exclusions, we currently have `r n_kids` child participants in the study: `r n_three` three-year-olds, `r n_four` four-year-olds, and `r n_five` five-year-olds.
 
 ```{r}
 data %>%
@@ -192,7 +193,7 @@ data %>%
 Choices of atypical stimuli. Our prediction is that children will choose more typical stimuli when prompted with a familiar word, and will choose more atypical stimuli when prompted with a novel word (inferring the novel word refers to an atypical subtype of the category). Children are patterning in line with our prediction.
 
 ```{r}
-data %>%
+p <- data %>%
   filter(trial_number > 1) %>%
   group_by(participant_id, condition, category, participant_age, trial_number) %>%
   summarise(n_distinct = n_distinct(stimulus_subclass) - 1) %>%
@@ -203,12 +204,31 @@ data %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   ylab("proportion choices of multiple types") +
-  facet_wrap(~participant_age)
+  facet_wrap(~participant_age) +
+  theme_few() + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  strip.background =element_rect(fill="transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/e4_age_multiple_types_effect.png"),
+  height = 5,
+  width = 8
+)
 
 ```
 
 ```{r}
-data %>%
+p <- data %>%
   filter(trial_number > 1) %>%
   group_by(condition, participant_age, participant_id) %>%
   summarise(prop_atypical = sum(typicality)/n()) %>%
@@ -219,7 +239,25 @@ data %>%
   ggplot(aes(x = condition, y = mean)) + 
   geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
   ylab("proportion atypical choices") +
-  facet_wrap(~participant_age)
+  facet_wrap(~participant_age) + theme(
+  panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_), # necessary to avoid drawing panel outline
+  panel.grid.major = element_blank(), # get rid of major grid
+  panel.grid.minor = element_blank(), # get rid of minor grid
+  plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent"),
+  legend.box.background = element_rect(fill = "transparent"),
+  strip.background =element_rect(fill="transparent"),
+  legend.key = element_rect(fill = "transparent")
+)
+
+ggsave(
+  plot = p,
+  filename = here("plots/e4_age_typicality_effect.png"),
+  height = 5,
+  width = 8
+)
 
 ```
 
@@ -272,28 +310,88 @@ model_data <- data %>%
   ungroup() %>%
   mutate(participant_id = as.factor(participant_id),
          exact_age = exact_age - mean_age,
-         condition = as.factor(condition))
+         condition = as.factor(condition),
+         stimulus_type = as.factor(stimulus_type))
+
+model_data %>%
+  group_by(condition) %>%
+  summarise(mean(n_atypical/2))
+
+model_data %>%
+  group_by(condition) %>%
+  summarise(mean(n_distinct))
 
 contrasts(model_data$condition) = contr.sum(2)
+contrasts(model_data$stimulus_type) = contr.sum(2)
 
 glmer(cbind(n_atypical, 2-n_atypical) ~ condition * exact_age + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
       data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
 
+```{r exploratory-continuous}
+typicality_judgments <- read_csv(here("../data/typicality_judgments.csv")) 
+
+typicality_differential <- typicality_judgments %>%
+  filter(!(category %in% c("apples", "broccoli", "carrots", "strawberries"))) %>%
+  mutate(designed_typicality = if_else(designed_typicality == 1, "typical", "atypical")) %>%
+  group_by(category, designed_typicality) %>%
+  summarise(mean_rating = mean(rating)) %>%
+  pivot_wider(names_from = designed_typicality, values_from = mean_rating) %>%
+  mutate(differential = typical - atypical) %>%
+  select(category, differential)
+
+typicality_model_data <- model_data %>%
+  left_join(typicality_differential, by = c("category"))
+
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition * differential + exact_age + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
+      data = typicality_model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+  tidy()
+
+glmer(n_distinct ~ condition * differential + exact_age   + stimulus_type + (1 | participant_id) + (1 | category), family = "binomial",
+      data = typicality_model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
+  tidy()
+```
+
+
 ```{r}
 model_data %>%
-  group_by(participant_id, exact_age, condition) %>%
-  summarise(prop_multiple = mean(n_distinct)) %>% 
-  ggplot(aes(x = prop_multiple)) +
-  geom_histogram() +
-  facet_wrap(~condition)
+  group_by(condition) %>%
+  summarise(prop_multiple = mean(n_distinct)) 
 
 
 glmer(n_distinct ~ condition * exact_age  + stimulus_type + (1 | category) + (1 | participant_id), family = "binomial",
       data = model_data, contrasts = list(condition = contr.sum, stimulus_type = contr.sum)) %>%
   tidy()
 ```
+```{r age-plots}
+# examine effect of age we find in atypical choices
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(condition, participant_age, participant_id) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition, participant_age) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = participant_age, y = mean, color = condition)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion atypical choices") 
+
+# examine effect of stimuli we find in atypical choices
+data %>%
+  filter(trial_number > 1) %>%
+  group_by(condition, stimulus_type, participant_id) %>%
+  summarise(prop_atypical = sum(typicality)/n()) %>%
+  ungroup() %>%
+  group_by(condition, stimulus_type) %>%
+  tidyboot_mean(prop_atypical) %>%
+  ungroup() %>%
+  ggplot(aes(x = stimulus_type, y = mean, color = condition)) + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper)) +
+  ylab("proportion atypical choices") 
+```
+
 ```{r, eval = FALSE}
 
 adult_data <- read_csv(here("../data/e2_adult_data.csv")) %>%
@@ -399,7 +497,7 @@ p <- plot_data %>%
     direction = "y",
     hjust = 0,
     segment.color = NA
-  )
+  ) + geom_hline(yintercept = 0.5, linetype = "dashed")
 
 ggsave(
   plot = p,

@@ -70,8 +70,16 @@ Do people tend to choose more atypical objects when prompted with a novel word?
 Participants' choices on familiar word (e.g., "leaf") vs. novel word (e.g., "neft") trials. Higher values indicate they chose more atypical items. Stimuli typicality scored by experimenter on a binary scale. People choose more atypical exemplars when prompted with a novel compared to a familiar word. They also strongly prefer typical exemplars when prompted with familiar words.
 
 ```{r}
-glmer(typicality ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data, contrasts = list(condition = contr.sum)) %>%
+model_data <- data %>%
+  group_by(participant_id, condition, category, trial_number) %>%
+  summarise(n_distinct = n_distinct(stimulus_subclass) - 1,
+            n_atypical = sum(typicality)) %>%
+  ungroup() %>%
+  mutate(participant_id = as.factor(participant_id),
+         condition = as.factor(condition))
+
+glmer(cbind(n_atypical, 2-n_atypical) ~ condition + (1|participant_id) + (1 | category), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum)) %>%
   tidy()
 ```
 
@@ -117,8 +125,8 @@ Do people tend to choose more varied objects when prompted with familiar vs. nov
 Above, participants' choices of exemplars; they have two choices on each trial. A score of 0 reflects that they chose all of one subtype, and a score of 1 reflects that they chose two distinct subtypes. People tend to choose fewer distinct subtypes when prompted with novel words.
 
 ```{r}
-glmer(distinct_types ~ condition + (1|participant_id) + (1 | category), family = "binomial",
-      data = data, contrasts = list(condition = contr.sum)) %>%
+glmer(n_distinct ~ condition + (1|participant_id) + (1 | category), family = "binomial",
+      data = model_data, contrasts = list(condition = contr.sum)) %>%
   tidy()
 ```
 
@@ -194,109 +202,3 @@ ggsave(
 
 Examining distinct type choices across stimulus types.
 
-```{r, eval = FALSE}
-
-adult_data <- adult_data %>%
-  mutate(age = "Adults") %>%
-  select(-study_id, -session_id)
-
-plot_data <- data %>%
-  filter(category != "carrots", category != "apples") %>%
-  group_by(participant_id, trial_number) %>%
-  mutate(distinct_types = n_distinct(stimulus_subclass) - 1) %>%
-  ungroup() %>%
-  select(participant_id, trial_number, condition, category, image_name, word, click_order, rt, id, typicality,
-         stimulus_subclass, distinct_types) %>%
-  mutate(age = "3- to 5-year-olds") %>%
-  rbind(adult_data) 
-
-p <- plot_data %>%
-  group_by(age, condition, participant_id, trial_number) %>%
-  summarise(prop_distinct = sum(distinct_types)/n()) %>%
-  ungroup() %>%
-  group_by(age, condition) %>%
-  tidyboot_mean(prop_distinct) %>%
-  ungroup() %>%
-  ggplot(aes(x = condition, y = mean, color = age)) + 
-  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
-                  position = position_dodge(width = 0.2)) +
-  geom_line(aes(group = age),
-            position = position_dodge(width = 0.2)) +
-  ylab("proportion choices of multiple types") +
-  scale_color_brewer(palette = "Dark2") +
-  theme_few() + theme(
-  panel.background = element_rect(fill = "transparent",
-                                  colour = NA_character_), # necessary to avoid drawing panel outline
-  panel.grid.major = element_blank(), # get rid of major grid
-  panel.grid.minor = element_blank(), # get rid of minor grid
-  plot.background = element_rect(fill = "transparent",
-                                 colour = NA_character_), # necessary to avoid drawing plot outline
-  legend.background = element_rect(fill = "transparent"),
-  legend.box.background = element_rect(fill = "transparent"),
-  legend.key = element_rect(fill = "transparent")
-) +
-  geom_text_repel(
-    data = . %>%
-      group_by(age) %>%
-      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
-      ungroup(),
-    aes(label = age),
-    nudge_x = 0.1,
-    show.legend = FALSE,
-    direction = "y",
-    hjust = 0,
-    segment.color = NA
-  )
-
-ggsave(
-  plot = p,
-  filename = here("plots/overall_types_effect.svg"),
-  height = 5,
-  width = 6
-)
-
-p <- plot_data %>%
-  group_by(age, condition, participant_id) %>%
-  summarise(prop_atypical = sum(typicality)/n()) %>%
-  ungroup() %>%
-  group_by(age, condition) %>%
-  tidyboot_mean(prop_atypical) %>%
-  ungroup() %>%
-  ggplot(aes(x = condition, y = mean, color = age)) + 
-  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper),
-                  position = position_dodge(width = 0.2)) +
-  geom_line(aes(group = age), position = position_dodge(width = 0.2)) +
-  ylab("proportion atypical choices") +
-  scale_color_brewer(palette = "Dark2") +
-  theme_few() + theme(
-  panel.background = element_rect(fill = "transparent",
-                                  colour = NA_character_), # necessary to avoid drawing panel outline
-  panel.grid.major = element_blank(), # get rid of major grid
-  panel.grid.minor = element_blank(), # get rid of minor grid
-  plot.background = element_rect(fill = "transparent",
-                                 colour = NA_character_), # necessary to avoid drawing plot outline
-  legend.background = element_rect(fill = "transparent"),
-  legend.box.background = element_rect(fill = "transparent"),
-  legend.key = element_rect(fill = "transparent")
-) +
-  geom_text_repel(
-    data = . %>%
-      group_by(age) %>%
-      filter(condition == max(condition)) %>%  # assumes 'condition' is numeric or ordered factor
-      ungroup(),
-    aes(label = age),
-    nudge_x = 0.1,
-    show.legend = FALSE,
-    direction = "y",
-    hjust = 0,
-    segment.color = NA
-  )
-
-ggsave(
-  plot = p,
-  filename = here("plots/overall_typicality_effect.svg"),
-  height = 5,
-  width = 6
-)
-
-```

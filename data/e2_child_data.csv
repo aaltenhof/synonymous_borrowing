@@ -79,26 +79,26 @@ participant_id,study_id,participant_age,session_date,session_time,trial_number,c
 6,exp_2_child,4,10/30/2025,13:50:26,8,novel_word_condition,flowers,flower_star_2_1.png,1,tinches,2,4814,2,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
 6,exp_2_child,4,10/30/2025,13:50:26,9,novel_word_condition,leaves,leaf_heart_2_2.png,2,datches,1,2980,2,2,10/30,5/27/2021,OL,NA,FALSE,NA,NA
 6,exp_2_child,4,10/30/2025,13:50:26,9,novel_word_condition,leaves,leaf_oak_3_1.png,1,datches,2,4030,3,1,10/30,5/27/2021,OL,NA,FALSE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,0,novel_word_condition,carrots,carrot_carrot_1_0.png,11,carrots,1,20739,1,0,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,0,novel_word_condition,carrots,carrot_carrot_5_0.png,10,carrots,2,28137,5,0,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,1,novel_word_condition,apples,apple_apple_6_0.png,11,apples,1,4071,6,0,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,1,novel_word_condition,apples,apple_apple_1_0.png,7,apples,2,6530,1,0,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,2,novel_word_condition,hats,hat_jester_1_2.png,11,datches,1,22880,1,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,2,novel_word_condition,hats,hat_jester_3_2.png,10,datches,2,24346,3,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,3,novel_word_condition,cups,cup_twohandled_3_2.png,10,serns,1,11196,3,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,3,novel_word_condition,cups,cup_twohandled_1_2.png,5,serns,2,16945,1,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,4,novel_word_condition,flowers,flower_star_3_1.png,11,nefts,1,11049,3,1,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,4,novel_word_condition,flowers,flower_star_2_1.png,3,nefts,2,13916,2,1,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,5,novel_word_condition,mushrooms,mushroom_bell_2_2.png,6,tinches,1,9661,2,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,5,novel_word_condition,mushrooms,mushroom_bell_1_2.png,2,tinches,2,14894,1,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,6,novel_word_condition,shoes,shoe_elf_1_2.png,10,palts,1,5326,1,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,6,novel_word_condition,shoes,shoe_elf_3_2.png,11,palts,2,6277,3,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,7,novel_word_condition,spoons,spoon_slotted_3_2.png,10,leams,1,4465,3,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,7,novel_word_condition,spoons,spoon_slotted_1_2.png,8,leams,2,5681,1,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,8,novel_word_condition,leaves,leaf_bean_2_2.png,10,gades,1,3683,2,2,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,8,novel_word_condition,leaves,leaf_droplet_3_1.png,9,gades,2,4765,3,1,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,9,novel_word_condition,shells,shell_fan_3_1.png,10,bines,1,4596,3,1,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
-7,exp_2_child,4,10/30/2025,14:32:48,9,novel_word_condition,shells,shell_fan_2_1.png,11,bines,2,7446,2,1,10/30,1/16/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,0,novel_word_condition,carrots,carrot_carrot_1_0.png,11,carrots,1,20739,1,0,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,0,novel_word_condition,carrots,carrot_carrot_5_0.png,10,carrots,2,28137,5,0,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,1,novel_word_condition,apples,apple_apple_6_0.png,11,apples,1,4071,6,0,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,1,novel_word_condition,apples,apple_apple_1_0.png,7,apples,2,6530,1,0,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,2,novel_word_condition,hats,hat_jester_1_2.png,11,datches,1,22880,1,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,2,novel_word_condition,hats,hat_jester_3_2.png,10,datches,2,24346,3,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,3,novel_word_condition,cups,cup_twohandled_3_2.png,10,serns,1,11196,3,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,3,novel_word_condition,cups,cup_twohandled_1_2.png,5,serns,2,16945,1,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,4,novel_word_condition,flowers,flower_star_3_1.png,11,nefts,1,11049,3,1,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,4,novel_word_condition,flowers,flower_star_2_1.png,3,nefts,2,13916,2,1,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,5,novel_word_condition,mushrooms,mushroom_bell_2_2.png,6,tinches,1,9661,2,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,5,novel_word_condition,mushrooms,mushroom_bell_1_2.png,2,tinches,2,14894,1,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,6,novel_word_condition,shoes,shoe_elf_1_2.png,10,palts,1,5326,1,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,6,novel_word_condition,shoes,shoe_elf_3_2.png,11,palts,2,6277,3,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,7,novel_word_condition,spoons,spoon_slotted_3_2.png,10,leams,1,4465,3,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,7,novel_word_condition,spoons,spoon_slotted_1_2.png,8,leams,2,5681,1,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,8,novel_word_condition,leaves,leaf_bean_2_2.png,10,gades,1,3683,2,2,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,8,novel_word_condition,leaves,leaf_droplet_3_1.png,9,gades,2,4765,3,1,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,9,novel_word_condition,shells,shell_fan_3_1.png,10,bines,1,4596,3,1,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
+7,exp_2_child,4,10/30/2025,14:32:48,9,novel_word_condition,shells,shell_fan_2_1.png,11,bines,2,7446,2,1,10/30,5/27/2021,OL,"Has to refresh bc WiFi issues, also difficulty tapping",TRUE,NA,NA
 17,exp_2_child,4,11/04/2025,12:57:20,0,novel_word_condition,apples,apple_apple_3_0.png,11,apples,1,4430,3,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
 17,exp_2_child,4,11/04/2025,12:57:20,0,novel_word_condition,apples,apple_apple_6_0.png,7,apples,2,5412,6,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
 17,exp_2_child,4,11/04/2025,12:57:20,1,novel_word_condition,carrots,carrot_carrot_3_0.png,6,carrots,1,3713,3,0,11/4/2025,12/10/2020,OL,NA,FALSE,NA,58.8235294117647
